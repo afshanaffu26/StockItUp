@@ -6,6 +6,8 @@
     <color name="colorAccent">@color/colorPink</color>
 
     <color name="colorMain">@color/colorOrange</color>
+    <color name="colorText">@color/colorOrange</color>
+    <color name="colorButton">@color/colorOrange</color>
 
     <color name="colorError">#B00020</color>
     <color name="colorPink">#FF0266</color>
