@@ -13,23 +13,38 @@
         android:layout_width="129dp"
         android:layout_height="122dp"
         android:visibility="gone" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="@string/log_in"
+        android:textStyle="bold"
+        android:textColor="@color/colorText"
+        android:textSize="24sp" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_marginTop="30dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/splash" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_marginTop="15dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/splash" />
 
         <EditText
             android:id="@+id/editEmail"
@@ -61,6 +76,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
+            android:textSize="18sp"
             android:text="@string/log_in"
             android:textColor="#FFFFFF"
             android:background="@color/colorButton"
@@ -71,21 +87,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/recover_password"
+            android:textStyle="bold"
+            android:textColor="@color/colorText"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:clickable="true"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:layout_marginBottom="20dp"
     android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/need_an_account"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
         <TextView
             android:id="@+id/txtSignUp"
             android:layout_width="wrap_content"
@@ -95,8 +114,8 @@
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:text="@string/sign_up"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 </LinearLayout>
     </LinearLayout>
-
+</LinearLayout>
 </RelativeLayout>

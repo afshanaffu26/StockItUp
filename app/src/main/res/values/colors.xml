@@ -3,18 +3,22 @@
 
     <color name="colorPrimary">@color/colorMain</color>
     <color name="colorPrimaryDark">@color/colorMain</color>
-    <color name="colorAccent">@color/colorPink</color>
+    <color name="colorAccent">@color/colorRed</color>
 
-    <color name="colorMain">#eb6841</color>
+    <color name="colorMain">@color/colorBlue</color>
     <color name="colorText">@color/colorMain </color>
     <color name="colorButton">@color/colorMain </color>
     <color name="colorBorder">#c8c8a9</color>
 
-    <color name="colorError">#B00020</color>
+    <color name="colorRed">#db2544</color>
     <color name="colorPink">#FF0266</color>
     <color name="colorYellow">#ffa700</color>
     <color name="colorOrange">#EE6002</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorGreen">#00b159 </color>
+    <color name="colorBlue">#008080 </color>
+
+    <color name="colorTest">#008080</color>
+    <!--eb6841  db2544-->
 
 </resources>

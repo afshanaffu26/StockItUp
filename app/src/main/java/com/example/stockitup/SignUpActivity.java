@@ -3,9 +3,14 @@ package com.example.stockitup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
+
+    TextView txtLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,5 +21,17 @@ public class SignUpActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("StockItUp");
 
+        txtLogin = findViewById(R.id.txtLogin);
+        txtLogin.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.txtLogin:
+                startActivity(new Intent(this,LoginActivity.class));
+                break;
+        }
     }
 }

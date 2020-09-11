@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:gravity="center"
-                    android:text="Sign Up"
+                    android:text="@string/sign_up"
                     android:textStyle="bold"
                     android:textColor="@color/colorText"
                     android:textSize="24sp" />
@@ -112,6 +112,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="3dp"
                         android:paddingTop="5dp"
+                        android:textSize="14sp"
                         android:singleLine="false"
                         android:text="@string/i_agree_to_the"
                         />
@@ -121,6 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="false"
+                        android:textSize="16sp"
                         android:layout_marginLeft="3dp"
                         android:textColor="@color/colorText"
                         android:text="@string/terms_and_conditions"
@@ -134,6 +136,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp"
                     android:background="@color/colorMain"
+                    android:textSize="18sp"
                     android:text="@string/sign_up"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
@@ -151,7 +154,7 @@
                         android:text="@string/already_had_an_account"
                         android:textSize="16sp" />
                     <TextView
-                        android:id="@+id/textLogin"
+                        android:id="@+id/txtLogin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
