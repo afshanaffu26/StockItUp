@@ -3,6 +3,11 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="recover_password">Recover Password?</string>
-    <string name="need_an_account_sign_up">Need an account? Sign Up</string>
+    <string name="need_an_account">Need an account? </string>
     <string name="log_in">LOG IN</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="i_agree_to_the">I agree to the</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="already_had_an_account">Already had an account?</string>
 </resources>

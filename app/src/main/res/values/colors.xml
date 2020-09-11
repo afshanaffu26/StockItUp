@@ -6,7 +6,7 @@
     <color name="colorAccent">@color/colorPink</color>
 
     <color name="colorMain">#eb6841</color>
-    <color name="colorText">#3d1e6d </color>
+    <color name="colorText">@color/colorMain </color>
     <color name="colorButton">@color/colorMain </color>
     <color name="colorBorder">#c8c8a9</color>
 
