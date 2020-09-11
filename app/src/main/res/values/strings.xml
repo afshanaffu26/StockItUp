@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">StockItUp</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="recover_password">Recover Password?</string>
+    <string name="need_an_account_sign_up">Need an account? Sign Up</string>
+    <string name="log_in">LOG IN</string>
 </resources>
