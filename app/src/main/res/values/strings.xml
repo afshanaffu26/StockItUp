@@ -10,4 +10,8 @@
     <string name="i_agree_to_the">I agree to the</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="already_had_an_account">Already have an account?</string>
+    <string name="slide_1_title">StockItUp!</string>
+    <string name="slide_1_desc">The easiest way to order Groceries</string>
+    <string name="slide_3_title">Great Discounts</string>
+    <string name="slide_3_desc">Best Discount on Every Order!</string>
 </resources>
