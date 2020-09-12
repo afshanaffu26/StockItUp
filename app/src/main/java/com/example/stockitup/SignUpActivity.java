@@ -11,18 +11,20 @@ import android.widget.TextView;
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtLogin;
+    TextView txtConditions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("StockItUp");
 
         txtLogin = findViewById(R.id.txtLogin);
         txtLogin.setOnClickListener(this);
+        txtConditions = findViewById(R.id.txtConditions);
+        txtConditions.setOnClickListener(this);
     }
 
     @Override
@@ -31,6 +33,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         {
             case R.id.txtLogin:
                 startActivity(new Intent(this,LoginActivity.class));
+                break;
+            case R.id.txtConditions:
+                startActivity(new Intent(getApplicationContext(), TermsActivity.class));
                 break;
         }
     }
