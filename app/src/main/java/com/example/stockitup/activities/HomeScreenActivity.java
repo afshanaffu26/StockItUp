@@ -13,10 +13,20 @@ package com.example.stockitup.activities;
         import android.os.Bundle;
         import android.view.MenuItem;
         import android.view.View;
+        import android.widget.FrameLayout;
         import android.widget.ImageView;
         import android.widget.TextView;
 
+        import com.bumptech.glide.Glide;
+        import com.example.stockitup.fragments.HelpFragment;
+        import com.example.stockitup.fragments.OrderHistoryFragment;
+        import com.example.stockitup.fragments.FeedbackFragment;
+        import com.example.stockitup.fragments.CartFragment;
+        import com.example.stockitup.fragments.HomeFragment;
         import com.example.stockitup.R;
+        import com.example.stockitup.fragments.InviteFragment;
+        import com.example.stockitup.fragments.OffersFragment;
+        import com.example.stockitup.fragments.SettingsFragment;
         import com.google.android.material.navigation.NavigationView;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
@@ -33,15 +43,15 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     //private BottomNavigationView mMainNav;
-//    private FrameLayout mMainFrame;
-//    private HomeFragment homeFragment;
-//    private CartFragment cartFragment;
-//    private FeedbackFragment feedbackFragment;
-//    private InviteFragment inviteFragment;
-//    private OffersFragment offersFragment;
-//    private OrderHistoryFragment orderHistoryFragment;
-//    private SettingsFragment settingsFragment;
-//    private HelpFragment helpFragment;
+    private FrameLayout mMainFrame;
+    private HomeFragment homeFragment;
+    private CartFragment cartFragment;
+    private FeedbackFragment feedbackFragment;
+    private InviteFragment inviteFragment;
+    private OffersFragment offersFragment;
+    private OrderHistoryFragment orderHistoryFragment;
+    private SettingsFragment settingsFragment;
+    private HelpFragment helpFragment;
 //    private SearchFragment searchFragment;
     private TextView drawerUsername,drawerAccount;
     private ImageView drawerImage;
@@ -75,7 +85,7 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
 
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
-       // mMainFrame=findViewById(R.id.main_frame);
+        mMainFrame=findViewById(R.id.main_frame);
         //mMainNav=findViewById(R.id.main_nav);
 
         View headerView = navigationView.getHeaderView(0);
@@ -83,19 +93,19 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         drawerUsername = (TextView) headerView.findViewById(R.id.textView3);
         drawerAccount = (TextView) headerView.findViewById(R.id.textView4);
 
-//        homeFragment = new HomeFragment();
-//        cartFragment = new CartFragment();
-//        helpFragment = new HelpFragment();
-//        offersFragment = new OffersFragment();
-//        orderHistoryFragment = new OrderHistoryFragment();
-//        inviteFragment = new InviteFragment();
-//        settingsFragment = new SettingsFragment();
-//        feedbackFragment = new FeedbackFragment();
+        homeFragment = new HomeFragment();
+        cartFragment = new CartFragment();
+        helpFragment = new HelpFragment();
+        offersFragment = new OffersFragment();
+        orderHistoryFragment = new OrderHistoryFragment();
+        inviteFragment = new InviteFragment();
+        settingsFragment = new SettingsFragment();
+        feedbackFragment = new FeedbackFragment();
 //        searchFragment = new SearchFragment();
         mAuth = FirebaseAuth.getInstance();
-        //setUserDetails();
+        setUserDetails();
 
-        //setFragment(homeFragment);
+        setFragment(homeFragment);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -107,7 +117,7 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                //setUserDetails();
+                setUserDetails();
             }
 
         };
@@ -153,35 +163,35 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
 //                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
 //                else
 //                    drawerLayout.closeDrawer(GravityCompat.START);
-                //setFragment(homeFragment);
+                setFragment(homeFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.menu1cart:
-                //setFragment(cartFragment);
+                setFragment(cartFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.menu1history:
-                //setFragment(orderHistoryFragment);
+                setFragment(orderHistoryFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.menu1offers:
-                //setFragment(offersFragment);
+                setFragment(offersFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.menu2settings:
-                //setFragment(settingsFragment);
+                setFragment(settingsFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.menu2share:
-                //setFragment(inviteFragment);
+                setFragment(inviteFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.menu2feedback:
-                //setFragment(feedbackFragment);
+                setFragment(feedbackFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.menu2help:
-                //setFragment(helpFragment);
+                setFragment(helpFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.menu3logout:
@@ -211,14 +221,14 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         //drawerImage.setImageDrawable(R.drawable.menu);
         if (user != null) {
             if (user.getPhotoUrl() != null) {
-                //Glide.with(this).load(user.getPhotoUrl().toString()).into(drawerImage);
+                Glide.with(this).load(user.getPhotoUrl().toString()).into(drawerImage);
             }
             if (user.getDisplayName() != null) {
                 String displayName = user.getDisplayName();
                 drawerUsername.setText(displayName);
             }
             if (user.getEmail() != null) {
-                String emailId = user.getEmail().toString();
+                String emailId = user.getEmail();
                 drawerAccount.setText(emailId);
             }
         }

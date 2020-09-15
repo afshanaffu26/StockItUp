@@ -47,5 +47,7 @@ Upon Purchaser’s reasonable request from time to time, Supplier shall furnish 
     <string name="cart">Cart</string>
     <string name="order_history">Order History</string>
     <string name="offers">Offers</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
