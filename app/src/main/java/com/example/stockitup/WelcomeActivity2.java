@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class WelcomeActivity2 extends AppCompatActivity  implements View.OnClickListener {
+public class  WelcomeActivity2 extends AppCompatActivity  implements View.OnClickListener {
 
     Button buttonNext;
 
@@ -18,14 +18,9 @@ public class WelcomeActivity2 extends AppCompatActivity  implements View.OnClick
         buttonNext = findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.buttonNext:
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                break;
+                finish();
         }
-
     }
-}
