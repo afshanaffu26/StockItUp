@@ -46,13 +46,13 @@
                 android:textSize="@dimen/slide_desc" />
 
             <Button
-                android:id="@+id/buttonNext2"
+                android:id="@+id/buttonNext"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="100dp"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
-                android:text="NEXT"
+                android:text="@string/next"
                 android:textColor="#51ca8e"
                 />
 

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "296282360851",
+    "firebase_url": "https://stockitup-b1bcb.firebaseio.com",
+    "project_id": "stockitup-b1bcb",
+    "storage_bucket": "stockitup-b1bcb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296282360851:android:563b834f13a026519303e6",
+        "android_client_info": {
+          "package_name": "com.example.stockitup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296282360851-p8a0qv9bnr7eekek2cqd3fv7e1ro9rsr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stockitup",
+            "certificate_hash": "553f609be9a237764a712668a1d794044c7b7ec9"
+          }
+        },
+        {
+          "client_id": "296282360851-3kap40jppm98fnrekc5cn9q17qs90tjo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjkXVeB8pf83Vqu68ZVXPLgBJ9VJuRhtI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296282360851-3kap40jppm98fnrekc5cn9q17qs90tjo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

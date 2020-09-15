@@ -34,9 +34,9 @@
         android:textSize="24sp" />
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/img_width_height"
         android:layout_marginTop="30dp"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/img_width_height"
         android:layout_gravity="center"
         app:srcCompat="@drawable/splash" />
 
@@ -86,7 +86,7 @@
             android:id="@+id/txt_recover_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/recover_password"
+            android:text="@string/recover_password_login"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:layout_marginTop="30dp"

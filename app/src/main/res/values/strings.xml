@@ -2,7 +2,7 @@
     <string name="app_name">StockItUp</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="recover_password">Recover Password?</string>
+    <string name="recover_password_login">Recover Password?</string>
     <string name="need_an_account">Need an account? </string>
     <string name="log_in">LOG IN</string>
     <string name="confirm_password">Confirm Password</string>
@@ -14,4 +14,25 @@
     <string name="slide_1_desc">The easiest way to order Groceries</string>
     <string name="slide_3_title">Great Discounts</string>
     <string name="slide_3_desc">Best Discount on Every Order!</string>
+
+    <string name="terms_and_conditions_text">The following specific delivery terms shall be applicable to each delivery made by Supplier to Purchaser under any Order:\n\n
+a.Purchaser shall not be charged for packing or cartage expenses. Such expenses shall be paid by Supplier.\n\n
+b.Supplier shall include with each shipment a document listing each item and quantity separately, as indicated on the Order.\n\n
+c.Supplier shall not back order without prior written approval of Purchaser.\n\n
+d.Purchaser reserves the right to reject shipment and return Products at Supplier’s expense if each container, and each package therein, are not adequate for reshipment and not marked to meet requirements of existing labeling laws, and existing weight and measure laws. Each container shall bear the name of Supplier, unless the Products bear any of Purchaser’s proprietary brands.\n\n
+e.If any governmental registration or approval is required for the Products, such registration or approval shall be obtained by Supplier at Supplier’s expense.\n\n
+f.Palletized loads shall be delivered on Purchaser’s approved pallets only. \n\n
+Supplier shall perform reasonable amounts of testing and inspection with respect to each shipment of the Products to ensure the Products comply with the requirements of the Agreement.\n\n
+The testing methods and procedures shall conform to the standards, specifications and other requirements \n\n
+a. that Purchaser provides to Supplier, \n\n
+b. that are prescribed by any applicable law or regulation or requirement of any governmental agency, or \n\n
+c. that are otherwise specified or agreed to in writing. \n\n
+Upon Purchaser’s request, Supplier shall furnish to Purchaser, before or upon delivery of the Products, a copy of the results of, and a certificate of analysis with respect to, each test. Supplier shall make a record of the date, time and results of each test and the testing procedure used and shall retain all inspection and test records for two years after the Products are delivered to Purchaser or for any reasonable additional period that Purchaser specifies. \n\n
+Upon Purchaser’s reasonable request from time to time, Supplier shall furnish copies of the records to Purchaser at no charge. Additionally, Supplier shall cause to be performed, at its sole expense, all third-party testing Purchaser may reasonably request to determine whether Products provided to Purchaser under the Agreement conform to the standards, specifications and other requirements of the Agreement.
+    </string>
+    <string name="recover_password">Recover Password</string>
+    <string name="reset_password">RESET PASSWORD</string>
+    <string name="full_name">Full Name</string>
+    <string name="next">NEXT</string>
+
 </resources>

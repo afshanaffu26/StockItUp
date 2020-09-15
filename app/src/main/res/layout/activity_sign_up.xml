@@ -34,8 +34,8 @@
                     android:textSize="24sp" />
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="@dimen/img_width_height"
+                    android:layout_height="@dimen/img_width_height"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     app:srcCompat="@drawable/splash" />
@@ -48,7 +48,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/edit_text_background"
-                    android:hint="Full Name"
+                    android:hint="@string/full_name"
                     android:ems="10"
                     android:inputType="text" />
 

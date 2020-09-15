@@ -30,21 +30,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="Recover Password"
+            android:text="@string/recover_password"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:textSize="24sp" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="146dp"
-            android:layout_height="132dp"
+            android:layout_width="@dimen/img_width_height"
+            android:layout_height="@dimen/img_width_height"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             app:srcCompat="@drawable/splash" />
-
-
-
         <EditText
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
@@ -65,7 +62,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:background="@color/colorButton"
-            android:text="RESET PASSWORD"
+            android:text="@string/reset_password"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 

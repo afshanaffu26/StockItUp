@@ -9,23 +9,22 @@ import android.widget.Button;
 
 public class WelcomeActivity2 extends AppCompatActivity  implements View.OnClickListener {
 
-    Button buttonNext2;
+    Button buttonNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome2);
-        buttonNext2 = findViewById(R.id.buttonNext2);
-        buttonNext2.setOnClickListener(this);
+        buttonNext = findViewById(R.id.buttonNext);
+        buttonNext.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.buttonNext2:
+            case R.id.buttonNext:
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
-
         }
 
     }

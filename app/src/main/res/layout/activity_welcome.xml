@@ -51,7 +51,7 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
-                android:text="NEXT"
+                android:text="@string/next"
                 android:textColor="#51ca8e"
                 />
 
