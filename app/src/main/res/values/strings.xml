@@ -34,5 +34,18 @@ Upon Purchaser’s reasonable request from time to time, Supplier shall furnish 
     <string name="reset_password">RESET PASSWORD</string>
     <string name="full_name">Full Name</string>
     <string name="next">NEXT</string>
+    <string name="openNavDrawer">Navigation Bar open</string>
+    <string name="closeNavDrawer">Navigation Bar close</string>
+    <string name="stockitup_gmail_com">stockitup@gmail.com</string>
+    <string name="others">Others</string>
+    <string name="settings">Settings</string>
+    <string name="invite_friends">Invite Friends</string>
+    <string name="feedback">Feedback</string>
+    <string name="need_help">Need Help?</string>
+    <string name="log_out">Log Out</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="order_history">Order History</string>
+    <string name="offers">Offers</string>
 
 </resources>

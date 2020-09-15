@@ -1,4 +1,4 @@
-package com.example.stockitup;
+package com.example.stockitup.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.stockitup.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -58,15 +59,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if (mAuth.getCurrentUser()!=null){
-//            finish();
-//            startActivity(new Intent(this,MainActivity.class));
-//        }
-//
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mAuth.getCurrentUser()!=null){
+            finish();
+            startActivity(new Intent(this,HomeScreenActivity.class));
+        }
+
+    }
 
     /**
      * Called when a view has been clicked.
@@ -130,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (task.isSuccessful())
                 {
                     finish();
-                    Intent i= new Intent(LoginActivity.this,MainActivity.class);
+                    Intent i= new Intent(LoginActivity.this,HomeScreenActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     Toast.makeText(getApplicationContext(),"Logged In",Toast.LENGTH_SHORT).show();

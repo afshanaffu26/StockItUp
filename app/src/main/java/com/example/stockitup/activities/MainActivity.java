@@ -1,8 +1,10 @@
-package com.example.stockitup;
+package com.example.stockitup.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.stockitup.R;
 
 public class MainActivity extends AppCompatActivity {
 

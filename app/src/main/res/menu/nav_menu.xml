@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="@string/app_name">
+        <menu>
+            <item android:title="@string/home" android:icon="@drawable/home" android:id="@+id/menu1home"/>
+            <item android:title="@string/cart" android:icon="@drawable/cart" android:id="@+id/menu1cart"/>
+            <item android:title="@string/order_history" android:icon="@drawable/history" android:id="@+id/menu1history"/>
+            <item android:title="@string/offers" android:icon="@drawable/offers" android:id="@+id/menu1offers"/>
+        </menu>
+    </item>
+    <item android:title="@string/others">
+        <menu>
+            <item android:title="@string/settings" android:icon="@drawable/settings" android:id="@+id/menu2settings"/>
+            <item android:title="@string/invite_friends" android:icon="@drawable/share" android:id="@+id/menu2share"/>
+            <item android:title="@string/feedback" android:icon="@drawable/feedback" android:id="@+id/menu2feedback"/>
+            <item android:title="@string/need_help" android:icon="@drawable/help" android:id="@+id/menu2help"/>
+        </menu>
+    </item>
+    <item android:title="@string/log_out" android:icon="@drawable/logout" android:id="@+id/menu3logout"/>
+</menu>
