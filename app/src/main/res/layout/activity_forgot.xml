@@ -8,14 +8,6 @@
     android:orientation="vertical"
     tools:context=".ForgotActivity">
 
-    <ProgressBar
-        android:visibility="gone"
-        android:id="@+id/progressbar"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -54,7 +46,6 @@
             android:ems="10"
             android:inputType="textEmailAddress" />
 
-
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="300dp"
@@ -65,8 +56,13 @@
             android:text="@string/reset_password"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
-
     </LinearLayout>
 
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progressbar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
