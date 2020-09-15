@@ -1,19 +1,35 @@
 package com.example.stockitup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+/**
+ * This class manages user authentication
+ */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView txtSignUp;
     TextView txt_recover_password;
     Button btnLogin;
+    FirebaseAuth mAuth;
+    EditText editEmail,editPassword;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +49,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
 
+        mAuth = FirebaseAuth.getInstance();
+
+        editEmail=(EditText) findViewById(R.id.editEmail);
+        editPassword=(EditText) findViewById(R.id.editPassword);
+        progressBar=(ProgressBar) findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.GONE);
+
     }
 
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if (mAuth.getCurrentUser()!=null){
+//            finish();
+//            startActivity(new Intent(this,MainActivity.class));
+//        }
+//
+//    }
+
+    /**
+     * Called when a view has been clicked.
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId())
@@ -46,8 +83,63 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(this,ForgotActivity.class));
                 break;
             case R.id.btnLogin:
-                startActivity(new Intent(this,MainActivity.class));
+                userLogin();
                 break;
         }
+    }
+
+    /**
+     * This method is used to login to the application with provided email and password.
+     * Email, Password are mandatory
+     */
+    private void userLogin() {
+
+        final String email= editEmail.getText().toString().trim();
+        String password= editPassword.getText().toString().trim();
+
+        if(email.isEmpty())
+        {
+            editEmail.setError("Email is required");
+            editEmail.requestFocus();
+            return;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            editEmail.setError("Please enter valid email");
+            editEmail.requestFocus();
+            return;
+        }
+        if(password.isEmpty())
+        {
+            editPassword.setError("Password is required");
+            editPassword.requestFocus();
+            return;
+        }
+        if(password.length()<6)
+        {
+            editPassword.setError("Minimum length of password should be 6");
+            editPassword.requestFocus();
+            return;
+        }
+        progressBar.setVisibility(View.VISIBLE);
+
+        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                progressBar.setVisibility(View.GONE);
+
+                if (task.isSuccessful())
+                {
+                    finish();
+                    Intent i= new Intent(LoginActivity.this,MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    Toast.makeText(getApplicationContext(),"Logged In",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
