@@ -37,9 +37,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        String appName = getApplicationContext().getResources().getString(R.string.app_name);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("StockItUp");
+        getSupportActionBar().setTitle(appName);
 
         txtSignUp = findViewById(R.id.txtSignUp);
         txtSignUp.setOnClickListener(this);

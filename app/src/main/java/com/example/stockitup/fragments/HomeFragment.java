@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.example.stockitup.activities.CategoryItemsActivity;
 import com.example.stockitup.R;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
@@ -158,7 +158,9 @@ public class HomeFragment extends Fragment {
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent intent = new Intent(view.getContext(), CategoryItemsActivity.class);
+                        intent.putExtra("name", model.getName());
+                        startActivity(intent);
                     } });
             }
         };

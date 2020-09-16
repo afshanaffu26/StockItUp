@@ -79,9 +79,10 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        String appName = getApplicationContext().getResources().getString(R.string.app_name);
         toolbar=findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("StockItUp");
+        getSupportActionBar().setTitle(appName);
 
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);

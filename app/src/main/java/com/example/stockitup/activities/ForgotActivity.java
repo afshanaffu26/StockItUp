@@ -37,9 +37,9 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
         Toolbar toolbar = findViewById(R.id.toolbar);
-
+        String appName = getApplicationContext().getResources().getString(R.string.app_name);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("StockItUp");
+        getSupportActionBar().setTitle(appName);
         //display back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
