@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.stockitup.activities.CategoryItemsActivity;
 import com.example.stockitup.R;
+import com.example.stockitup.activities.ItemDescriptionActivity;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -34,7 +35,7 @@ import com.squareup.picasso.Picasso;
  */
 public class HomeFragment extends Fragment {
 
-    String categoryDocumentId;
+    String categoryDocumentId,documentId;
     FirebaseFirestore firebaseFirestore;
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView,recyclerViewCategory;
@@ -129,7 +130,14 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void
                     onClick(View view) {
-
+                        Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
+                        intent.putExtra("name", model.getName());
+                        intent.putExtra("image", model.getImage());
+                        intent.putExtra("price", model.getPrice());
+                        intent.putExtra("desc", model.getDesc());
+                        documentId = getSnapshots().getSnapshot(position).getId();
+                        intent.putExtra("documentId", documentId);
+                        startActivity(intent);
                     } });
             }
         };

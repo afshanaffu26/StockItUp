@@ -31,7 +31,7 @@ public class CategoryItemsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String category ="";
     TextView txtCategory;
-    String categoryDocumentId;
+    String categoryDocumentId,documentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,15 @@ public class CategoryItemsActivity extends AppCompatActivity {
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
+                        intent.putExtra("category", category);
+                        intent.putExtra("name", model.getName());
+                        intent.putExtra("image", model.getImage());
+                        intent.putExtra("price", model.getPrice());
+                        intent.putExtra("desc", model.getDesc());
+                        documentId = getSnapshots().getSnapshot(position).getId();
+                        intent.putExtra("documentId", documentId);
+                        startActivity(intent);
                     } });
             }
         };
