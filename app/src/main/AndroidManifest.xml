@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.PaymentActivity"></activity>
-        <activity android:name=".AddressActivity" />
+        <activity android:name=".activities.AddressActivity" />
         <activity android:name=".activities.ItemDescriptionActivity" />
         <activity android:name=".activities.CategoryItemsActivity" />
         <activity android:name=".activities.HomeScreenActivity" />

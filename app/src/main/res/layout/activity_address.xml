@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddressActivity">
+    tools:context=".activities.AddressActivity">
 
     <include
         android:id="@+id/toolbar"
