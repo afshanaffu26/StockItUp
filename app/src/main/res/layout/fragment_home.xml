@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Popular Items"
+                android:text="Essential Ingredients"
                 android:textColor="@color/colorMain"
                 android:textSize="18sp"
                 android:textStyle="bold" />

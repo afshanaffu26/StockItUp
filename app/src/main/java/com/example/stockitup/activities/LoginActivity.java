@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         if (mAuth.getCurrentUser()!=null){
             finish();
-            startActivity(new Intent(this,HomeScreenActivity.class));
+            userLoginSuccess();
         }
 
     }
@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     finish();
                     Intent i= new Intent(LoginActivity.this,HomeScreenActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
+                    userLoginSuccess();
                     Toast.makeText(getApplicationContext(),"Logged In",Toast.LENGTH_SHORT).show();
                 }
                 else
@@ -143,4 +143,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+
+    private void userLoginSuccess() {
+        String user = getApplicationContext().getResources().getString(R.string.stockitup_gmail_com);
+        if (mAuth.getCurrentUser().getEmail().equalsIgnoreCase(user))
+            startActivity(new Intent(this,AdminDashboardActivity.class));
+        else
+            startActivity(new Intent(this,HomeScreenActivity.class));
+    }
+
 }

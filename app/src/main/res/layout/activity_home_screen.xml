@@ -20,25 +20,10 @@
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 android:background="@color/colorPrimary"/>
-            <!--
-              android:background="@android:color/white"/>
-    -->
         </com.google.android.material.appbar.AppBarLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <!--            <com.google.android.material.bottomnavigation.BottomNavigationView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="56dp"-->
-            <!--                android:layout_alignParentBottom="true"-->
-            <!--                app:itemBackground="@color/colorPrimary"-->
-            <!--                app:itemIconTint="@color/nav_item_colors"-->
-            <!--                app:itemTextColor="@color/nav_item_colors"-->
-            <!--                android:id="@+id/main_nav"-->
-            <!--                app:menu="@menu/nav_items_bottom">-->
-            <!--            </com.google.android.material.bottomnavigation.BottomNavigationView>-->
-            <!--            android:layout_above="@id/main_nav"-->
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -46,9 +31,7 @@
                 android:layout_marginTop="?attr/actionBarSize"
                 android:id="@+id/main_frame">
             </FrameLayout>
-
         </RelativeLayout>
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.navigation.NavigationView
         android:background="@color/colorWhite"

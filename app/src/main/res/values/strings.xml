@@ -30,13 +30,14 @@ c. that are otherwise specified or agreed to in writing. \n\n
 Upon Purchaser’s request, Supplier shall furnish to Purchaser, before or upon delivery of the Products, a copy of the results of, and a certificate of analysis with respect to, each test. Supplier shall make a record of the date, time and results of each test and the testing procedure used and shall retain all inspection and test records for two years after the Products are delivered to Purchaser or for any reasonable additional period that Purchaser specifies. \n\n
 Upon Purchaser’s reasonable request from time to time, Supplier shall furnish copies of the records to Purchaser at no charge. Additionally, Supplier shall cause to be performed, at its sole expense, all third-party testing Purchaser may reasonably request to determine whether Products provided to Purchaser under the Agreement conform to the standards, specifications and other requirements of the Agreement.
     </string>
+
     <string name="recover_password">Recover Password</string>
     <string name="reset_password">RESET PASSWORD</string>
     <string name="full_name">Full Name</string>
     <string name="next">NEXT</string>
     <string name="openNavDrawer">Navigation Bar open</string>
     <string name="closeNavDrawer">Navigation Bar close</string>
-    <string name="stockitup_gmail_com">stockitup@gmail.com</string>
+    <string name="stockitup_gmail_com">teamstockitup@gmail.com</string>
     <string name="others">Others</string>
     <string name="settings">Settings</string>
     <string name="invite_friends">Invite Friends</string>
