@@ -34,7 +34,7 @@ import com.squareup.picasso.Picasso;
  */
 public class HomeFragment extends Fragment {
 
-    String documentId;
+    String categoryDocumentId;
     FirebaseFirestore firebaseFirestore;
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView,recyclerViewCategory;
@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull HomeFragment.CategoriesViewHolder holder, int position, @NonNull final CategoriesModel model) {
+            protected void onBindViewHolder(@NonNull HomeFragment.CategoriesViewHolder holder, final int position, @NonNull final CategoriesModel model) {
                 holder.txtName.setText(model.getName());
                 Picasso.get().load(model.getImage()).into(holder.imageView);
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +160,8 @@ public class HomeFragment extends Fragment {
                     public void onClick(View view) {
                         Intent intent = new Intent(view.getContext(), CategoryItemsActivity.class);
                         intent.putExtra("name", model.getName());
+                        categoryDocumentId = getSnapshots().getSnapshot(position).getId();
+                        intent.putExtra("categoryDocumentId", categoryDocumentId);
                         startActivity(intent);
                     } });
             }

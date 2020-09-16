@@ -4,6 +4,7 @@ public class CategoryItemsModel {
     String name;
     String image;
 
+
     public CategoryItemsModel() {
     }
 
