@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,9 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.fragments.CartFragment;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -37,6 +41,8 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
     FirebaseFirestore firebaseFirestore;
     String name,image,price,quantity,id,desc,documentId;
     Spinner spinner;
+    FloatingActionButton floatingActionButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +59,17 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         txtPrice = findViewById(R.id.price);
         txtDesc = findViewById(R.id.txtDesc);
 
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
+//                i.putExtra("screen","cart");
+//                startActivity(i);
+                startActivity(new Intent(getApplicationContext(), CartActivity.class));
 
+            }
+        });
         String appName = getApplicationContext().getResources().getString(R.string.app_name);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,6 +91,11 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+
+        if (getIntent().getStringExtra("screen") == null )
+            floatingActionButton.setVisibility(View.VISIBLE);
+        else if (getIntent().getStringExtra("screen").equalsIgnoreCase("cart"))
+            floatingActionButton.setVisibility(View.GONE);
 
         name = getIntent().getStringExtra("name");
         image = getIntent().getStringExtra("image");

@@ -29,7 +29,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text="South Special Dosa"
-            android:textColor="@color/colorMain" />
+            android:textColor="@color/colorText" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -134,7 +134,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp"
-                    android:background="@color/colorMain"
+                    android:background="@color/colorButton"
                     android:textSize="18sp"
                     android:text="@string/sign_up"
                     android:textColor="#FFFFFF"

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.stockitup.activities.CartActivity;
 import com.example.stockitup.activities.CategoryItemsActivity;
 import com.example.stockitup.R;
 import com.example.stockitup.activities.ItemDescriptionActivity;
@@ -93,11 +94,8 @@ public class HomeFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CartFragment cartFragment = new CartFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup)getView().getParent()).getId(), cartFragment, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit();
+
+                startActivity(new Intent(getContext(), CartActivity.class));
             }
         });
 

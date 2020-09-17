@@ -11,10 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-    <TextView
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <TextView
         android:id="@+id/txtCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +24,7 @@
         android:layout_margin="30dp"
         android:gravity="center"
         android:text="Category Items"
-        android:textColor="@color/colorMain"
+        android:textColor="@color/colorText"
         android:textSize="20sp"
         android:textStyle="bold" />
     <androidx.core.widget.NestedScrollView
@@ -53,4 +55,18 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/colorMain"
+        android:clickable="true"
+        android:src="@drawable/cart_white" />
 </RelativeLayout>
