@@ -3,7 +3,7 @@
     <item android:title="@string/app_name">
         <menu>
             <item android:title="@string/home" android:icon="@drawable/home" android:id="@+id/menu1home"/>
-            <item android:title="@string/cart" android:icon="@drawable/cart" android:id="@+id/menu1cart"/>
+<!--            <item android:title="@string/cart" android:icon="@drawable/cart" android:id="@+id/menu1cart"/>-->
             <item android:title="@string/order_history" android:icon="@drawable/history" android:id="@+id/menu1history"/>
             <item android:title="@string/offers" android:icon="@drawable/offers" android:id="@+id/menu1offers"/>
         </menu>

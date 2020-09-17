@@ -1,37 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context=".fragments.OrderHistoryFragment">
-    <TextView
-        android:id="@+id/txtEmptyOrders"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="No orders yet!" />
+    android:layout_height="wrap_content"
+    style="@style/CardView.Light"
+    android:layout_margin="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp">
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
+        android:paddingBottom="20dp"
+        android:paddingTop="10dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <ScrollView
+        <!--            <TextView-->
+        <!--                android:id="@+id/txtOrderId"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginLeft="10dp"-->
+        <!--                android:text="Order Id:"-->
+        <!--                android:textColor="@color/myTextColor"-->
+        <!--                android:textSize="18dp"/>-->
+        <TextView
+            android:id="@+id/txtOrderDate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/recyclerView"/>
-            </RelativeLayout>
-        </ScrollView>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Ordered On:"
+            android:textColor="@color/colorText"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/txtSubTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Subtotal: 55$"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/txtTax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Tax: 5$"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/txtDeliveryCharge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="DeliveryCharge: 5$"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/txtTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Total: 70$"
+            android:textSize="16dp" />
+        <TextView
+            android:id="@+id/txtAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Address:"
+            android:textSize="16dp"/>
     </LinearLayout>
-</FrameLayout>
+
+    <ImageButton
+        android:id="@+id/imgNext"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|center"
+        android:layout_weight="2"
+        android:background="@color/colorWhite"
+        android:src="@drawable/navigate_next_24" />
+</androidx.cardview.widget.CardView>

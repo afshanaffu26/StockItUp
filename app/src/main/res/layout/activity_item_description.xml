@@ -50,7 +50,7 @@
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:text="Pasta"
-                        android:textColor="@color/colorMain" />
+                        android:textColor="@color/colorText" />
                     <TextView
                         android:id="@+id/price"
                         android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
                         android:layout_marginLeft="10dp"
                         android:textSize="18sp"
                         android:text="Price : 8 $"
-                        android:textColor="@color/colorMain" />
+                        android:textColor="@color/colorText" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -72,7 +72,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:text="@string/item_description"
-                android:textColor="@color/colorMain" />
+                android:textColor="@color/colorText" />
 
             <TextView
                 android:id="@+id/txtDesc"
@@ -98,7 +98,7 @@
                     android:textSize="18sp"
                     android:text="@string/quantity"
                     android:layout_gravity="center_vertical"
-                    android:textColor="@color/colorMain" />
+                    android:textColor="@color/colorText" />
                 <Spinner
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/colorMain"
+                android:background="@color/colorButton"
                 android:text="@string/add_to_cart"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
@@ -130,4 +130,18 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_gravity="right|bottom|end"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp"
+        android:backgroundTint="@color/colorMain"
+        android:clickable="true"
+        android:src="@drawable/cart_white" />
 </RelativeLayout>

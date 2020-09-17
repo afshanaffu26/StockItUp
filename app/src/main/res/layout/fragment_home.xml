@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Essential Ingredients"
-                android:textColor="@color/colorMain"
+                android:textColor="@color/colorText"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -39,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Categories"
-                android:textColor="@color/colorMain"
+                android:textColor="@color/colorText"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -55,9 +61,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp"
                 android:text="Fresh ingredients always!!"
-                android:textColor="@color/colorMain"
+                android:textColor="@color/colorText"
                 android:textSize="18sp" />
 
             <TextView
@@ -67,20 +74,24 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:text="Best discounts ever.."
-                android:textColor="@color/colorMain"
+                android:textColor="@color/colorText"
                 android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
+</LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom|end"
-        android:layout_marginBottom="50dp"
-        android:layout_marginRight="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="40dp"
         android:backgroundTint="@color/colorMain"
         android:clickable="true"
         android:src="@drawable/cart_white" />
-
+</RelativeLayout>
 </FrameLayout>

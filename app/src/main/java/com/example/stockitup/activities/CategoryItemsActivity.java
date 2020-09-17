@@ -16,10 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.fragments.CartFragment;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
@@ -32,6 +34,8 @@ public class CategoryItemsActivity extends AppCompatActivity {
     String category ="";
     TextView txtCategory;
     String categoryDocumentId,documentId;
+    FloatingActionButton floatingActionButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,17 @@ public class CategoryItemsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
+//                i.putExtra("screen","cart");
+//                startActivity(i);
+                startActivity(new Intent(getApplicationContext(), CartActivity.class));
 
+            }
+        });
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);

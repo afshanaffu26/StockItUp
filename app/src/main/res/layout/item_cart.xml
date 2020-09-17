@@ -35,15 +35,16 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:text="South Special Dosa"
-                android:textColor="@color/colorMain" />
+                android:textColor="@color/colorText" />
+
             <TextView
                 android:id="@+id/txtPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textSize="18dp"
                 android:text="Price: 5$"
-                android:textColor="@color/colorMain" />
+                android:textColor="@color/colorText"
+                android:textSize="18dp" />
             <TextView
                 android:id="@+id/txtQuantity"
                 android:layout_width="wrap_content"
@@ -51,7 +52,7 @@
                 android:layout_marginLeft="10dp"
                 android:textSize="18dp"
                 android:text="Qty: 2"
-                android:textColor="@color/colorMain" />
+                android:textColor="@color/colorText" />
 
         </LinearLayout>
 

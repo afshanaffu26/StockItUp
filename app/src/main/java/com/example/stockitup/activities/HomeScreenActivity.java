@@ -13,6 +13,7 @@ package com.example.stockitup.activities;
         import android.os.Bundle;
         import android.view.MenuItem;
         import android.view.View;
+        import android.view.ViewGroup;
         import android.widget.FrameLayout;
         import android.widget.ImageView;
         import android.widget.TextView;
@@ -27,6 +28,7 @@ package com.example.stockitup.activities;
         import com.example.stockitup.fragments.InviteFragment;
         import com.example.stockitup.fragments.OffersFragment;
         import com.example.stockitup.fragments.SettingsFragment;
+        import com.google.android.material.floatingactionbutton.FloatingActionButton;
         import com.google.android.material.navigation.NavigationView;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
@@ -37,7 +39,7 @@ package com.example.stockitup.activities;
 public class HomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     FirebaseAuth mAuth;
-
+   // FloatingActionButton floatingActionButton;
     private Toolbar toolbar;
     private boolean isInFront;
     private DrawerLayout drawerLayout;
@@ -105,8 +107,18 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
 //        searchFragment = new SearchFragment();
         mAuth = FirebaseAuth.getInstance();
         setUserDetails();
-
-        setFragment(homeFragment);
+//        floatingActionButton = findViewById(R.id.floatingActionButton);
+//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                CartFragment cartFragment = new CartFragment();
+//                setFragment(cartFragment);
+//            }
+//        });
+       // if (getIntent().getStringExtra("screen") == null)
+            setFragment(homeFragment);
+//        else if(getIntent().getStringExtra("screen").equalsIgnoreCase("cart"))
+//            setFragment(cartFragment);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -167,10 +179,10 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
                 setFragment(homeFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
-            case R.id.menu1cart:
-                setFragment(cartFragment);
-                drawerLayout.closeDrawer(GravityCompat.START);
-                break;
+//            case R.id.menu1cart:
+//                setFragment(cartFragment);
+//                drawerLayout.closeDrawer(GravityCompat.START);
+//                break;
             case R.id.menu1history:
                 setFragment(orderHistoryFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);

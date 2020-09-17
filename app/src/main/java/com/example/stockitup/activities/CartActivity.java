@@ -1,13 +1,13 @@
-package com.example.stockitup.fragments;
-
-import android.content.Intent;
-import android.os.Bundle;
+package com.example.stockitup.activities;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.stockitup.activities.AddressActivity;
 import com.example.stockitup.R;
-import com.example.stockitup.activities.ItemDescriptionActivity;
+import com.example.stockitup.fragments.CartFragment;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -36,13 +35,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CartFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class CartFragment extends Fragment implements View.OnClickListener {
-
+public class CartActivity extends AppCompatActivity implements View.OnClickListener {
     String uid;
     ProgressBar progressBar;
     Button btnCheckout;
@@ -54,84 +47,54 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     TextView txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtEmptyCart;
     double subTotal,deliveryCharge,tax,total;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public CartFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CartFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CartFragment newInstance(String param1, String param2) {
-        CartFragment fragment = new CartFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        setContentView(R.layout.activity_cart);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_cart, container, false);
-        linearLayout = v.findViewById(R.id.linearLayout);
-        txtSubTotal = v.findViewById(R.id.txtSubTotal);
-        txtTax = v.findViewById(R.id.txtTax);
-        txtDeliveryCharge = v.findViewById(R.id.txtDeliveryCharge);
-        txtTotal = v.findViewById(R.id.txtTotal);
-        txtEmptyCart = v.findViewById(R.id.txtEmptyCart);
-        progressBar = v.findViewById(R.id.progressbar);
-        btnCheckout = v.findViewById(R.id.btnCheckout);
-        recyclerView = v.findViewById(R.id.recyclerView);
+        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        linearLayout = findViewById(R.id.linearLayout);
+        txtSubTotal = findViewById(R.id.txtSubTotal);
+        txtTax = findViewById(R.id.txtTax);
+        txtDeliveryCharge = findViewById(R.id.txtDeliveryCharge);
+        txtTotal = findViewById(R.id.txtTotal);
+        txtEmptyCart = findViewById(R.id.txtEmptyCart);
+        progressBar = findViewById(R.id.progressbar);
+        btnCheckout = findViewById(R.id.btnCheckout);
+        recyclerView = findViewById(R.id.recyclerView);
 
         btnCheckout.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         loadAndCalculateCartTotal();
+        setCartData();
 
+    }
+
+    private void setCartData() {
         //Query
         Query query = firebaseFirestore.collection("Cart").document("cart"+uid).collection("cart").orderBy("name",Query.Direction.ASCENDING);
         //RecyclerOptions
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query,CategoryItemsModel.class)
                 .build();
-        //progressBar.setVisibility(View.VISIBLE);
-        adapter = new FirestoreRecyclerAdapter<CategoryItemsModel, CartFragment.CartViewHolder>(options) {
+        adapter = new FirestoreRecyclerAdapter<CategoryItemsModel, CartActivity.CartViewHolder>(options) {
             @NonNull
             @Override
-            public CartFragment.CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public CartActivity.CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart,parent,false);
-                return new CartFragment.CartViewHolder(view);
+                return new CartActivity.CartViewHolder(view);
             }
             @Override
-            protected void onBindViewHolder(@NonNull CartFragment.CartViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
+            protected void onBindViewHolder(@NonNull CartActivity.CartViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
+                progressBar.setVisibility(View.VISIBLE);
                 holder.txtName.setText(model.getName());
                 holder.txtQuantity.setText("Qty: "+model.getQuantity());
                 holder.txtPrice.setText("Price: "+model.getPrice()+"$");
@@ -147,20 +110,17 @@ public class CartFragment extends Fragment implements View.OnClickListener {
                                 .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                //loadAndCalculateCartTotal();
+                                loadAndCalculateCartTotal();
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(getContext(),"Item removed from Cart",Toast.LENGTH_SHORT).show();
-                                CartFragment cartFragment = new CartFragment();
-                                getActivity().getSupportFragmentManager().beginTransaction()
-                                        .replace(((ViewGroup)getView().getParent()).getId(), cartFragment, "findThisFragment")
-                                        .addToBackStack(null)
-                                        .commit();                            }
+                                adapter.notifyDataSetChanged();
+                                Toast.makeText(getApplicationContext(),"Item removed from Cart",Toast.LENGTH_SHORT).show();
+                            }
                         })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(getContext(),"Error: "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }
@@ -175,6 +135,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
                         intent.putExtra("price", model.getPrice());
                         intent.putExtra("desc", model.getDesc());
                         intent.putExtra("quantity",model.getQuantity());
+                        intent.putExtra("screen","cart");
                         documentId = getSnapshots().getSnapshot(position).getId();
                         intent.putExtra("documentId",documentId);
                         startActivity(intent);
@@ -188,8 +149,6 @@ public class CartFragment extends Fragment implements View.OnClickListener {
         recyclerView.setHasFixedSize(false);
         adapter.startListening();
         recyclerView.setAdapter(adapter);
-
-        return v;
     }
 
     /**
@@ -205,8 +164,8 @@ public class CartFragment extends Fragment implements View.OnClickListener {
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                       // if(task.getResult().size() == 0)
-                            subTotal = 0.0;
+                        // if(task.getResult().size() == 0)
+                        subTotal = 0.0;
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot documentSnapshot : task.getResult()) {
                                 CategoryItemsModel cuisineItemsModel = documentSnapshot.toObject(CategoryItemsModel.class);
@@ -233,7 +192,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(@NonNull Exception e) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(getContext(),"Error: "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -261,7 +220,7 @@ public class CartFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCheckout:
-                Intent intent = new Intent(getContext(),AddressActivity.class);
+                Intent intent = new Intent(getApplicationContext(),AddressActivity.class);
                 intent.putExtra("subTotal", ""+subTotal);
                 intent.putExtra("tax", ""+tax);
                 intent.putExtra("deliveryCharge", ""+deliveryCharge);
@@ -291,5 +250,19 @@ public class CartFragment extends Fragment implements View.OnClickListener {
             linearLayout = itemView.findViewById(R.id.linearLayout);
             imgDeleteBtn = itemView.findViewById(R.id.imgDeleteBtn);
         }
+    }
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
