@@ -33,7 +33,6 @@
                 android:layout_alignParentLeft="true">
 
                 <TextView
-                    android:id="@+id/txt_payment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
@@ -49,37 +48,19 @@
                     android:layout_height="110dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-                    app:srcCompat="@drawable/splash" />
-
-                <TextView
-                    android:id="@+id/textName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="1dp"
-                    android:text="Name on the card"
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp" />
+                    app:srcCompat="@drawable/app_icon" />
 
                 <EditText
-                    android:id="@+id/name"
+                    android:id="@+id/editName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Name on the card"
+                    android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:inputType="text" />
-
-
-                <TextView
-                    android:id="@+id/textcard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Credit/Debit Card Number"
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/editEmail"
@@ -87,46 +68,35 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Credit/Debit Card Number"
+                    android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:inputType="number" />
 
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:text="CVV"
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp" />
-
                 <EditText
-                    android:id="@+id/editcvv"
+                    android:id="@+id/editCVV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="CVV"
+                    android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:inputType="numberPassword" />
 
-                <TextView
-                    android:id="@+id/textmonthyear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Exp Month/Year"
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp" />
-
                 <EditText
-                    android:id="@+id/monthyear"
+                    android:id="@+id/editExpDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:hint="Exp Month/Year"
+                    android:background="@drawable/edit_text_background"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="date" />
 
                 <Button
                     android:id="@+id/btnPay"

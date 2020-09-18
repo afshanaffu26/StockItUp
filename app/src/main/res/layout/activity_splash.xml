@@ -22,7 +22,7 @@
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/splash" />
+            app:srcCompat="@drawable/app_icon" />
 
         <TextView
             android:id="@+id/txtAppName"

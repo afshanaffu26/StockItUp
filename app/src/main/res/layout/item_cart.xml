@@ -22,7 +22,7 @@
             android:layout_margin="10dp"
             android:layout_gravity="center_vertical"
             android:scaleType="centerCrop"
-            android:src="@drawable/splash" />
+            android:src="@drawable/app_icon" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,7 +34,7 @@
                 android:layout_marginLeft="10dp"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:text="South Special Dosa"
+                android:text="Pasta"
                 android:textColor="@color/colorText" />
 
             <TextView

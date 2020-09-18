@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
-import com.example.stockitup.fragments.CartFragment;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -220,7 +219,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCheckout:
-                Intent intent = new Intent(getApplicationContext(),AddressActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
                 intent.putExtra("subTotal", ""+subTotal);
                 intent.putExtra("tax", ""+tax);
                 intent.putExtra("deliveryCharge", ""+deliveryCharge);

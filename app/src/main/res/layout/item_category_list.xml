@@ -20,7 +20,7 @@
             android:layout_height="80dp"
             android:layout_gravity="center_vertical"
             android:scaleType="centerCrop"
-            android:src="@drawable/splash" />
+            android:src="@drawable/app_icon" />
 
         <TextView
             android:id="@+id/txtName"

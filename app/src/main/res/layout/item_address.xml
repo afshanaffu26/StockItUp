@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    style="@style/CardView.Light"
+    android:layout_margin="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginStart="8dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtAddressName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="Home"
+                android:textColor="@color/colorText"
+                android:layout_marginStart="10dp" />
+
+            <TextView
+                android:id="@+id/txtStreetAndApt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="415 Rue Bernard"
+                android:textColor="@color/colorText"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp" />
+            <TextView
+                android:id="@+id/txtCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Montreal"
+                android:textColor="@color/colorText"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp" />
+            <TextView
+                android:id="@+id/txtProvince"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:text="Quebec"
+                android:textColor="@color/colorText"
+                android:layout_marginStart="10dp" />
+            <TextView
+                android:id="@+id/txtPincode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:text="HXV2XX"
+                android:textColor="@color/colorText"
+                android:layout_marginStart="10dp" />
+        </LinearLayout>
+    <ImageButton
+        android:id="@+id/imgBtnEditAddress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|end|top"
+        android:background="@color/colorWhite"
+        app:srcCompat="@drawable/edit_24"
+        tools:ignore="VectorDrawableCompat" />
+</androidx.cardview.widget.CardView>

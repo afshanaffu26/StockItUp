@@ -110,9 +110,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 txtVerifyUser.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        progressBar.setVisibility(View.VISIBLE);
                         user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                progressBar.setVisibility(View.GONE);
                                 Toast.makeText(ProfileActivity.this,"Verification Email Sent",Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -154,11 +156,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private void saveUserInfoUpdateName() {
 
         displayName=editName.getText().toString();
-//        if(displayName.isEmpty()){
-//            editName.setError("Name required");
-//            editName.requestFocus();
-//            return;
-//        }
+        if(displayName.isEmpty()){
+            editName.setError("Name required");
+            editName.requestFocus();
+            return;
+        }
         btnSave.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();

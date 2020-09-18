@@ -20,7 +20,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/splash" />
+            android:src="@drawable/app_icon" />
         <TextView
             android:id="@+id/txtName"
             android:layout_width="match_parent"
