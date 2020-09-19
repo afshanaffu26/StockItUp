@@ -18,6 +18,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
         buttonNext  = findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
         boolean isFirstTime = MyPreferences.isFirst(WelcomeActivity.this);
@@ -25,20 +26,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
         }
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), WelcomeActivity2.class));
-                finish();
-            }
-        });     }
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buttonNext:
                 startActivity(new Intent(getApplicationContext(), WelcomeActivity2.class));
+                finish();
                 break;
-
         }
     }
 }

@@ -103,9 +103,9 @@
                         android:id="@+id/spinner"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="15dp"
                         android:layout_gravity="center_vertical"
-                        android:background="#efefef"
+                        android:background="@drawable/edit_text_background"
                         android:layout_marginRight="15dp"
                         />
                 </LinearLayout>

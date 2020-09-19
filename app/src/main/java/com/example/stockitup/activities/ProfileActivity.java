@@ -52,15 +52,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG = "ProfileActivity";
     int TAKE_IMAGE_CODE = 10001;
 
-    /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -290,5 +281,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             });
         }
     }
-
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

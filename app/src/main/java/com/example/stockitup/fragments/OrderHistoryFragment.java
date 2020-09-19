@@ -15,10 +15,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.activities.ItemDescriptionActivity;
+import com.example.stockitup.activities.OrderHistoryListActivity;
+import com.example.stockitup.adapters.CartAdapter;
+import com.example.stockitup.adapters.OrderHistoryAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
+import com.example.stockitup.listeners.OnItemClickListener;
+import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.models.OrdersModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -80,7 +88,6 @@ public class OrderHistoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_order_history, container, false);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -89,28 +96,32 @@ public class OrderHistoryFragment extends Fragment {
         txtEmptyOrders = v.findViewById(R.id.txtEmptyOrders);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        setRecyclerViewData();
+
+        return v;
+    }
+
+    private void setRecyclerViewData() {
         Query query = firebaseFirestore.collection("Orders").document("orders"+uid).collection("orders");
         FirestoreRecyclerOptions<OrdersModel> options = new FirestoreRecyclerOptions.Builder<OrdersModel>()
                 .setQuery(query,OrdersModel.class)
                 .build();
-        adapter = new FirestoreRecyclerAdapter<OrdersModel, OrderHistoryFragment.OrderHistoryViewHolder>(options) {
-
-            @NonNull
+        final OrderHistoryAdapter adapter = new OrderHistoryAdapter(options);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        adapter.startListening();
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public OrderHistoryFragment.OrderHistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_history,parent,false);
-                return new OrderHistoryFragment.OrderHistoryViewHolder(view);
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
+                Intent intent = new Intent(getContext(), OrderHistoryListActivity.class);
+                startActivity(intent);
             }
-
+        });
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
             @Override
-            protected void onBindViewHolder(@NonNull OrderHistoryFragment.OrderHistoryViewHolder holder, final int position, @NonNull final OrdersModel model) {
-                holder.txtOrderDate.setText("Ordered On: "+model.getDate());
-                holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal());
-                holder.txtTax.setText("Tax: "+model.getTax());
-                holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge());
-                holder.txtTotal.setText("Total: "+model.getTotal());
-                holder.txtAddress.setText("Address: "+model.getAddress());
+            public void onDataChanged() {
                 if (adapter.getItemCount() != 0)
                 {
                     txtEmptyOrders.setVisibility(View.GONE);
@@ -121,35 +132,7 @@ public class OrderHistoryFragment extends Fragment {
                     txtEmptyOrders.setVisibility(View.VISIBLE);
                     linearLayout.setVisibility(View.GONE);
                 }
-                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                    } });
             }
-        };
-        recyclerView.setHasFixedSize(false);
-        adapter.startListening();
-        recyclerView.setAdapter(adapter);
-        return v;
-    }
-
-    /**
-     * This class binds the recycler view with item
-     * Subclass of {@link RecyclerView.ViewHolder}
-     */
-    private class OrderHistoryViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress;
-        private LinearLayout linearLayout;
-        public OrderHistoryViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
-            txtSubTotal = itemView.findViewById(R.id.txtSubTotal);
-            txtTax = itemView.findViewById(R.id.txtTax);
-            txtDeliveryCharge = itemView.findViewById(R.id.txtDeliveryCharge);
-            txtTotal = itemView.findViewById(R.id.txtTotal);
-            txtAddress = itemView.findViewById(R.id.txtAddress);
-            linearLayout = itemView.findViewById(R.id.linearLayout);
-        }
+        });
     }
 }

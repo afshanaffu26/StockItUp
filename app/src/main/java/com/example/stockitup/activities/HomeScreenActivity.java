@@ -13,7 +13,6 @@ package com.example.stockitup.activities;
         import android.os.Bundle;
         import android.view.MenuItem;
         import android.view.View;
-        import android.view.ViewGroup;
         import android.widget.FrameLayout;
         import android.widget.ImageView;
         import android.widget.TextView;
@@ -22,13 +21,11 @@ package com.example.stockitup.activities;
         import com.example.stockitup.fragments.HelpFragment;
         import com.example.stockitup.fragments.OrderHistoryFragment;
         import com.example.stockitup.fragments.FeedbackFragment;
-        import com.example.stockitup.fragments.CartFragment;
         import com.example.stockitup.fragments.HomeFragment;
         import com.example.stockitup.R;
         import com.example.stockitup.fragments.InviteFragment;
         import com.example.stockitup.fragments.OffersFragment;
         import com.example.stockitup.fragments.SettingsFragment;
-        import com.google.android.material.floatingactionbutton.FloatingActionButton;
         import com.google.android.material.navigation.NavigationView;
         import com.google.firebase.auth.FirebaseAuth;
         import com.google.firebase.auth.FirebaseUser;
@@ -39,22 +36,18 @@ package com.example.stockitup.activities;
 public class HomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     FirebaseAuth mAuth;
-   // FloatingActionButton floatingActionButton;
     private Toolbar toolbar;
     private boolean isInFront;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    //private BottomNavigationView mMainNav;
     private FrameLayout mMainFrame;
     private HomeFragment homeFragment;
-    private CartFragment cartFragment;
     private FeedbackFragment feedbackFragment;
     private InviteFragment inviteFragment;
     private OffersFragment offersFragment;
     private OrderHistoryFragment orderHistoryFragment;
     private SettingsFragment settingsFragment;
     private HelpFragment helpFragment;
-//    private SearchFragment searchFragment;
     private TextView drawerUsername,drawerAccount;
     private ImageView drawerImage;
 
@@ -89,7 +82,6 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
         mMainFrame=findViewById(R.id.main_frame);
-        //mMainNav=findViewById(R.id.main_nav);
 
         View headerView = navigationView.getHeaderView(0);
         drawerImage = (ImageView) headerView.findViewById(R.id.imageView2);
@@ -97,28 +89,16 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         drawerAccount = (TextView) headerView.findViewById(R.id.textView4);
 
         homeFragment = new HomeFragment();
-        cartFragment = new CartFragment();
         helpFragment = new HelpFragment();
         offersFragment = new OffersFragment();
         orderHistoryFragment = new OrderHistoryFragment();
         inviteFragment = new InviteFragment();
         settingsFragment = new SettingsFragment();
         feedbackFragment = new FeedbackFragment();
-//        searchFragment = new SearchFragment();
         mAuth = FirebaseAuth.getInstance();
+
         setUserDetails();
-//        floatingActionButton = findViewById(R.id.floatingActionButton);
-//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                CartFragment cartFragment = new CartFragment();
-//                setFragment(cartFragment);
-//            }
-//        });
-       // if (getIntent().getStringExtra("screen") == null)
-            setFragment(homeFragment);
-//        else if(getIntent().getStringExtra("screen").equalsIgnoreCase("cart"))
-//            setFragment(cartFragment);
+        setFragment(homeFragment);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
@@ -137,29 +117,11 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-//        mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch(item.getItemId()){
-//                    case R.id.nav_home:
-//                        setFragment(homeFragment);
-//                        return true;
-//                    case R.id.nav_world:
-//                        setFragment(searchFragment);
-//                        return true;
-//                    case R.id.nav_settings:
-//                        setFragment(settingsFragment);
-//                        return true;
-//                    default:
-//                        return false;
-//                }            }
-//        });
     }
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame,fragment);
         fragmentTransaction.commit();
-
     }
 
     /**
@@ -172,17 +134,9 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         int id=item.getItemId();
         switch(id){
             case R.id.menu1home:
-//                if (!isInFront)
-//                    startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-//                else
-//                    drawerLayout.closeDrawer(GravityCompat.START);
                 setFragment(homeFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
                 break;
-//            case R.id.menu1cart:
-//                setFragment(cartFragment);
-//                drawerLayout.closeDrawer(GravityCompat.START);
-//                break;
             case R.id.menu1history:
                 setFragment(orderHistoryFragment);
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -231,7 +185,6 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         FirebaseUser user = mAuth.getCurrentUser();
         drawerUsername.setText("");
         drawerAccount.setText("");
-        //drawerImage.setImageDrawable(R.drawable.menu);
         if (user != null) {
             if (user.getPhotoUrl() != null) {
                 Glide.with(this).load(user.getPhotoUrl().toString()).into(drawerImage);

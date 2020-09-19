@@ -24,22 +24,11 @@ import java.util.Map;
  * This class manages user address to proceed with order
  */
 public class AddAddressActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btnNext;
-    EditText editName,editApt,editProvince,editCity,editPostalID,editCountry;
-    String name,apt,province,city,postalID,country;
-    FirebaseFirestore firebaseFirestore;
-    String uid;
-    String subTotal,deliveryCharge,tax,total;
 
-    /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
+    private EditText editFullName,editAddressLine1,editAddressLine2,editProvince,editCity,editPostalID,editCountry,editPhone;
+    private FirebaseFirestore firebaseFirestore;
+    private String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,18 +39,20 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        btnNext = findViewById(R.id.btnNext);
+
+        Button btnNext = findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
-        editName = findViewById(R.id.editName);
-        editApt = findViewById(R.id.editApt);
+        editFullName = findViewById(R.id.editFullName);
+        editAddressLine1 = findViewById(R.id.editAddressLine1);
+        editAddressLine2 = findViewById(R.id.editAddressLine2);
         editProvince = findViewById(R.id.editProvince);
         editCity = findViewById(R.id.editCity);
         editPostalID = findViewById(R.id.editPostalID);
         editCountry = findViewById(R.id.editCountry);
+        editPhone = findViewById(R.id.editPhone);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
     }
 
@@ -82,23 +73,27 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
      * This method stores the provided address to database.
      */
     private void addAddress() {
-        name = editName.getText().toString();
-        apt = editApt.getText().toString();
+        String fullName,addressLine1,addressLine2,apt,province,city,postalID,country,phone;
+
+        fullName = editFullName.getText().toString();
+        addressLine1 = editAddressLine1.getText().toString();
+        addressLine2 = editAddressLine2.getText().toString();
         province = editProvince.getText().toString();
         city = editCity.getText().toString();
         postalID = editPostalID.getText().toString();
         country = editCountry.getText().toString();
+        phone = editPhone.getText().toString();
 
-        if(name.isEmpty())
+        if(fullName.isEmpty())
         {
-            editName.setError("Street name is required");
-            editName.requestFocus();
+            editFullName.setError("Full name is required");
+            editFullName.requestFocus();
             return;
         }
-        if(apt.isEmpty())
+        if(addressLine1.isEmpty())
         {
-            editApt.setError("Apt/Suit# is required");
-            editApt.requestFocus();
+            editAddressLine1.setError("Address Line 1 is required");
+            editAddressLine1.requestFocus();
             return;
         }
         if(city.isEmpty())
@@ -125,9 +120,18 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
             editPostalID.requestFocus();
             return;
         }
+        if(phone.isEmpty())
+        {
+            editPhone.setError("Telephone number is required");
+            editPhone.requestFocus();
+            return;
+        }
 
         Map<String, Object> address = new HashMap<>();
-        address.put("address", ""+name+" "+apt+" "+city+" "+province+" "+country+" "+postalID);
+        address.put("fullName", ""+fullName);
+        address.put("address", ""+addressLine1+" "+addressLine2+" "+city+" "+province+" "+country+" "+postalID);
+        address.put("phone", ""+phone);
+
         firebaseFirestore.collection("Address").document(uid).set(address)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -147,6 +151,8 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
      * Navigates to payment page to show break up of total amount being charged.
      */
     private void goToPayment() {
+        String subTotal,deliveryCharge,tax,total;
+
         Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
         subTotal = getIntent().getStringExtra("subTotal");
         tax = getIntent().getStringExtra("tax");
@@ -160,5 +166,13 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         startActivity(intent);
     }
 
-
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

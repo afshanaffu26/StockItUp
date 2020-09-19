@@ -58,12 +58,12 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/imgDeleteBtn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right|end|bottom"
-        android:background="@color/colorWhite"
-        app:srcCompat="@drawable/delete_forever_24"
-        tools:ignore="VectorDrawableCompat" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/imgDeleteBtn"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_gravity="right|end|bottom"-->
+<!--        android:background="@color/colorWhite"-->
+<!--        app:srcCompat="@drawable/delete_forever_24"-->
+<!--        tools:ignore="VectorDrawableCompat" />-->
 </androidx.cardview.widget.CardView>

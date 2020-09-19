@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
-import com.example.stockitup.fragments.CartFragment;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,33 +47,21 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_description);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
-        btnAddToCart = findViewById(R.id.btnAddToCart);
-        btnAddToCart.setOnClickListener(this);
-
-        imageView = findViewById(R.id.imageView);
-        txtName = findViewById(R.id.txtName);
-        txtPrice = findViewById(R.id.price);
-        txtDesc = findViewById(R.id.txtDesc);
-
-        floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
-//                i.putExtra("screen","cart");
-//                startActivity(i);
-                startActivity(new Intent(getApplicationContext(), CartActivity.class));
-
-            }
-        });
         String appName = getApplicationContext().getResources().getString(R.string.app_name);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        imageView = findViewById(R.id.imageView);
+        txtName = findViewById(R.id.txtName);
+        txtPrice = findViewById(R.id.price);
+        txtDesc = findViewById(R.id.txtDesc);
+        btnAddToCart = findViewById(R.id.btnAddToCart);
+        btnAddToCart.setOnClickListener(this);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(this);
         spinner = (Spinner) findViewById(R.id.spinner);
 
         // Spinner click listener
@@ -188,6 +174,9 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
             case R.id.btnAddToCart:
                 quantity = spinner.getSelectedItem().toString();
                 addItemToCart(name,image,desc,price,quantity);
+                break;
+            case R.id.floatingActionButton:
+                startActivity(new Intent(getApplicationContext(), CartActivity.class));
                 break;
         }
     }

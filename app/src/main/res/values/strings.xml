@@ -53,5 +53,6 @@ Upon Purchaser’s reasonable request from time to time, Supplier shall furnish 
     <string name="item_description">Description</string>
     <string name="quantity">Quantity:</string>
     <string name="add_to_cart">Add to Cart</string>
+    <string name="search">Search</string>
 
 </resources>

@@ -3,43 +3,43 @@ package com.example.stockitup.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.adapters.CartAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
+import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
+
     String uid;
     ProgressBar progressBar;
     Button btnCheckout;
-    FirebaseFirestore firebaseFirestore;
-    private FirestoreRecyclerAdapter adapter;
+    private FirebaseFirestore firebaseFirestore;
+    private CollectionReference collectionReference;
+    private CartAdapter adapter;
     RecyclerView recyclerView;
     LinearLayout linearLayout;
     String documentId;
@@ -69,91 +69,65 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         btnCheckout.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        collectionReference = firebaseFirestore.collection("Cart").document("cart"+uid).collection("cart");
 
-        loadAndCalculateCartTotal();
-        setCartData();
-
+        setRecyclerViewData();
     }
-
-    private void setCartData() {
-        //Query
-        Query query = firebaseFirestore.collection("Cart").document("cart"+uid).collection("cart").orderBy("name",Query.Direction.ASCENDING);
-        //RecyclerOptions
+    private void setRecyclerViewData() {
+        Query query = collectionReference.orderBy("name",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query,CategoryItemsModel.class)
                 .build();
-        adapter = new FirestoreRecyclerAdapter<CategoryItemsModel, CartActivity.CartViewHolder>(options) {
-            @NonNull
-            @Override
-            public CartActivity.CartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart,parent,false);
-                return new CartActivity.CartViewHolder(view);
-            }
-            @Override
-            protected void onBindViewHolder(@NonNull CartActivity.CartViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
-                progressBar.setVisibility(View.VISIBLE);
-                holder.txtName.setText(model.getName());
-                holder.txtQuantity.setText("Qty: "+model.getQuantity());
-                holder.txtPrice.setText("Price: "+model.getPrice()+"$");
-                Picasso.get().load(model.getImage()).into(holder.imageView);
-                loadAndCalculateCartTotal();
+        adapter = new CartAdapter(options);
 
-                holder.imgDeleteBtn.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        documentId = getSnapshots().getSnapshot(position).getId();
-                        progressBar.setVisibility(View.VISIBLE);
-                        firebaseFirestore.collection("Cart").document("cart"+uid).collection("cart").document(documentId)
-                                .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                loadAndCalculateCartTotal();
-                                progressBar.setVisibility(View.GONE);
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(getApplicationContext(),"Item removed from Cart",Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
-                });
-                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void
-                    onClick(View view) {
-                        Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
-                        intent.putExtra("name", model.getName());
-                        intent.putExtra("image", model.getImage());
-                        intent.putExtra("price", model.getPrice());
-                        intent.putExtra("desc", model.getDesc());
-                        intent.putExtra("quantity",model.getQuantity());
-                        intent.putExtra("screen","cart");
-                        documentId = getSnapshots().getSnapshot(position).getId();
-                        intent.putExtra("documentId",documentId);
-                        startActivity(intent);
-                    }
-                });
-                progressBar.setVisibility(View.GONE);
-            }
-
-        };
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(false);
-        adapter.startListening();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+        loadAndCalculateCartTotal();
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                adapter.deleteItem(viewHolder.getAdapterPosition());
+            }
+        })
+        .attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
+                Intent intent = new Intent(getApplicationContext(), ItemDescriptionActivity.class);
+                intent.putExtra("name", model.getName());
+                intent.putExtra("image", model.getImage());
+                intent.putExtra("price", model.getPrice());
+                intent.putExtra("desc", model.getDesc());
+                intent.putExtra("quantity",model.getQuantity());
+                intent.putExtra("screen","cart");
+                String documentId = documentSnapshot.getId();
+                intent.putExtra("documentId",documentId);
+                startActivity(intent);
+            }
+        });
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
+            @Override
+            public void onDataChanged() {
+                loadAndCalculateCartTotal();
+            }
+        });
     }
 
     /**
      * This method is used to calculate cart total
      */
-    private void loadAndCalculateCartTotal() {
+    public void loadAndCalculateCartTotal() {
         subTotal =0.0;
         txtEmptyCart.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
@@ -163,7 +137,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        // if(task.getResult().size() == 0)
                         subTotal = 0.0;
                         if (task.isSuccessful()) {
                             for (DocumentSnapshot documentSnapshot : task.getResult()) {
@@ -230,27 +203,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * This class describes the content of each cart item in recycler view
-     * Subclass of {@link RecyclerView.ViewHolder}
-     */
-    private class CartViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView txtName,txtQuantity,txtPrice;
-        private ImageView imageView;
-        LinearLayout linearLayout;
-        ImageButton imgDeleteBtn;
-
-        public CartViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
-            txtPrice = itemView.findViewById(R.id.txtPrice);
-            txtQuantity = itemView.findViewById(R.id.txtQuantity);
-            imageView = itemView.findViewById(R.id.imageView);
-            linearLayout = itemView.findViewById(R.id.linearLayout);
-            imgDeleteBtn = itemView.findViewById(R.id.imgDeleteBtn);
-        }
-    }
-    /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
      * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
      */
@@ -261,7 +213,14 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }

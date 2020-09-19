@@ -2,6 +2,7 @@ package com.example.stockitup.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,24 +10,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
-import com.example.stockitup.fragments.CartFragment;
-import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
-public class CategoryItemsActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+public class CategoryItemsActivity extends AppCompatActivity implements View.OnClickListener{
 
     FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
@@ -35,7 +47,6 @@ public class CategoryItemsActivity extends AppCompatActivity {
     TextView txtCategory;
     String categoryDocumentId,documentId;
     FloatingActionButton floatingActionButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +64,7 @@ public class CategoryItemsActivity extends AppCompatActivity {
         txtCategory = findViewById(R.id.txtCategory);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(),HomeScreenActivity.class);
-//                i.putExtra("screen","cart");
-//                startActivity(i);
-                startActivity(new Intent(getApplicationContext(), CartActivity.class));
-
-            }
-        });
+        floatingActionButton.setOnClickListener(this);
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);
@@ -105,8 +107,17 @@ public class CategoryItemsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
     }
-    private class CategoryItemsViewHolder extends RecyclerView.ViewHolder {
 
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.floatingActionButton:
+                startActivity(new Intent(getApplicationContext(), CartActivity.class));
+                break;
+        }
+    }
+
+    private class CategoryItemsViewHolder extends RecyclerView.ViewHolder {
         private TextView txtName;
         private ImageView imageView;
         private LinearLayout linearLayout;
@@ -136,5 +147,24 @@ public class CategoryItemsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_search_menu,menu);
+        MenuItem menuItem = menu.findItem(R.id.menuSearch);
+        SearchView searchView = (SearchView)menuItem.getActionView();
+        searchView.setQueryHint("Type here to search");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 }

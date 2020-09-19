@@ -84,9 +84,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.txtConditions:
                 startActivity(new Intent(getApplicationContext(), TermsActivity.class));
                 break;
-                case R.id.btnSignUp:
-                    userSignUp();
-                    break;
+            case R.id.btnSignUp:
+                userSignUp();
+                break;
         }
     }
     /**
@@ -135,7 +135,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if(!password.equals(confirmPassword))
         {
             editPassword.setError("Passwords do not match");
-            //editConfirmPassword.setError("Passwords do not match");
             editPassword.requestFocus();
             return;
         }
@@ -153,16 +152,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(name).build();
-
-                    user.updateProfile(profileUpdates)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        //Toast.makeText(getApplicationContext(), "User profile Updated", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    user.updateProfile(profileUpdates);
                     //if (user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp()) {
                     //FirebaseAuth.getInstance().signOut();
                     finish();

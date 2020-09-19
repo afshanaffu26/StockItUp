@@ -33,27 +33,37 @@
                 android:text="Delivery Address"
                 android:textColor="@color/colorText"
                 android:textSize="24sp" />
-
             <EditText
-                android:id="@+id/editName"
+                android:id="@+id/editFullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="Street Name"
+                android:hint="Full Name"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+            <EditText
+                android:id="@+id/editAddressLine1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:hint="Address Line 1"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
 
             <EditText
-                android:id="@+id/editApt"
+                android:id="@+id/editAddressLine2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="Apt/Suit#"
+                android:hint="Address Line 2 (optional)"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="text" />
@@ -103,9 +113,19 @@
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
-                android:hint="Postal Code"
+                android:hint="Postal Code/ZIP"
                 android:inputType="textPostalAddress" />
-
+            <EditText
+                android:id="@+id/editPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:hint="Telephone number"
+                android:inputType="number" />
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="300dp"
