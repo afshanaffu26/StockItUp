@@ -15,6 +15,8 @@ import com.example.stockitup.models.OrdersModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import java.text.SimpleDateFormat;
+
 public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,OrderHistoryAdapter.ViewHolder> {
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
@@ -24,7 +26,8 @@ public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,Or
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull OrdersModel model) {
-        holder.txtOrderDate.setText("Ordered On: "+model.getDate());
+        String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(model.getDate());
+        holder.txtOrderDate.setText("Ordered On: "+date);
         holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal());
         holder.txtTax.setText("Tax: "+model.getTax());
         holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge());

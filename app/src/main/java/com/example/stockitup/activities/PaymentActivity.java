@@ -91,8 +91,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                             firebaseFirestore.collection("Orders").document("orders" + uid).collection("orders").document(docId).collection("Order").add(cuisineItemsModel).addOnSuccessListener(new OnSuccessListener < DocumentReference > () {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
-
-                                String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
+                                Date date = new Date();
                                 subTotal = getIntent().getStringExtra("subTotal");
                                 tax = getIntent().getStringExtra("tax");
                                 deliveryCharge = getIntent().getStringExtra("deliveryCharge");

@@ -14,8 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,19 +22,10 @@ import com.example.stockitup.R;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 public class CategoryItemsActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -69,7 +58,7 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);
 
-        Query query = firebaseFirestore.collection("Categories").document(categoryDocumentId).collection(category);
+        Query query = firebaseFirestore.collection("Categories").document(categoryDocumentId).collection(category).orderBy("name",Query.Direction.ASCENDING);
         //RecyclerOptions
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query, CategoryItemsModel.class)
