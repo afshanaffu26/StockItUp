@@ -3,7 +3,6 @@ package com.example.stockitup.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,9 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
-import com.example.stockitup.activities.ItemDescriptionActivity;
 import com.example.stockitup.activities.OrderHistoryListActivity;
-import com.example.stockitup.adapters.CartAdapter;
 import com.example.stockitup.adapters.OrderHistoryAdapter;
 import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
@@ -102,7 +99,7 @@ public class OrderHistoryFragment extends Fragment {
     }
 
     private void setRecyclerViewData() {
-        Query query = firebaseFirestore.collection("Orders").document("orders"+uid).collection("orders");
+        Query query = firebaseFirestore.collection("Orders").document("orders"+uid).collection("orders").orderBy("date",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<OrdersModel> options = new FirestoreRecyclerOptions.Builder<OrdersModel>()
                 .setQuery(query,OrdersModel.class)
                 .build();
@@ -116,6 +113,8 @@ public class OrderHistoryFragment extends Fragment {
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
                 Intent intent = new Intent(getContext(), OrderHistoryListActivity.class);
+                orderHistoryDocumentId = documentSnapshot.getId();
+                intent.putExtra("orderHistoryDocumentId", orderHistoryDocumentId);
                 startActivity(intent);
             }
         });
