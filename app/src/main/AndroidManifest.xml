@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.OrderHistoryListActivity" />
+        <activity android:name=".activities.AdminDashboardActivity" />
         <activity android:name=".activities.AddressActivity" />
         <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.CartActivity" />

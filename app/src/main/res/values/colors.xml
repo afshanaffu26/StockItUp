@@ -9,6 +9,7 @@
     <color name="colorText">@color/colorMain </color>
     <color name="colorButton">@color/colorMain </color>
     <color name="colorBorder">#c8c8a9</color>
+    <color name="colorCard">@color/colorAccent </color>
 
     <color name="colorRed">#db2544</color>
     <color name="colorPink">#FF0266</color>
