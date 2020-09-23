@@ -160,7 +160,8 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull HomeFragment.CategoriesViewHolder holder, final int position, @NonNull final CategoriesModel model) {
                 holder.txtName.setText(model.getName());
-                Picasso.get().load(model.getImage()).into(holder.imageView);
+                if (model.getImage() != "")
+                    Picasso.get().load(model.getImage()).into(holder.imageView);
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

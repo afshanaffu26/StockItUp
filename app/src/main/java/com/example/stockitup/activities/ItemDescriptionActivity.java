@@ -89,7 +89,6 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         desc = getIntent().getStringExtra("desc");
         quantity = getIntent().getStringExtra("quantity");
         documentId = getIntent().getStringExtra("documentId");
-
         Picasso.get().load(image).into(imageView);
         txtName.setText(name);
         txtPrice.setText("Price : " + price+"$");

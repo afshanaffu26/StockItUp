@@ -75,14 +75,16 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
             @Override
             protected void onBindViewHolder(@NonNull CategoryItemsActivity.CategoryItemsViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
                 holder.txtName.setText(model.getName());
-                Picasso.get().load(model.getImage()).into(holder.imageView);
+                if (model.getImage() != "")
+                    Picasso.get().load(model.getImage()).into(holder.imageView);
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
                         intent.putExtra("category", category);
                         intent.putExtra("name", model.getName());
-                        intent.putExtra("image", model.getImage());
+                        if (model.getImage() != "")
+                            intent.putExtra("image", model.getImage());
                         intent.putExtra("price", model.getPrice());
                         intent.putExtra("desc", model.getDesc());
                         documentId = getSnapshots().getSnapshot(position).getId();

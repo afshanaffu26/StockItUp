@@ -1,21 +1,33 @@
 package com.example.stockitup.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toolbar;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AdminDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     CardView cardLogout,cardViewCategory,cardAddCategoryItems;
     Toolbar toolbar;
+    FirebaseFirestore firebaseFirestore;
+    Map<String,String> map=new HashMap<String,String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +40,25 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cardViewCategory.setOnClickListener(this);
         cardAddCategoryItems = findViewById(R.id.cardAddCategoryItems);
         cardAddCategoryItems.setOnClickListener(this);
-
+        firebaseFirestore = FirebaseFirestore.getInstance();
         String appName = getApplicationContext().getResources().getString(R.string.app_name);
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
+
+        firebaseFirestore.collection("Categories").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            for (DocumentSnapshot documentSnapshot: task.getResult())
+                            {
+                                map.put(documentSnapshot.getString("name"),documentSnapshot.getId());
+                            }
+                        }
+                    }
+                });
     }
 
     @Override
@@ -40,10 +66,12 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         switch (view.getId())
         {
             case R.id.cardViewCategory:
-                startActivity(new Intent(getApplicationContext(),ViewCategoriesActivity.class));
+                startActivity(new Intent(getApplicationContext(), AdminViewCategoriesActivity.class));
                 break;
             case R.id.cardAddCategoryItems:
-                startActivity(new Intent(getApplicationContext(),AddCategoryItemsActivity.class));
+                Intent i = new Intent(getApplicationContext(), AdminAddCategoryItemsActivity.class);
+                AppConstants.categories_map = map;
+                startActivity(i);
                 break;
             case R.id.cardLogout:
                 userLogout();

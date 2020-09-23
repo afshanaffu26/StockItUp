@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AddCategoryItemsActivity">
+    tools:context=".activities.AdminAddCategoryItemsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/edit_text_background"
@@ -40,6 +40,7 @@
             android:src="@drawable/app_icon"/>
 
         <EditText
+            android:id="@+id/editName"
             android:layout_width="match_parent"
             android:background="@drawable/edit_text_background"
             android:layout_height="wrap_content"
@@ -50,6 +51,20 @@
             android:inputType="text" />
 
         <EditText
+            android:id="@+id/editDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/edit_text_background"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Enter description"
+            android:inputType="textMultiLine" />
+
+        <EditText
+            android:id="@+id/editPrice"
             android:layout_width="match_parent"
             android:background="@drawable/edit_text_background"
             android:layout_height="wrap_content"
@@ -60,18 +75,6 @@
             android:ems="10"
             android:inputType="number" />
 
-        <EditText
-            android:id="@+id/editTextTextMultiLine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/edit_text_background"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="Enter description"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="15dp"
-            android:inputType="textMultiLine" />
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="300dp"

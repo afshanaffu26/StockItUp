@@ -88,7 +88,9 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                         for (DocumentSnapshot documentSnapshot: task.getResult()) {
                             CategoryItemsModel cuisineItemsModel = documentSnapshot.toObject(CategoryItemsModel.class);
                             //adding each cart item to orders collection inside a particular docId
-                            firebaseFirestore.collection("Orders").document("orders" + uid).collection("orders").document(docId).collection("Order").add(cuisineItemsModel).addOnSuccessListener(new OnSuccessListener < DocumentReference > () {
+                            firebaseFirestore.collection("Orders").document("orders" + uid).collection("orders").document(docId).collection("Order")
+                                    .add(cuisineItemsModel)
+                                    .addOnSuccessListener(new OnSuccessListener < DocumentReference > () {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                 Date date = new Date();
@@ -99,18 +101,23 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
                                 OrdersModel ordersModel = new OrdersModel(date, subTotal, tax, deliveryCharge, total, address);
                                 //adding orders data to that particular docId
-                                firebaseFirestore.collection("Orders").document("orders" + uid).collection("orders").document(docId).set(ordersModel).addOnSuccessListener(new OnSuccessListener < Void > () {
+                                firebaseFirestore.collection("Orders").document("orders" + uid).collection("orders").document(docId)
+                                        .set(ordersModel)
+                                        .addOnSuccessListener(new OnSuccessListener < Void > () {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         //get cart details to delete each item
-                                        firebaseFirestore.collection("Cart").document("cart" + uid).collection("cart").get().addOnCompleteListener(new OnCompleteListener < QuerySnapshot > () {
+                                        firebaseFirestore.collection("Cart").document("cart" + uid).collection("cart")
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener < QuerySnapshot > () {
                                         @Override
                                         public void onComplete(@NonNull Task < QuerySnapshot > task) {
                                             if (task.isSuccessful()) {
                                             Toast.makeText(getApplicationContext(), "Order placed successfully.", Toast.LENGTH_SHORT).show();
                                             for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()) {
                                                 //delete each cart item
-                                                firebaseFirestore.collection("Cart").document("cart" + uid).collection("cart").document(queryDocumentSnapshot.getId()).delete();
+                                                firebaseFirestore.collection("Cart").document("cart" + uid).collection("cart").document(queryDocumentSnapshot.getId())
+                                                        .delete();
                                             }
                                         }
                                             startActivity(new Intent(getApplicationContext(), HomeScreenActivity.class));

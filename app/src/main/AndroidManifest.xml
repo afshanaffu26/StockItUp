@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AddCategoryItemsActivity"></activity>
+        <activity android:name=".activities.AdminAddCategoryItemsActivity"></activity>
         <activity android:name=".activities.ManageUsersActivity" />
         <activity android:name=".activities.OrderHistoryListActivity" />
         <activity android:name=".activities.AdminDashboardActivity" />
@@ -27,7 +27,7 @@
         <activity android:name=".activities.ForgotActivity" />
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.ViewCategoriesActivity" />
+        <activity android:name=".activities.AdminViewCategoriesActivity" />
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
