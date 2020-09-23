@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class AdminDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
-    CardView cardLogout;
+    CardView cardLogout,cardViewCategory,cardAddCategoryItems;
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,10 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         //stockitup.8
         cardLogout = findViewById(R.id.cardLogout);
         cardLogout.setOnClickListener(this);
+        cardViewCategory = findViewById(R.id.cardViewCategory);
+        cardViewCategory.setOnClickListener(this);
+        cardAddCategoryItems = findViewById(R.id.cardAddCategoryItems);
+        cardAddCategoryItems.setOnClickListener(this);
 
         String appName = getApplicationContext().getResources().getString(R.string.app_name);
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -35,6 +39,12 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId())
         {
+            case R.id.cardViewCategory:
+                startActivity(new Intent(getApplicationContext(),ViewCategoriesActivity.class));
+                break;
+            case R.id.cardAddCategoryItems:
+                startActivity(new Intent(getApplicationContext(),AddCategoryItemsActivity.class));
+                break;
             case R.id.cardLogout:
                 userLogout();
                 break;
