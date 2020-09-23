@@ -3,12 +3,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".fragments.FeedbackFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Feedback"
+            android:textStyle="bold"
+            android:textColor="@color/colorText"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            android:text="Your review will help us to give you better experience. Make it a good one!"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/editTextMultiLine"
+            android:layout_width="match_parent"
+            android:layout_marginTop="80dp"
+            android:hint="Tell us your experience..."
+            android:layout_height="200dp"
+            android:ems="10"
+            android:padding="10dp"
+            android:gravity="start|top"
+            android:background="#3051ca8e"
+            android:layout_margin="10dp"
+            android:inputType="textMultiLine" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="2"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/buttonDiscard"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorWhite"
+                android:text="Discard"
+                android:textColor="@color/colorText"
+                android:layout_weight="1"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/buttonSend"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorMain"
+                android:text="Submit"
+                android:layout_weight="1"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 </FrameLayout>
