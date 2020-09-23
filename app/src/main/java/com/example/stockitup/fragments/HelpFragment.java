@@ -1,5 +1,6 @@
 package com.example.stockitup.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,15 +8,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.activities.ContactActivity;
+import com.example.stockitup.activities.FaqActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HelpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HelpFragment extends Fragment {
+public class HelpFragment extends Fragment implements View.OnClickListener{
+    TextView help2;
+    TextView help3;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,6 +54,11 @@ public class HelpFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Called to do initial creation of a fragment
+     * Note that this can be called while the fragment's activity is still in the process of being created. As such, you can not rely on things like the activity's content view hierarchy being initialized at this point. If you want to do work once the activity itself is created, add a {@link androidx.lifecycle.LifecycleObserver} on the activity's Lifecycle, removing it when it receives the Lifecycle.State.CREATED callback.
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +68,37 @@ public class HelpFragment extends Fragment {
         }
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view. This is optional, and non-graphical fragments can return null. This will be called between onCreate(Bundle) and onViewCreated(View, Bundle).
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to. The fragment should not add the view itself, but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_help, container, false);
+        View v= inflater.inflate(R.layout.fragment_help, container, false);
+        help2=v.findViewById(R.id.help2);
+        help2.setOnClickListener(this);
+        help3=v.findViewById(R.id.help3);
+        help3.setOnClickListener(this);
+        return v;
+    }
+
+    /**
+     * Called when a view has been clicked.
+     * @param view The view that was clicked.
+     */
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.help2:
+                startActivity(new Intent(getContext(), FaqActivity.class));
+                break;
+            case R.id.help3:
+                startActivity(new Intent(getContext(), ContactActivity.class));
+        }
     }
 }
