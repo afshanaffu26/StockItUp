@@ -19,11 +19,15 @@ import com.example.stockitup.activities.CartActivity;
 import com.example.stockitup.activities.CategoryItemsActivity;
 import com.example.stockitup.R;
 import com.example.stockitup.activities.ItemDescriptionActivity;
+import com.example.stockitup.adapters.CartAdapter;
+import com.example.stockitup.adapters.CategoriesAdapter;
+import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
@@ -40,7 +44,8 @@ public class HomeFragment extends Fragment {
     FirebaseFirestore firebaseFirestore;
     FloatingActionButton floatingActionButton;
     RecyclerView recyclerView,recyclerViewCategory;
-    private FirestoreRecyclerAdapter adapter,adapter1;
+    private FirestoreRecyclerAdapter adapter;
+    private CategoriesAdapter categoriesAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,7 +90,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = v.findViewById(R.id.recyclerView);
@@ -94,11 +98,10 @@ public class HomeFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 startActivity(new Intent(getContext(), CartActivity.class));
             }
         });
-
+        setRecyclerViewData();
         //Query
         Query query = firebaseFirestore.collection("Essentials");
         //RecyclerOptions
@@ -122,7 +125,6 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull HomeFragment.CategoryItemsViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
                 holder.txtName.setText(model.getName());
-
                 Picasso.get().load(model.getImage()).into(holder.imageView);
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -144,55 +146,32 @@ public class HomeFragment extends Fragment {
         adapter.startListening();
         recyclerView.setAdapter(adapter);
 
-        Query query1 = firebaseFirestore.collection("Categories");
-        FirestoreRecyclerOptions<CategoriesModel> options1 = new FirestoreRecyclerOptions.Builder<CategoriesModel>()
-                .setQuery(query1,CategoriesModel.class)
-                .build();
-        adapter1 = new FirestoreRecyclerAdapter<CategoriesModel, HomeFragment.CategoriesViewHolder>(options1) {
-
-            @NonNull
-            @Override
-            public HomeFragment.CategoriesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category,parent,false);
-                return new HomeFragment.CategoriesViewHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull HomeFragment.CategoriesViewHolder holder, final int position, @NonNull final CategoriesModel model) {
-                holder.txtName.setText(model.getName());
-                if (model.getImage() != "")
-                    Picasso.get().load(model.getImage()).into(holder.imageView);
-                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(view.getContext(), CategoryItemsActivity.class);
-                        intent.putExtra("name", model.getName());
-                        categoryDocumentId = getSnapshots().getSnapshot(position).getId();
-                        intent.putExtra("categoryDocumentId", categoryDocumentId);
-                        startActivity(intent);
-                    } });
-            }
-        };
-        recyclerViewCategory.setHasFixedSize(true);
-        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        adapter1.startListening();
-        recyclerViewCategory.setAdapter(adapter1);
         return v;
     }
 
-    private class CategoriesViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView txtName;
-        private ImageView imageView;
-        LinearLayout linearLayout;
-
-        public CategoriesViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
-            imageView = itemView.findViewById(R.id.imageView);
-            linearLayout = itemView.findViewById(R.id.linearLayout);
-        }
+    private void setRecyclerViewData() {
+        Query query = firebaseFirestore.collection("Categories");
+        FirestoreRecyclerOptions<CategoriesModel> options = new FirestoreRecyclerOptions.Builder<CategoriesModel>()
+                .setQuery(query,CategoriesModel.class)
+                .build();
+        categoriesAdapter= new CategoriesAdapter(options);
+        categoriesAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
+                Intent intent = new Intent(getContext(), CategoryItemsActivity.class);
+                String documentId = documentSnapshot.getId();
+                intent.putExtra("name", model.getName());
+                intent.putExtra("categoryDocumentId", documentId);
+                startActivity(intent);
+            }
+        });
+        recyclerViewCategory.setHasFixedSize(true);
+        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        categoriesAdapter.startListening();
+        recyclerViewCategory.setAdapter(categoriesAdapter);
     }
+
 
     public class CategoryItemsViewHolder extends RecyclerView.ViewHolder{
         private TextView txtName;

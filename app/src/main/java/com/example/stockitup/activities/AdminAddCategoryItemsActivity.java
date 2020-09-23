@@ -33,7 +33,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_category_items);
+        setContentView(R.layout.activity_admin_add_category_items);
 
         String appName = getApplicationContext().getResources().getString(R.string.app_name);
         Toolbar toolbar = findViewById(R.id.toolbar);
