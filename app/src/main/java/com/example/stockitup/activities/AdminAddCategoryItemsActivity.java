@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,6 +31,8 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
     private String category,documentId;
     private EditText editName,editPrice,editDescription;
     private Button btnAdd;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         spinner = findViewById(R.id.spinner);
         editName = findViewById(R.id.editName);
         editPrice = findViewById(R.id.editPrice);
@@ -47,23 +51,21 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        spinner.setOnItemSelectedListener(this);
+        progressBar = findViewById(R.id.progressBar);
+
         ArrayList<String> categoriesList = new ArrayList<>();
         categoriesList.add("Select a category..");
         categoriesList.addAll(AppConstants.categories_map.keySet());
-        // Spinner click listener
-        spinner.setOnItemSelectedListener(this);
+
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoriesList);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categoriesList);
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-
     }
-    /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -76,8 +78,6 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
             category = adapterView.getSelectedItem().toString();
         else
             category = "";
-        Toast.makeText(AdminAddCategoryItemsActivity.this, "Selected: "+category, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -126,12 +126,14 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         }
         else
         {
+            progressBar.setVisibility(View.VISIBLE);
             CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, description, price);
             firebaseFirestore.collection("Categories").document(documentId).collection(category)
                     .add(categoryItemsModel)
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(AdminAddCategoryItemsActivity.this, "Added", Toast.LENGTH_SHORT).show();
                         }
                     });

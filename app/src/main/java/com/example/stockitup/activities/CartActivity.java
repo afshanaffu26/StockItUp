@@ -101,7 +101,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+            public void onItemClick(View view,DocumentSnapshot documentSnapshot, int position) {
                 CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
                 Intent intent = new Intent(getApplicationContext(), ItemDescriptionActivity.class);
                 intent.putExtra("name", model.getName());

@@ -110,7 +110,7 @@ public class OrderHistoryFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+            public void onItemClick(View view,DocumentSnapshot documentSnapshot, int position) {
                 CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
                 Intent intent = new Intent(getContext(), OrderHistoryListActivity.class);
                 orderHistoryDocumentId = documentSnapshot.getId();

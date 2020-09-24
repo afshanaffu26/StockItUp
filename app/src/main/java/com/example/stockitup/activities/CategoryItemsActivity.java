@@ -56,16 +56,14 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void setRecyclerViewData() {
-
         Query query = firebaseFirestore.collection("Categories").document(categoryDocumentId).collection(category).orderBy("name",Query.Direction.ASCENDING);
-        //RecyclerOptions
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query, CategoryItemsModel.class)
                 .build();
         adapter= new CategoryItemsAdapter(options);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+            public void onItemClick(View view,DocumentSnapshot documentSnapshot, int position) {
                 CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
                 Intent intent = new Intent(getApplicationContext(), ItemDescriptionActivity.class);
                 String documentId = documentSnapshot.getId();
@@ -105,10 +103,6 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         super.onStop();
         adapter.stopListening();
     }
-    /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
     @Override
     public boolean onSupportNavigateUp() {
         finish();

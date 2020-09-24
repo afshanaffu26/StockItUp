@@ -56,7 +56,7 @@ public class CategoryItemsAdapter extends FirestoreRecyclerAdapter<CategoryItems
                     //if an item is deleted from recycler view, this checks when its in delete animation position returning -1
                     if (position != RecyclerView.NO_POSITION && listener != null)
                     {
-                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
+                        listener.onItemClick(view,getSnapshots().getSnapshot(position),position);
                     }
                 }
             });

@@ -157,7 +157,7 @@ public class HomeFragment extends Fragment {
         categoriesAdapter= new CategoriesAdapter(options);
         categoriesAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+            public void onItemClick(View view,DocumentSnapshot documentSnapshot, int position) {
                 CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
                 Intent intent = new Intent(getContext(), CategoryItemsActivity.class);
                 String documentId = documentSnapshot.getId();

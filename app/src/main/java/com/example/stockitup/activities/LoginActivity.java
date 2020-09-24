@@ -53,9 +53,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
 
-        editEmail=(EditText) findViewById(R.id.editEmail);
-        editPassword=(EditText) findViewById(R.id.editPassword);
-        progressBar=(ProgressBar) findViewById(R.id.progressbar);
+        editEmail= findViewById(R.id.editEmail);
+        editPassword= findViewById(R.id.editPassword);
+        progressBar= findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
 
     }

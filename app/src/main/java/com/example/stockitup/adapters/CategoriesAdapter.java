@@ -1,6 +1,5 @@
 package com.example.stockitup.adapters;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
-import com.example.stockitup.activities.CategoryItemsActivity;
 import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoriesModel;
-import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
 
 public class CategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesModel,CategoriesAdapter.ViewHolder>{
@@ -62,7 +58,7 @@ public class CategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesModel,
                     //if an item is deleted from recycler view, this checks when its in delete animation position returning -1
                     if (position != RecyclerView.NO_POSITION && listener != null)
                     {
-                        listener.onItemClick(getSnapshots().getSnapshot(position),position);
+                        listener.onItemClick(view,getSnapshots().getSnapshot(position),position);
                     }
                 }
             });
