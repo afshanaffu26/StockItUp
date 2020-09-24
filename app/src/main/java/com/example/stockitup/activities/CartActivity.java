@@ -34,17 +34,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String uid;
-    ProgressBar progressBar;
-    Button btnCheckout;
+    private String uid;
+    private ProgressBar progressBar;
+    private Button btnCheckout;
     private FirebaseFirestore firebaseFirestore;
     private CollectionReference collectionReference;
     private CartAdapter adapter;
-    RecyclerView recyclerView;
-    LinearLayout linearLayout;
-    String documentId;
-    TextView txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtEmptyCart;
-    double subTotal,deliveryCharge,tax,total;
+    private RecyclerView recyclerView;
+    private LinearLayout linearLayout;
+    private TextView txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtEmptyCart;
+    private double subTotal,deliveryCharge,tax,total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

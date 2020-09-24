@@ -21,10 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
  *  this class deals with password reset
  */
 public class ForgotActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btnSubmit;
-    FirebaseAuth mAuth;
-    EditText editEmail;
-    ProgressBar progressBar;
+    private Button btnSubmit;
+    private FirebaseAuth mAuth;
+    private EditText editEmail;
+    private ProgressBar progressBar;
 
     @Override
     public boolean onSupportNavigateUp() {

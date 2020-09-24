@@ -1,8 +1,8 @@
 package com.example.stockitup.models;
 
     public class CategoriesModel {
-        String name;
-        String image;
+        private String name;
+        private String image;
 
         public CategoriesModel() {
         }

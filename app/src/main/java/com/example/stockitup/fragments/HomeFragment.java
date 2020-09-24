@@ -40,10 +40,10 @@ import com.squareup.picasso.Picasso;
  */
 public class HomeFragment extends Fragment {
 
-    String categoryDocumentId,documentId;
-    FirebaseFirestore firebaseFirestore;
-    FloatingActionButton floatingActionButton;
-    RecyclerView recyclerView,recyclerViewCategory;
+    private String categoryDocumentId,documentId;
+    private FirebaseFirestore firebaseFirestore;
+    private FloatingActionButton floatingActionButton;
+    private RecyclerView recyclerView,recyclerViewCategory;
     private FirestoreRecyclerAdapter adapter;
     private CategoriesAdapter categoriesAdapter;
 

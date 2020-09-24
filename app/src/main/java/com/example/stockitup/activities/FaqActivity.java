@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.example.stockitup.R;
 public class FaqActivity extends AppCompatActivity {
-    TextView Q1;
+    private TextView Q1;
 
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.

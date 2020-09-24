@@ -28,13 +28,13 @@ import com.squareup.picasso.Picasso;
  * This class deals with history previously ordered items
  */
 public class OrderHistoryListActivity extends AppCompatActivity{
-    FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
-    RecyclerView recyclerView;
-    String cuisine ="";
-    TextView txtCuisine;
-    String documentId,orderHistoryDocumentId;
-    String uid;
+    private RecyclerView recyclerView;
+    private String cuisine ="";
+    private TextView txtCuisine;
+    private String documentId,orderHistoryDocumentId;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

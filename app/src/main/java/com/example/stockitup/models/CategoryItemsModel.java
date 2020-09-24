@@ -1,11 +1,11 @@
 package com.example.stockitup.models;
 
 public class CategoryItemsModel {
-    String name;
-    String image;
-    String desc;
-    String price;
-    String quantity;
+    private String name;
+    private String image;
+    private String desc;
+    private String price;
+    private String quantity;
 
     public CategoryItemsModel() {
     }

@@ -20,8 +20,8 @@ import com.example.stockitup.activities.FaqActivity;
  * create an instance of this fragment.
  */
 public class HelpFragment extends Fragment implements View.OnClickListener{
-    TextView help2;
-    TextView help3;
+    private TextView help2;
+    private TextView help3;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

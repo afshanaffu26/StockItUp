@@ -33,13 +33,13 @@ import java.util.List;
 public class ItemDescriptionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private static final int MAX_QUANTITY = 6;
-    Button btnAddToCart;
-    ImageView imageView;
-    TextView txtName,txtPrice,txtDesc;
-    FirebaseFirestore firebaseFirestore;
-    String name,image,price,quantity,id,desc,documentId;
-    Spinner spinner;
-    FloatingActionButton floatingActionButton;
+    private Button btnAddToCart;
+    private ImageView imageView;
+    private TextView txtName,txtPrice,txtDesc;
+    private FirebaseFirestore firebaseFirestore;
+    private String name,image,price,quantity,id,desc,documentId;
+    private Spinner spinner;
+    private FloatingActionButton floatingActionButton;
 
 
     @Override

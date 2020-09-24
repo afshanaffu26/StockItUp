@@ -38,19 +38,19 @@ import java.io.IOException;
  */
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txtVerifyUser;
-    EditText editName;
-    Button btnSave;
-    ImageView imgUser;
-    Uri uriProfileImage;
-    ProgressBar progressBar;
-    FirebaseAuth mAuth;
+    private TextView txtVerifyUser;
+    private EditText editName;
+    private Button btnSave;
+    private ImageView imgUser;
+    private Uri uriProfileImage;
+    private ProgressBar progressBar;
+    private FirebaseAuth mAuth;
 
     private static final int CHOOSE_IMAGE = 101;
-    String profileImageUrl=null;
-    String displayName= null;
+    private String profileImageUrl=null;
+    private String displayName= null;
     private static final String TAG = "ProfileActivity";
-    int TAKE_IMAGE_CODE = 10001;
+    private int TAKE_IMAGE_CODE = 10001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

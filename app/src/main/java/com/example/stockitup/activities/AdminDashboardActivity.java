@@ -24,10 +24,10 @@ import java.util.Map;
 
 public class AdminDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
-    CardView cardLogout,cardViewCategory,cardAddCategoryItems;
-    Toolbar toolbar;
-    FirebaseFirestore firebaseFirestore;
-    Map<String,String> map=new HashMap<String,String>();
+    private CardView cardLogout,cardViewCategory,cardAddCategoryItems;
+    private Toolbar toolbar;
+    private FirebaseFirestore firebaseFirestore;
+    private Map<String,String> map=new HashMap<String,String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

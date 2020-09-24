@@ -34,13 +34,13 @@ import com.google.firebase.firestore.Query;
  */
 public class OrderHistoryFragment extends Fragment {
 
-    FirebaseFirestore firebaseFirestore;
+    private FirebaseFirestore firebaseFirestore;
     private FirestoreRecyclerAdapter adapter;
-    RecyclerView recyclerView;
-    String orderHistoryDocumentId;
-    LinearLayout linearLayout;
-    TextView txtEmptyOrders;
-    String uid;
+    private RecyclerView recyclerView;
+    private String orderHistoryDocumentId;
+    private LinearLayout linearLayout;
+    private TextView txtEmptyOrders;
+    private String uid;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

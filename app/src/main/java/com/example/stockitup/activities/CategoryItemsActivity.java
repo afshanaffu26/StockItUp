@@ -1,6 +1,5 @@
 package com.example.stockitup.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -9,33 +8,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.adapters.CategoryItemsAdapter;
+import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.squareup.picasso.Picasso;
 
 public class CategoryItemsActivity extends AppCompatActivity implements View.OnClickListener{
 
-    FirebaseFirestore firebaseFirestore;
-    private FirestoreRecyclerAdapter adapter;
-    RecyclerView recyclerView;
-    String category ="";
-    TextView txtCategory;
-    String categoryDocumentId,documentId;
-    FloatingActionButton floatingActionButton;
+    private FirebaseFirestore firebaseFirestore;
+    private CategoryItemsAdapter adapter;
+    private RecyclerView recyclerView;
+    private String category ="";
+    private TextView txtCategory;
+    private String categoryDocumentId;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,49 +47,39 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(this);
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);
+        setRecyclerViewData();
+    }
+
+    private void setRecyclerViewData() {
 
         Query query = firebaseFirestore.collection("Categories").document(categoryDocumentId).collection(category).orderBy("name",Query.Direction.ASCENDING);
         //RecyclerOptions
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query, CategoryItemsModel.class)
                 .build();
-        adapter = new FirestoreRecyclerAdapter<CategoryItemsModel, CategoryItemsActivity.CategoryItemsViewHolder>(options) {
-
-            @NonNull
+        adapter= new CategoryItemsAdapter(options);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public CategoryItemsActivity.CategoryItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_list,parent,false);
-                return new CategoryItemsActivity.CategoryItemsViewHolder(view);
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull CategoryItemsActivity.CategoryItemsViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
-                holder.txtName.setText(model.getName());
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
+                Intent intent = new Intent(getApplicationContext(), ItemDescriptionActivity.class);
+                String documentId = documentSnapshot.getId();
+                intent.putExtra("category", category);
+                intent.putExtra("name", model.getName());
                 if (model.getImage() != "")
-                    Picasso.get().load(model.getImage()).into(holder.imageView);
-                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
-                        intent.putExtra("category", category);
-                        intent.putExtra("name", model.getName());
-                        if (model.getImage() != "")
-                            intent.putExtra("image", model.getImage());
-                        intent.putExtra("price", model.getPrice());
-                        intent.putExtra("desc", model.getDesc());
-                        documentId = getSnapshots().getSnapshot(position).getId();
-                        intent.putExtra("documentId", documentId);
-                        startActivity(intent);
-                    } });
+                    intent.putExtra("image", model.getImage());
+                intent.putExtra("price", model.getPrice());
+                intent.putExtra("desc", model.getDesc());
+                intent.putExtra("documentId", documentId);
+                startActivity(intent);
             }
-        };
-
+        });
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
@@ -108,17 +94,6 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    private class CategoryItemsViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtName;
-        private ImageView imageView;
-        private LinearLayout linearLayout;
-        public CategoryItemsViewHolder(@NonNull View itemView) {
-            super(itemView);
-            txtName = itemView.findViewById(R.id.txtName);
-            imageView = itemView.findViewById(R.id.imageView);
-            linearLayout = itemView.findViewById(R.id.linearLayout);
-        }
-    }
     @Override
     protected void onStart() {
         super.onStart();

@@ -29,13 +29,13 @@ import com.google.firebase.auth.UserProfileChangeRequest;
  */
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txtLogin;
-    TextView txtConditions;
-    ProgressBar progressBar;
-    CheckBox checkBox;
-    EditText editName,editEmail,editPassword,editConfirmPassword;
+    private TextView txtLogin;
+    private TextView txtConditions;
+    private ProgressBar progressBar;
+    private CheckBox checkBox;
+    private EditText editName,editEmail,editPassword,editConfirmPassword;
     private FirebaseAuth mAuth;
-    Button btnSignUp;
+    private Button btnSignUp;
 
     @Override
     public boolean onSupportNavigateUp() {

@@ -12,7 +12,7 @@ import com.example.stockitup.R;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener  {
 
-    Button buttonNext;
+    private Button buttonNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

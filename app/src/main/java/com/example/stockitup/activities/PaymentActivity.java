@@ -33,11 +33,11 @@ import java.util.UUID;
  */
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btnPay;
-    FirebaseFirestore firebaseFirestore;
-    String uid;
-    String subTotal, deliveryCharge, tax, total;
-    String address;
+    private Button btnPay;
+    private FirebaseFirestore firebaseFirestore;
+    private String uid;
+    private String subTotal, deliveryCharge, tax, total;
+    private String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,7 +14,7 @@ import com.example.stockitup.R;
  *  Manages application main content
  */
 public class SplashActivity extends AppCompatActivity {
-    Window window;
+    private Window window;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

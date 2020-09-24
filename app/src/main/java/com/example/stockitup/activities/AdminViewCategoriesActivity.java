@@ -50,12 +50,12 @@ public class AdminViewCategoriesActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-//                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
-//                Intent intent = new Intent(getApplicationContext(), CategoryItemsActivity.class);
-//                String documentId = documentSnapshot.getId();
-//                intent.putExtra("name", model.getName());
-//                intent.putExtra("categoryDocumentId", documentId);
-//                startActivity(intent);
+                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
+                Intent intent = new Intent(getApplicationContext(), AdminCategoryItemsActivity.class);
+                String documentId = documentSnapshot.getId();
+                intent.putExtra("name", model.getName());
+                intent.putExtra("categoryDocumentId", documentId);
+                startActivity(intent);
             }
         });
         recyclerView.setHasFixedSize(true);

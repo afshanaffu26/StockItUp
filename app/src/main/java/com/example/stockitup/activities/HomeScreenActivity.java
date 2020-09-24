@@ -35,7 +35,7 @@ package com.example.stockitup.activities;
  */
 public class HomeScreenActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
     private Toolbar toolbar;
     private boolean isInFront;
     private DrawerLayout drawerLayout;

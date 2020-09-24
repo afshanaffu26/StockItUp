@@ -21,8 +21,8 @@ import com.example.stockitup.R;
  * This class deals with contact us details for user to contact
  */
 public class ContactActivity extends AppCompatActivity implements View.OnClickListener {
-    ImageView imgCall1,imgCall2;
-    String number;
+    private ImageView imgCall1,imgCall2;
+    private String number;
 
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
