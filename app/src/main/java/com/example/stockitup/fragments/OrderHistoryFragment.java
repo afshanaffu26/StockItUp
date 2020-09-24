@@ -20,6 +20,7 @@ import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.models.OrdersModel;
+import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -99,7 +100,7 @@ public class OrderHistoryFragment extends Fragment {
     }
 
     private void setRecyclerViewData() {
-        Query query = firebaseFirestore.collection("Orders").document("orders"+uid).collection("orders").orderBy("date",Query.Direction.DESCENDING);
+        Query query = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).orderBy("date",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<OrdersModel> options = new FirestoreRecyclerOptions.Builder<OrdersModel>()
                 .setQuery(query,OrdersModel.class)
                 .build();

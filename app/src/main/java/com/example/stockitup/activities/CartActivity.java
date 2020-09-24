@@ -21,6 +21,7 @@ import com.example.stockitup.adapters.CartAdapter;
 import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
+import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -69,7 +70,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         btnCheckout.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        collectionReference = firebaseFirestore.collection("Cart").document("cart"+uid).collection("cart");
+        collectionReference = firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
 
         setRecyclerViewData();
     }
@@ -131,7 +132,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         txtEmptyCart.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-        firebaseFirestore.collection("Cart").document("cart"+uid).collection("cart")
+        firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
                 .get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -200,11 +201,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-    /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
     @Override
     public boolean onSupportNavigateUp() {
         finish();

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.models.CategoryItemsModel;
+import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -89,7 +90,8 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         desc = getIntent().getStringExtra("desc");
         quantity = getIntent().getStringExtra("quantity");
         documentId = getIntent().getStringExtra("documentId");
-        Picasso.get().load(image).into(imageView);
+        if (image != null && !image.isEmpty())
+            Picasso.get().load(image).into(imageView);
         txtName.setText(name);
         txtPrice.setText("Price : " + price+"$");
         txtDesc.setText(desc);
@@ -116,7 +118,7 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         CategoryItemsModel cuisineItemsModel = new CategoryItemsModel(name, image, desc, price,quantity);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        firebaseFirestore.collection("Cart").document("cart"+uid).collection("cart").document(documentId)
+        firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId)
                 .set(cuisineItemsModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

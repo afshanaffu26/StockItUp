@@ -128,7 +128,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         {
             progressBar.setVisibility(View.VISIBLE);
             CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, description, price);
-            firebaseFirestore.collection("Categories").document(documentId).collection(category)
+            firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(documentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
                     .add(categoryItemsModel)
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override

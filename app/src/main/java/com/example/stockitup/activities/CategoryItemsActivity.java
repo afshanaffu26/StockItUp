@@ -17,6 +17,7 @@ import com.example.stockitup.R;
 import com.example.stockitup.adapters.CategoryItemsAdapter;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
+import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -56,7 +57,7 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void setRecyclerViewData() {
-        Query query = firebaseFirestore.collection("Categories").document(categoryDocumentId).collection(category).orderBy("name",Query.Direction.ASCENDING);
+        Query query = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).orderBy("name",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query, CategoryItemsModel.class)
                 .build();
@@ -69,7 +70,7 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
                 String documentId = documentSnapshot.getId();
                 intent.putExtra("category", category);
                 intent.putExtra("name", model.getName());
-                if (model.getImage() != "")
+                if (model.getImage() != null && !model.getImage().isEmpty())
                     intent.putExtra("image", model.getImage());
                 intent.putExtra("price", model.getPrice());
                 intent.putExtra("desc", model.getDesc());

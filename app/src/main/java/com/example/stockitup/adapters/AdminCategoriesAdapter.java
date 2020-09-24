@@ -28,7 +28,7 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull final CategoriesModel model) {
         holder.txtName.setText(model.getName());
-        if (model.getImage() != "")
+        if (model.getImage()!= null && !model.getImage().isEmpty())
             Picasso.get().load(model.getImage()).into(holder.imageView);
     }
 

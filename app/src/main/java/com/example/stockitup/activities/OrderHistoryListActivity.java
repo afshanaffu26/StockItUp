@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.stockitup.R;
 import com.example.stockitup.models.CategoryItemsModel;
+import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +55,7 @@ public class OrderHistoryListActivity extends AppCompatActivity{
         orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        Query query = firebaseFirestore.collection("Orders").document("orders"+uid).collection("orders").document(orderHistoryDocumentId).collection("Order");
+        Query query = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderHistoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
         //RecyclerOptions
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query,CategoryItemsModel.class)
@@ -73,7 +74,8 @@ public class OrderHistoryListActivity extends AppCompatActivity{
                 holder.txtName.setText(model.getName());
                 holder.txtPrice.setText("Price: "+model.getPrice());
                 holder.txtQuantity.setText("Qty: "+model.getQuantity());
-                Picasso.get().load(model.getImage()).into(holder.imageView);
+                if (model.getImage()!= null && !model.getImage().isEmpty())
+                    Picasso.get().load(model.getImage()).into(holder.imageView);
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

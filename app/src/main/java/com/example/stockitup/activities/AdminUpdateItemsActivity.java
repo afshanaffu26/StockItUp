@@ -49,7 +49,7 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
         editDesc.setText(desc);
         editPrice.setText(price);
 
-        if (image != "")
+        if (image!=null && !image.isEmpty())
             Picasso.get().load(image).into(imageView);
     }
     @Override

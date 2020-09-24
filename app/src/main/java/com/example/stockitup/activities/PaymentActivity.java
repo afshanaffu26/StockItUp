@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.stockitup.R;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.models.OrdersModel;
+import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,7 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -72,72 +72,68 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private void cartCheckout() {
         final String docId = "" + UUID.randomUUID().toString();
         //fetch the recent address added
-        firebaseFirestore.collection("Address").document(uid).get().addOnSuccessListener(new OnSuccessListener < DocumentSnapshot > () {
+        firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document(uid).get().addOnSuccessListener(new OnSuccessListener < DocumentSnapshot > () {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
             address = documentSnapshot.get("address").toString();
         }
         });
         //fetch cart items
-        firebaseFirestore.collection("Cart").document("cart" + uid).collection("cart").get().addOnCompleteListener(
+        firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).get().addOnCompleteListener(
                 new OnCompleteListener < QuerySnapshot > () {
                     @Override
-                    public void onComplete(@NonNull Task < QuerySnapshot > task) {
-                    if (task.isSuccessful()) {
-                        //iterating through each cart item
-                        for (DocumentSnapshot documentSnapshot: task.getResult()) {
-                            CategoryItemsModel cuisineItemsModel = documentSnapshot.toObject(CategoryItemsModel.class);
-                            //adding each cart item to orders collection inside a particular docId
-                            firebaseFirestore.collection("Orders").document("orders" + uid).collection("orders").document(docId).collection("Order")
-                                    .add(cuisineItemsModel)
-                                    .addOnSuccessListener(new OnSuccessListener < DocumentReference > () {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                Date date = new Date();
-                                subTotal = getIntent().getStringExtra("subTotal");
-                                tax = getIntent().getStringExtra("tax");
-                                deliveryCharge = getIntent().getStringExtra("deliveryCharge");
-                                total = getIntent().getStringExtra("total");
-
-                                OrdersModel ordersModel = new OrdersModel(date, subTotal, tax, deliveryCharge, total, address);
-                                //adding orders data to that particular docId
-                                firebaseFirestore.collection("Orders").document("orders" + uid).collection("orders").document(docId)
-                                        .set(ordersModel)
-                                        .addOnSuccessListener(new OnSuccessListener < Void > () {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            //iterating through each cart item
+                            for (DocumentSnapshot documentSnapshot : task.getResult()) {
+                                String cartDocumentId = documentSnapshot.getId();
+                                CategoryItemsModel cuisineItemsModel = documentSnapshot.toObject(CategoryItemsModel.class);
+                                //adding each cart item to orders collection inside a particular docId
+                                firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(cartDocumentId)
+                                        .set(cuisineItemsModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
-                                    public void onSuccess(Void aVoid) {
-                                        //get cart details to delete each item
-                                        firebaseFirestore.collection("Cart").document("cart" + uid).collection("cart")
-                                                .get()
-                                                .addOnCompleteListener(new OnCompleteListener < QuerySnapshot > () {
-                                        @Override
-                                        public void onComplete(@NonNull Task < QuerySnapshot > task) {
-                                            if (task.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "Order placed successfully.", Toast.LENGTH_SHORT).show();
-                                            for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()) {
-                                                //delete each cart item
-                                                firebaseFirestore.collection("Cart").document("cart" + uid).collection("cart").document(queryDocumentSnapshot.getId())
-                                                        .delete();
-                                            }
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Date date = new Date();
+                                            subTotal = getIntent().getStringExtra("subTotal");
+                                            tax = getIntent().getStringExtra("tax");
+                                            deliveryCharge = getIntent().getStringExtra("deliveryCharge");
+                                            total = getIntent().getStringExtra("total");
+                                            OrdersModel ordersModel = new OrdersModel(date, subTotal, tax, deliveryCharge, total, address);
+                                            //adding orders data to that particular docId
+                                            firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId)
+                                                    .set(ordersModel)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            //get cart details to delete each item
+                                                            firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
+                                                                    .get()
+                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                            if (task.isSuccessful()) {
+                                                                                Toast.makeText(getApplicationContext(), "Order placed successfully.", Toast.LENGTH_SHORT).show();
+                                                                                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                                                                    //delete each cart item
+                                                                                    firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(queryDocumentSnapshot.getId())
+                                                                                            .delete();
+                                                                                }
+                                                                            }
+                                                                            startActivity(new Intent(getApplicationContext(), HomeScreenActivity.class));
+                                                                        }
+                                                                    });
+                                                        }
+                                                    });
                                         }
-                                            startActivity(new Intent(getApplicationContext(), HomeScreenActivity.class));
-                                        }
-                                    });
-                                }
+                                    }
                                 });
                             }
-                            });
-
                         }
+
                     }
-                }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-            });
+                });
+
     }
 
     /**

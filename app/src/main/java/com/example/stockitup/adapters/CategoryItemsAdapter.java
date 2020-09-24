@@ -26,7 +26,7 @@ public class CategoryItemsAdapter extends FirestoreRecyclerAdapter<CategoryItems
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
         holder.txtName.setText(model.getName());
-        if (model.getImage() != "")
+        if (model.getImage()!= null && !model.getImage().isEmpty())
             Picasso.get().load(model.getImage()).into(holder.imageView);
     }
 

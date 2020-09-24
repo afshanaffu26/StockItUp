@@ -20,6 +20,7 @@ import com.example.stockitup.adapters.AdminCategoriesAdapter;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
+import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,7 +51,7 @@ public class AdminViewCategoriesActivity extends AppCompatActivity {
     }
 
     private void setRecyclerViewData() {
-        Query query = firebaseFirestore.collection("Categories");
+        Query query = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION);
         FirestoreRecyclerOptions<CategoriesModel> options = new FirestoreRecyclerOptions.Builder<CategoriesModel>()
                 .setQuery(query,CategoriesModel.class)
                 .build();
@@ -58,14 +59,18 @@ public class AdminViewCategoriesActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, DocumentSnapshot documentSnapshot, int position) {
+                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
+                String documentId = documentSnapshot.getId();
                 if (view.getId() == R.id.imageViewEdit)
                 {
-                    startActivity(new Intent(getApplicationContext(),AdminEditCategoryActivity.class));
+                    Intent intent = new Intent(getApplicationContext(), AdminEditCategoryActivity.class);
+                    intent.putExtra("name", model.getName());
+                    intent.putExtra("image", model.getImage());
+                    intent.putExtra("categoryDocumentId", documentId);
+                    startActivity(intent);
                 }
                 else {
-                    CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
                     Intent intent = new Intent(getApplicationContext(), AdminCategoryItemsActivity.class);
-                    String documentId = documentSnapshot.getId();
                     intent.putExtra("name", model.getName());
                     intent.putExtra("categoryDocumentId", documentId);
                     startActivity(intent);

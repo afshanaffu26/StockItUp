@@ -30,7 +30,8 @@ public class CartAdapter extends FirestoreRecyclerAdapter<CategoryItemsModel,Car
         holder.txtName.setText(model.getName());
         holder.txtQuantity.setText("Qty: "+model.getQuantity());
         holder.txtPrice.setText("Price: "+model.getPrice()+"$");
-        Picasso.get().load(model.getImage()).into(holder.imageView);
+        if (model.getImage()!= null && !model.getImage().isEmpty())
+            Picasso.get().load(model.getImage()).into(holder.imageView);
     }
 
     @NonNull

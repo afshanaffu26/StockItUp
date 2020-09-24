@@ -24,6 +24,7 @@ import com.example.stockitup.adapters.CategoriesAdapter;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
+import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -150,7 +151,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setRecyclerViewData() {
-        Query query = firebaseFirestore.collection("Categories");
+        Query query = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION);
         FirestoreRecyclerOptions<CategoriesModel> options = new FirestoreRecyclerOptions.Builder<CategoriesModel>()
                 .setQuery(query,CategoriesModel.class)
                 .build();

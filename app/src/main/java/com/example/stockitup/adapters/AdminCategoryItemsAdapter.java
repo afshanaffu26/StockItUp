@@ -28,8 +28,7 @@ public class AdminCategoryItemsAdapter extends FirestoreRecyclerAdapter<Category
         holder.txtName.setText(model.getName());
         holder.txtDesc.setText(model.getDesc());
         holder.txtPrice.setText("Price: "+model.getPrice()+"$");
-
-        if (model.getImage() != "")
+        if (model.getImage()!= null && !model.getImage().isEmpty())
             Picasso.get().load(model.getImage()).into(holder.imageView);
     }
 

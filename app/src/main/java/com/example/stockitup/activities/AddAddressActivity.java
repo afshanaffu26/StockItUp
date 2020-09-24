@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -132,7 +133,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         address.put("address", ""+addressLine1+" "+addressLine2+" "+city+" "+province+" "+country+" "+postalID);
         address.put("phone", ""+phone);
 
-        firebaseFirestore.collection("Address").document(uid).set(address)
+        firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document(uid).set(address)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

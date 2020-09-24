@@ -37,10 +37,8 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
 
     private FirebaseAuth mAuth;
     private Toolbar toolbar;
-    private boolean isInFront;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private FrameLayout mMainFrame;
     private HomeFragment homeFragment;
     private FeedbackFragment feedbackFragment;
     private InviteFragment inviteFragment;
@@ -51,23 +49,6 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
     private TextView drawerUsername,drawerAccount;
     private ImageView drawerImage;
 
-    /**
-     * Called when the activity will start interacting with the user
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        isInFront = true;
-    }
-
-    /**
-     * Called when the activity loses foreground state, is no longer focusable or before tran
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        isInFront = false;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +62,6 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
 
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
-        mMainFrame=findViewById(R.id.main_frame);
 
         View headerView = navigationView.getHeaderView(0);
         drawerImage = (ImageView) headerView.findViewById(R.id.imageView2);

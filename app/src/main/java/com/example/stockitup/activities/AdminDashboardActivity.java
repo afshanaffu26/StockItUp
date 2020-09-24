@@ -70,7 +70,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     }
     private void setCategoriesMapData() {
         progressBar.setVisibility(View.VISIBLE);
-        firebaseFirestore.collection("Categories").get()
+        firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
