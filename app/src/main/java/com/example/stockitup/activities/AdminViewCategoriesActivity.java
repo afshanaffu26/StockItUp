@@ -22,16 +22,18 @@ import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class AdminViewCategoriesActivity extends AppCompatActivity {
+public class AdminViewCategoriesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
     private AdminCategoriesAdapter adapter;
     private ProgressBar progressBar;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,9 @@ public class AdminViewCategoriesActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressbar);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(this);
+
         setRecyclerViewData();
     }
 
@@ -136,5 +141,14 @@ public class AdminViewCategoriesActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.floatingActionButton:
+                startActivity(new Intent(getApplicationContext(), AdminAddCategoryActivity.class));
+                break;
+        }
     }
 }

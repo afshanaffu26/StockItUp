@@ -56,4 +56,5 @@ Upon Purchaser’s reasonable request from time to time, Supplier shall furnish 
     <string name="search">Search</string>
     <string name="update">Update</string>
     <string name="product_name">Product Name</string>
+    <string name="add">Add</string>
 </resources>

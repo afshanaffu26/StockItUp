@@ -42,4 +42,18 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="gone"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="40dp"
+        android:layout_gravity="right|bottom|end"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp"
+        android:backgroundTint="@color/colorMain"
+        android:clickable="true"
+        android:src="@drawable/ic_baseline_add_white_24" />
 </RelativeLayout>

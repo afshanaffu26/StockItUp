@@ -22,11 +22,18 @@ import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class AdminCategoryItemsActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
+
+public class AdminCategoryItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore firebaseFirestore;
     private AdminCategoryItemsAdapter adapter;
@@ -35,6 +42,8 @@ public class AdminCategoryItemsActivity extends AppCompatActivity {
     private TextView txtCategory;
     private String categoryDocumentId;
     private ProgressBar progressBar;
+    private FloatingActionButton floatingActionButton;
+    private Map<String,String> map=new HashMap<String,String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,8 @@ public class AdminCategoryItemsActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(this);
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);
@@ -78,6 +89,7 @@ public class AdminCategoryItemsActivity extends AppCompatActivity {
                 intent.putExtra("price", model.getPrice());
                 intent.putExtra("desc", model.getDesc());
                 intent.putExtra("documentId", documentId);
+                intent.putExtra("categoryDocumentId",categoryDocumentId);
                 startActivity(intent);
             }
         });
@@ -141,5 +153,34 @@ public class AdminCategoryItemsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.floatingActionButton:
+                setCategoriesMapData();
+                break;
+        }
+    }
+    private void setCategoriesMapData() {
+        progressBar.setVisibility(View.VISIBLE);
+        firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            for (DocumentSnapshot documentSnapshot: task.getResult())
+                            {
+                                map.put(documentSnapshot.getString("name"),documentSnapshot.getId());
+                            }
+                            AppConstants.categories_map = map;
+                            Intent i = new Intent(getApplicationContext(), AdminAddCategoryItemsActivity.class);
+                            startActivity(i);
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
     }
 }
