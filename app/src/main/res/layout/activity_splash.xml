@@ -19,8 +19,8 @@
 
         <ImageView
             android:id="@+id/imgAppIcon"
-            android:layout_width="@dimen/img_width_height"
-            android:layout_height="@dimen/img_width_height"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/app_icon" />
 
