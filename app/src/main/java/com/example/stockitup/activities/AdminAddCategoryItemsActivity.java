@@ -1,15 +1,21 @@
 package com.example.stockitup.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,6 +28,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AdminAddCategoryItemsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
@@ -30,8 +37,11 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
     private FirebaseFirestore firebaseFirestore;
     private String category,documentId;
     private EditText editName,editPrice,editDescription;
+    ImageView imageView,imageViewEdit;
     private Button btnAdd;
     private ProgressBar progressBar;
+    private static final int CHOOSE_IMAGE = 101;
+    private Uri uriItemImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,9 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         editPrice = findViewById(R.id.editPrice);
         editDescription = findViewById(R.id.editDescription);
         btnAdd = findViewById(R.id.btnAdd);
+        imageView =  findViewById(R.id.imageView);
+        imageViewEdit = findViewById(R.id.imageViewEdit);
+        imageViewEdit.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
         spinner.setOnItemSelectedListener(this);
@@ -92,6 +105,29 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
             case R.id.btnAdd:
                 addItemToCategory();
                 break;
+            case R.id.imageViewEdit:
+                showImageChooser();
+                break;
+        }
+    }
+
+    private void showImageChooser() {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(i, "Select Image"), CHOOSE_IMAGE);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CHOOSE_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            uriItemImage = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriItemImage);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
