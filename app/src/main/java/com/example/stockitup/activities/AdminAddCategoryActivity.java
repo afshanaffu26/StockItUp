@@ -14,18 +14,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class AdminAddCategoryActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,9 +41,11 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
     private Button btnAdd;
     private ImageView imageViewEdit,imageView;
     private String image,documentId,name;
-    private Uri uriProfileImage;
     private FirebaseFirestore firebaseFirestore;
     private static final int CHOOSE_IMAGE = 101;
+    private Uri uriItemImage;
+    private String itemImageUrl=null;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,18 +63,10 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         btnAdd = findViewById(R.id.btnAdd);
         imageViewEdit = findViewById(R.id.imageViewEdit);
         imageView = findViewById(R.id.imageView);
+        progressBar = findViewById(R.id.progressbar);
 
         imageViewEdit.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
-
-        name = getIntent().getStringExtra("name");
-        image = getIntent().getStringExtra("image");
-        documentId = getIntent().getStringExtra("categoryDocumentId");
-
-        editName.setText(name);
-        if (image!=null && !image.isEmpty())
-            Picasso.get().load(image).into(imageView);
-
     }
 
     @Override
@@ -96,9 +98,9 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CHOOSE_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            uriProfileImage = data.getData();
+            uriItemImage = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImage);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriItemImage);
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -107,9 +109,69 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
     }
 
     private void addCategory() {
-        String name,image;
         name = editName.getText().toString();
-        image = "";
+        if (uriItemImage == null){
+            Toast.makeText(getApplicationContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(name.isEmpty())
+        {
+            editName.setError("Name is required");
+            editName.requestFocus();
+            return;
+        }
+        else {
+            uploadImageToFirebaseStorage();
+        }
+    }
+
+    /**
+     * This method is used to upload image to firebase
+     */
+    private void uploadImageToFirebaseStorage() {
+        String imageId = "" + UUID.randomUUID().toString();
+        final StorageReference itemImageRef = FirebaseStorage.getInstance().getReference()
+                .child("ingredientsImages")
+                .child(imageId+".jpeg");
+        if (uriItemImage != null) {
+            progressBar.setVisibility(View.VISIBLE);
+            itemImageRef.putFile(uriItemImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //progressBar.setVisibility(View.GONE);
+                            //itemImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
+                            itemImageRef.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            //progressBar.setVisibility(View.GONE);
+                                            itemImageUrl = uri.toString();
+                                            //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
+                                            onUploadImageSuccess(itemImageUrl);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+    private void onUploadImageSuccess(String itemImageUrl) {
+        image = itemImageUrl;
         CategoriesModel categoriesModel = new CategoriesModel(name,image);
         firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION)
                 .add(categoriesModel)
@@ -117,7 +179,8 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful())
-                            Toast.makeText(getApplicationContext(),"Category Added",Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(),"Category Added",Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -156,6 +156,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         btnSave.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        uploadImageToFirebaseStorage();
         UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                 .setDisplayName(displayName)
                 .build();
@@ -192,7 +193,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImage);
                 imgUser.setImageBitmap(bitmap);
-                uploadImageToFirebaseStorage();
+//                uploadImageToFirebaseStorage();
             } catch (IOException e) {
                 e.printStackTrace();
             }
