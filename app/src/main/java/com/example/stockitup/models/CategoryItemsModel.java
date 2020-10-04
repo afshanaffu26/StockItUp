@@ -10,13 +10,6 @@ public class CategoryItemsModel {
     public CategoryItemsModel() {
     }
 
-    public CategoryItemsModel(String name, String image, String desc, String price) {
-        this.name = name;
-        this.image = image;
-        this.desc = desc;
-        this.price = price;
-    }
-
     public CategoryItemsModel(String name, String image, String desc, String price, String quantity) {
         this.name = name;
         this.image = image;

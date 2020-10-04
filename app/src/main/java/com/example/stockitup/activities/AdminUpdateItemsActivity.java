@@ -18,25 +18,34 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class AdminUpdateItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText editName,editDesc,editPrice;
-    private String name,desc,price,image,documentId,categoryDocumentId;
-    private ImageView imageView,imageViewEdit;
+    private EditText editName, editDesc, editPrice;
+    String quantity ="0";
+    private String name, desc, price, image, documentId, categoryDocumentId;
+    private ImageView imageView, imageViewEdit;
     private ProgressBar progressBar;
     private Button btnUpdate;
     private FirebaseFirestore firebaseFirestore;
     private static final int CHOOSE_IMAGE = 101;
     private Uri uriItemImage;
+    private String itemImageUrl=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +80,10 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
         editDesc.setText(desc);
         editPrice.setText(price);
 
-        if (image!=null && !image.isEmpty())
+        if (image != null && !image.isEmpty())
             Picasso.get().load(image).into(imageView);
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -82,8 +92,7 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
 
     @Override
     public void onClick(View view) {
-        switch(view.getId())
-        {
+        switch (view.getId()) {
             case R.id.btnUpdate:
                 updateItemData();
                 break;
@@ -99,6 +108,7 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(i, "Select Image"), CHOOSE_IMAGE);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -114,16 +124,75 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
     }
 
     private void updateItemData() {
-        String name = editName.getText().toString();
-        String desc = editDesc.getText().toString();
-        String price = editPrice.getText().toString();
-        String image = "";
-        CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name,image,desc,price);
+        if (uriItemImage == null) {
+            Toast.makeText(getApplicationContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (name.isEmpty()) {
+            editName.setError("Name is required");
+            editName.requestFocus();
+            return;
+        } else {
+            uploadImageToFirebaseStorage();
+        }
+    }
+
+    /**
+     * This method is used to upload image to firebase
+     */
+    private void uploadImageToFirebaseStorage() {
+        String imageId = "" + UUID.randomUUID().toString();
+        final StorageReference itemImageRef = FirebaseStorage.getInstance().getReference()
+                .child("ingredientsImages")
+                .child(imageId + ".jpeg");
+        if (uriItemImage != null) {
+            progressBar.setVisibility(View.VISIBLE);
+            itemImageRef.putFile(uriItemImage)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //itemImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
+                            itemImageRef.getDownloadUrl()
+                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            //progressBar.setVisibility(View.GONE);
+                                            itemImageUrl = uri.toString();
+                                            //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
+                                            onUploadImageSuccess(itemImageUrl);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+    private void onUploadImageSuccess(String itemImageUrl) {
+        name = editName.getText().toString();
+        desc = editDesc.getText().toString();
+        price = editPrice.getText().toString();
+        image = itemImageUrl;
+        CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, desc, price,quantity);
         firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId)
                 .set(categoryItemsModel)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(AdminUpdateItemsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
                     }
                 });
