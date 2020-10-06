@@ -64,7 +64,7 @@ public class AddressActivity extends AppCompatActivity{
     }
 
     private void setRecyclerViewData() {
-        Query query = firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document("address"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
+        final Query query = firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document("address"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
         FirestoreRecyclerOptions<AddressModel> options = new FirestoreRecyclerOptions.Builder<AddressModel>()
                 .setQuery(query,AddressModel.class)
                 .build();
@@ -88,8 +88,15 @@ public class AddressActivity extends AppCompatActivity{
                     startActivity(intent);
                 }
                 else {
-                    String address = ""+model.getAddressLine() + " " + model.getCity() + " " + model.getProvince()+" "+model.getCountry()+" " +model.getPincode();
-                    goToPayment(address);
+                    if (getIntent().getStringExtra("screen") == null )
+                    {
+                        String address = ""+model.getAddressLine() + " " + model.getCity() + " " + model.getProvince()+" "+model.getCountry()+" " +model.getPincode();
+                        goToPayment(address);
+                    }
+                    else if (getIntent().getStringExtra("screen").equalsIgnoreCase("settings"))
+                    {
+                        return;
+                    }
                 }
             }
         });

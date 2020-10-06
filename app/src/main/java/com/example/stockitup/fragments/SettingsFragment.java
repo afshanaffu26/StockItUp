@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.activities.AddressActivity;
 import com.example.stockitup.activities.ProfileActivity;
 
 /**
@@ -68,6 +69,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         ImageView imgProfileBtn = v.findViewById(R.id.imgProfileBtn);
         imgProfileBtn.setOnClickListener(this);
+        ImageView imgAddressBtn = v.findViewById(R.id.imgAddressBtn);
+        imgAddressBtn.setOnClickListener(this);
         return v;
     }
     @Override
@@ -76,6 +79,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.imgProfileBtn:
                 Intent i = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(i);
+                ((Activity) getActivity()).overridePendingTransition(0, 0);
+                break;
+            case R.id.imgAddressBtn:
+                Intent intent = new Intent(getActivity(), AddressActivity.class);
+                intent.putExtra("screen","settings");
+                startActivity(intent);
                 ((Activity) getActivity()).overridePendingTransition(0, 0);
                 break;
         }
