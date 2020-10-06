@@ -15,11 +15,9 @@ import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.models.OrdersModel;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -44,7 +42,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
@@ -71,13 +69,6 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
      */
     private void cartCheckout() {
         final String docId = "" + UUID.randomUUID().toString();
-        //fetch the recent address added
-        firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document(uid).get().addOnSuccessListener(new OnSuccessListener < DocumentSnapshot > () {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-            address = documentSnapshot.get("address").toString();
-        }
-        });
         //fetch cart items
         firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).get().addOnCompleteListener(
                 new OnCompleteListener < QuerySnapshot > () {
@@ -99,6 +90,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                             tax = getIntent().getStringExtra("tax");
                                             deliveryCharge = getIntent().getStringExtra("deliveryCharge");
                                             total = getIntent().getStringExtra("total");
+                                            address = getIntent().getStringExtra("address");
                                             OrdersModel ordersModel = new OrdersModel(date, subTotal, tax, deliveryCharge, total, address);
                                             //adding orders data to that particular docId
                                             firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId)

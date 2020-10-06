@@ -24,13 +24,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -40,7 +38,7 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
     private EditText editName;
     private Button btnAdd;
     private ImageView imageViewEdit,imageView;
-    private String image,documentId,name;
+    private String image,name;
     private FirebaseFirestore firebaseFirestore;
     private static final int CHOOSE_IMAGE = 101;
     private Uri uriItemImage;
@@ -52,7 +50,7 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_category);
 
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);

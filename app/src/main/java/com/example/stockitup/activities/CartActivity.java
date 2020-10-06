@@ -53,7 +53,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
@@ -220,7 +220,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCheckout:
-                Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddressActivity.class);
                 intent.putExtra("subTotal", ""+subTotal);
                 intent.putExtra("tax", ""+tax);
                 intent.putExtra("deliveryCharge", ""+deliveryCharge);

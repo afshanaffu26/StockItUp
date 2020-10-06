@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
+
 public class FaqActivity extends AppCompatActivity {
     private TextView Q1;
 
@@ -23,9 +25,11 @@ public class FaqActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq);
+
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("StockItUp");
+        getSupportActionBar().setTitle(appName);
         //display back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

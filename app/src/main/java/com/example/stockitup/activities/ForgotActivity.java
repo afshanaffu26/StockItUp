@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +38,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         //display back button

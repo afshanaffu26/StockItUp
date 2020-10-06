@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
 
 /**
  * This class deals with feedback of application
@@ -97,7 +98,7 @@ public class FeedbackFragment extends Fragment implements View.OnClickListener {
      * This method sends email via Email app with provided data.
      */
     private void sendEmailWithoutChooser() {
-        String email = "teamstockitup@gmail.com";
+        String email = AppConstants.ADMIN_EMAIL;
         String feedback_msg = editTextMultiLine.getText().toString().trim();
         if(feedback_msg.isEmpty()) {
             Toast.makeText(getContext(), "Please enter your experience..", Toast.LENGTH_SHORT).show();
@@ -130,7 +131,7 @@ public class FeedbackFragment extends Fragment implements View.OnClickListener {
         }
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "teamstockitup@gmail.com" });
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { AppConstants.ADMIN_EMAIL });
         intent.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
         intent.putExtra(Intent.EXTRA_TEXT, feedbackMessage);
         startActivity(Intent.createChooser(intent, ""));

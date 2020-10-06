@@ -36,7 +36,6 @@ import com.google.firebase.firestore.Query;
 public class OrderHistoryFragment extends Fragment {
 
     private FirebaseFirestore firebaseFirestore;
-    private FirestoreRecyclerAdapter adapter;
     private RecyclerView recyclerView;
     private String orderHistoryDocumentId;
     private LinearLayout linearLayout;

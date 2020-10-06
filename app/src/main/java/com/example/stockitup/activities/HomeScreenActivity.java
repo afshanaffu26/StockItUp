@@ -1,34 +1,34 @@
 package com.example.stockitup.activities;
 
-        import androidx.annotation.NonNull;
-        import androidx.appcompat.app.ActionBarDrawerToggle;
-        import androidx.appcompat.app.AppCompatActivity;
-        import androidx.appcompat.widget.Toolbar;
-        import androidx.core.view.GravityCompat;
-        import androidx.drawerlayout.widget.DrawerLayout;
-        import androidx.fragment.app.Fragment;
-        import androidx.fragment.app.FragmentTransaction;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-        import android.content.Intent;
-        import android.os.Bundle;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.FrameLayout;
-        import android.widget.ImageView;
-        import android.widget.TextView;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import com.bumptech.glide.Glide;
-        import com.example.stockitup.fragments.HelpFragment;
-        import com.example.stockitup.fragments.OrderHistoryFragment;
-        import com.example.stockitup.fragments.FeedbackFragment;
-        import com.example.stockitup.fragments.HomeFragment;
-        import com.example.stockitup.R;
-        import com.example.stockitup.fragments.InviteFragment;
-        import com.example.stockitup.fragments.OffersFragment;
-        import com.example.stockitup.fragments.SettingsFragment;
-        import com.google.android.material.navigation.NavigationView;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
+import com.bumptech.glide.Glide;
+import com.example.stockitup.fragments.HelpFragment;
+import com.example.stockitup.fragments.OrderHistoryFragment;
+import com.example.stockitup.fragments.FeedbackFragment;
+import com.example.stockitup.fragments.HomeFragment;
+import com.example.stockitup.R;
+import com.example.stockitup.fragments.InviteFragment;
+import com.example.stockitup.fragments.OffersFragment;
+import com.example.stockitup.fragments.SettingsFragment;
+import com.example.stockitup.utils.AppConstants;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * This class deals with Home screen and related fragments to be set on where required.
@@ -55,7 +55,7 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         toolbar=findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);

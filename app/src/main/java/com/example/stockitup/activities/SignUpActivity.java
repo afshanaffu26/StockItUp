@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -47,12 +48,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         //display back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         txtLogin = findViewById(R.id.txtLogin);
         txtLogin.setOnClickListener(this);
@@ -79,7 +80,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         switch (view.getId())
         {
             case R.id.txtLogin:
-                startActivity(new Intent(this,LoginActivity.class));
+                finish();
+                Intent i= new Intent(getApplicationContext(),LoginActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
                 break;
             case R.id.txtConditions:
                 startActivity(new Intent(getApplicationContext(), TermsActivity.class));
@@ -149,13 +153,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()) {
+                    finish();
+                    Intent i= new Intent(SignUpActivity.this,HomeScreenActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(name).build();
                     user.updateProfile(profileUpdates);
                     //if (user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp()) {
                     //FirebaseAuth.getInstance().signOut();
-                    finish();
+                    //finish();
                     //startActivity(new Intent(getApplicationContext(),LoginActivity.class));
                     Toast.makeText(getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT).show();
                     //}

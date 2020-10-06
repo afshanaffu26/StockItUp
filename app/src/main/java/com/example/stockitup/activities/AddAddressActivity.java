@@ -13,20 +13,20 @@ import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * This class manages user address to proceed with order
- */
 public class AddAddressActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private EditText editFullName,editAddressLine1,editAddressLine2,editProvince,editCity,editPostalID,editCountry,editPhone;
+    private EditText editName,editAddressLine,editProvince,editCity,editPostalID,editCountry,editPhone;
     private FirebaseFirestore firebaseFirestore;
     private String uid;
 
@@ -34,8 +34,8 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
-        
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
@@ -43,9 +43,8 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
 
         Button btnNext = findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
-        editFullName = findViewById(R.id.editFullName);
-        editAddressLine1 = findViewById(R.id.editAddressLine1);
-        editAddressLine2 = findViewById(R.id.editAddressLine2);
+        editName = findViewById(R.id.editName);
+        editAddressLine = findViewById(R.id.editAddressLine);
         editProvince = findViewById(R.id.editProvince);
         editCity = findViewById(R.id.editCity);
         editPostalID = findViewById(R.id.editPostalID);
@@ -74,27 +73,26 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
      * This method stores the provided address to database.
      */
     private void addAddress() {
-        String fullName,addressLine1,addressLine2,apt,province,city,postalID,country,phone;
+        String name,addressLine,province,city,postalID,country,phone;
 
-        fullName = editFullName.getText().toString();
-        addressLine1 = editAddressLine1.getText().toString();
-        addressLine2 = editAddressLine2.getText().toString();
+        name = editName.getText().toString();
+        addressLine = editAddressLine.getText().toString();
         province = editProvince.getText().toString();
         city = editCity.getText().toString();
         postalID = editPostalID.getText().toString();
         country = editCountry.getText().toString();
         phone = editPhone.getText().toString();
 
-        if(fullName.isEmpty())
+        if(name.isEmpty())
         {
-            editFullName.setError("Full name is required");
-            editFullName.requestFocus();
+            editName.setError("Name is required");
+            editName.requestFocus();
             return;
         }
-        if(addressLine1.isEmpty())
+        if(addressLine.isEmpty())
         {
-            editAddressLine1.setError("Address Line 1 is required");
-            editAddressLine1.requestFocus();
+            editAddressLine.setError("Street and Apt/Suit# is required");
+            editAddressLine.requestFocus();
             return;
         }
         if(city.isEmpty())
@@ -129,42 +127,20 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         }
 
         Map<String, Object> address = new HashMap<>();
-        address.put("fullName", ""+fullName);
-        address.put("address", ""+addressLine1+" "+addressLine2+" "+city+" "+province+" "+country+" "+postalID);
+        address.put("name", ""+name);
+        address.put("addressLine", ""+addressLine);
+        address.put("city", ""+city);
+        address.put("province", ""+province);
+        address.put("country", ""+country);
+        address.put("pincode", ""+postalID);
         address.put("phone", ""+phone);
 
-        firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document(uid).set(address)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        goToPayment();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddAddressActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    /**
-     * Navigates to payment page to show break up of total amount being charged.
-     */
-    private void goToPayment() {
-        String subTotal,deliveryCharge,tax,total;
-
-        Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
-        subTotal = getIntent().getStringExtra("subTotal");
-        tax = getIntent().getStringExtra("tax");
-        deliveryCharge = getIntent().getStringExtra("deliveryCharge");
-        total = getIntent().getStringExtra("total");
-
-        intent.putExtra("subTotal", subTotal);
-        intent.putExtra("tax", tax);
-        intent.putExtra("deliveryCharge", deliveryCharge);
-        intent.putExtra("total", total);
-        startActivity(intent);
+        firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).add(address).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                Toast.makeText(AddAddressActivity.this, "Address Added.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorWhite"
+    android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -34,39 +34,27 @@
                 android:textColor="@color/colorText"
                 android:textSize="24sp" />
             <EditText
-                android:id="@+id/editFullName"
+                android:id="@+id/editName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="Full Name"
+                android:hint="Name"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
             <EditText
-                android:id="@+id/editAddressLine1"
+                android:id="@+id/editAddressLine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="Address Line 1"
+                android:hint="Street and Apt/Suit#"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
-
-            <EditText
-                android:id="@+id/editAddressLine2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
-                android:hint="Address Line 2 (optional)"
-                android:background="@drawable/edit_text_background"
-                android:ems="10"
-                android:inputType="text" />
 
             <EditText
                 android:id="@+id/editCity"
@@ -134,7 +122,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@color/colorButton"
-                android:text="Next"
+                android:text="Add Address"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>

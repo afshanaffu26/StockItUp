@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
 
 public class TermsActivity extends AppCompatActivity {
 
@@ -14,7 +15,7 @@ public class TermsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms);
 
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);

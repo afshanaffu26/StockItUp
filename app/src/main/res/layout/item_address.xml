@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/txtAddressName"
+                android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -26,7 +26,7 @@
                 android:layout_marginStart="10dp" />
 
             <TextView
-                android:id="@+id/txtStreetAndApt"
+                android:id="@+id/txtAddressLine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -53,12 +53,30 @@
                 android:textColor="@color/colorText"
                 android:layout_marginStart="10dp" />
             <TextView
+                android:id="@+id/txtCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:text="Canada"
+                android:textColor="@color/colorText"
+                android:layout_marginStart="10dp" />
+            <TextView
                 android:id="@+id/txtPincode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textSize="18sp"
                 android:text="HXV2XX"
+                android:textColor="@color/colorText"
+                android:layout_marginStart="10dp" />
+            <TextView
+                android:id="@+id/txtPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:text="+15145145141"
                 android:textColor="@color/colorText"
                 android:layout_marginStart="10dp" />
         </LinearLayout>

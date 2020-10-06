@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
 
 /**
  * This class deals with contact us details for user to contact
@@ -37,9 +38,11 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
+
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("StockItUp");
+        getSupportActionBar().setTitle(appName);
         //display back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

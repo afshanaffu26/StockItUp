@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
+import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
@@ -146,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void userLoginSuccess() {
-        String user = getApplicationContext().getResources().getString(R.string.stockitup_gmail_com);
+        String user = AppConstants.ADMIN_EMAIL;
         if (mAuth.getCurrentUser().getEmail().equalsIgnoreCase(user))
             startActivity(new Intent(this,AdminDashboardActivity.class));
         else

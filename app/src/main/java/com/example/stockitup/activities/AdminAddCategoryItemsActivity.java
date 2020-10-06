@@ -58,7 +58,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_category_items);
 
-        String appName = getApplicationContext().getResources().getString(R.string.app_name);
+        String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
@@ -160,7 +160,6 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-//                                            progressBar.setVisibility(View.GONE);
                                             itemImageUrl = uri.toString();
                                             //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
                                             onUploadImageSuccess(itemImageUrl);
