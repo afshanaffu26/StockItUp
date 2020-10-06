@@ -32,10 +32,10 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="187dp"
-                android:layout_height="165dp"
+                android:layout_width="@dimen/img_width_height"
+                android:layout_marginTop="30dp"
+                android:layout_height="@dimen/img_width_height"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
                 app:srcCompat="@drawable/app_icon" />
 
             <TextView
