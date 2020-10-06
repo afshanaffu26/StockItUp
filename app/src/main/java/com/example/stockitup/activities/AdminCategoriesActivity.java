@@ -18,16 +18,21 @@ import android.widget.Toast;
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.AdminCategoriesAdapter;
 import com.example.stockitup.listeners.OnItemClickListener;
+import com.example.stockitup.listeners.OnItemDeleteListener;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class AdminViewCategoriesActivity extends AppCompatActivity implements View.OnClickListener {
+public class AdminCategoriesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
@@ -38,7 +43,7 @@ public class AdminViewCategoriesActivity extends AppCompatActivity implements Vi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_view_categories);
+        setContentView(R.layout.activity_admin_categories);
 
         String appName = getApplicationContext().getResources().getString(R.string.app_name);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -82,6 +87,39 @@ public class AdminViewCategoriesActivity extends AppCompatActivity implements Vi
                 }
             }
         });
+        adapter.setOnItemDeleteListener(new OnItemDeleteListener() {
+            @Override
+            public void onItemDelete(DocumentSnapshot documentSnapshot, int position) {
+                final String id = documentSnapshot.getId();
+                progressBar.setVisibility(View.VISIBLE);
+                firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(id).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    if (task.getResult().size() == 0)
+                                    {
+                                        firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(id).delete();
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(getApplicationContext(), "Deleted Successfully.",
+                                                Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+                                    else {
+                                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                            firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(id).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(queryDocumentSnapshot.getId()).delete();
+                                        }
+                                        firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(id).delete();
+                                        Toast.makeText(getApplicationContext(), "Deleted Successfully.",
+                                                Toast.LENGTH_LONG).show();
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                }
+                            }
+                        });
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(false);
@@ -106,14 +144,14 @@ public class AdminViewCategoriesActivity extends AppCompatActivity implements Vi
                     case DialogInterface.BUTTON_POSITIVE:
                         // Yes button clicked
                         adapter.deleteItem(position);
-                        Toast.makeText(getApplicationContext(), "Deleted Successfully",
+                        Toast.makeText(getApplicationContext(), "Deleted Successfully.",
                                 Toast.LENGTH_LONG).show();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
                         // No button clicked
                         adapter.notifyItemChanged(position);
-                        Toast.makeText(getApplicationContext(), "Delete cancelled",
+                        Toast.makeText(getApplicationContext(), "Delete Cancelled.",
                                 Toast.LENGTH_LONG).show();
                         break;
                 }
@@ -121,7 +159,7 @@ public class AdminViewCategoriesActivity extends AppCompatActivity implements Vi
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure?")
+        builder.setMessage("Are you sure you want to delete this category?")
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
@@ -151,4 +189,5 @@ public class AdminViewCategoriesActivity extends AppCompatActivity implements Vi
                 break;
         }
     }
+
 }

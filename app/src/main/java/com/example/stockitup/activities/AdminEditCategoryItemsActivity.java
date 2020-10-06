@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
-import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,7 +33,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.UUID;
 
-public class AdminUpdateItemsActivity extends AppCompatActivity implements View.OnClickListener {
+public class AdminEditCategoryItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editName, editDesc, editPrice;
     String quantity ="0";
@@ -50,7 +49,7 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_update_items);
+        setContentView(R.layout.activity_admin_edit_category_items);
 
         String appName = getApplicationContext().getResources().getString(R.string.app_name);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -124,10 +123,6 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
     }
 
     private void updateItemData() {
-        if (uriItemImage == null) {
-            Toast.makeText(getApplicationContext(), "Please select an image", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if (name.isEmpty()) {
             editName.setError("Name is required");
             editName.requestFocus();
@@ -179,6 +174,22 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
                         }
                     });
         }
+        else
+        {
+            name = editName.getText().toString();
+            desc = editDesc.getText().toString();
+            price = editPrice.getText().toString();
+            CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, desc, price,quantity);
+            firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId)
+                    .set(categoryItemsModel)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(AdminEditCategoryItemsActivity.this, "Category Item Updated.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
     private void onUploadImageSuccess(String itemImageUrl) {
@@ -193,7 +204,7 @@ public class AdminUpdateItemsActivity extends AppCompatActivity implements View.
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(AdminUpdateItemsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminEditCategoryItemsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

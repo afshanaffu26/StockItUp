@@ -194,7 +194,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(AdminAddCategoryItemsActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminAddCategoryItemsActivity.this, "Category Item Added.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

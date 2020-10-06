@@ -117,10 +117,6 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
     }
 
     private void updateCategory() {
-        if (uriItemImage == null){
-            Toast.makeText(getApplicationContext(), "Please select an image", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if(name.isEmpty())
         {
             editName.setError("Name is required");
@@ -170,6 +166,20 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
                         public void onFailure(@NonNull Exception e) {
                             progressBar.setVisibility(View.GONE);
                             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else
+        {
+            name = editName.getText().toString();
+            CategoriesModel categoriesModel = new CategoriesModel(name, image);
+            firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(documentId)
+                    .set(categoriesModel)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(), "Category Updated.", Toast.LENGTH_SHORT).show();
                         }
                     });
         }

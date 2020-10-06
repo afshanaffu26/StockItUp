@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.AdminAddCategoryActivity"></activity>
         <activity android:name=".activities.AdminEditCategoryActivity" />
-        <activity android:name=".activities.AdminUpdateItemsActivity" />
+        <activity android:name=".activities.AdminEditCategoryItemsActivity" />
         <activity android:name=".activities.AdminCategoryItemsActivity" />
         <activity android:name=".activities.ContactActivity" />
         <activity android:name=".activities.FaqActivity" />
@@ -35,7 +35,7 @@
         <activity android:name=".activities.ForgotActivity" />
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.AdminViewCategoriesActivity" />
+        <activity android:name=".activities.AdminCategoriesActivity" />
         <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorWhite"
-    tools:context=".activities.AdminUpdateItemsActivity">
+    tools:context=".activities.AdminEditCategoryItemsActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

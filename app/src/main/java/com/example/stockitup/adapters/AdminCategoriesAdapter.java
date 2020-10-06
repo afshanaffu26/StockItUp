@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
-import com.example.stockitup.activities.AdminCategoryItemsActivity;
 import com.example.stockitup.listeners.OnItemClickListener;
+import com.example.stockitup.listeners.OnItemDeleteListener;
 import com.example.stockitup.models.CategoriesModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesModel,AdminCategoriesAdapter.ViewHolder>{
 
     private OnItemClickListener listener;
-    private AdminCategoryItemsActivity adminCategoryItemsActivity = new AdminCategoryItemsActivity();;
+    private OnItemDeleteListener itemDeleteListener;
     public AdminCategoriesAdapter(@NonNull FirestoreRecyclerOptions<CategoriesModel> options) {
         super(options);
     }
@@ -40,7 +40,7 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
     }
 
     public void deleteItem(int position){
-        getSnapshots().getSnapshot(position).getReference().delete();
+        itemDeleteListener.onItemDelete(getSnapshots().getSnapshot(position), position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -68,5 +68,8 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
 
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
+    }
+    public void setOnItemDeleteListener(OnItemDeleteListener listener){
+        this.itemDeleteListener = listener;
     }
 }

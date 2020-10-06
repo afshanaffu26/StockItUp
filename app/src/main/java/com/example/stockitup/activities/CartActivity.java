@@ -1,12 +1,14 @@
 package com.example.stockitup.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -95,7 +97,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                adapter.deleteItem(viewHolder.getAdapterPosition());
+                final int position = viewHolder.getAdapterPosition();
+                alertMessage(position);
             }
         })
         .attachToRecyclerView(recyclerView);
@@ -123,7 +126,32 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+    public void alertMessage(final int position) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        // Yes button clicked
+                        adapter.deleteItem(position);
+                        Toast.makeText(getApplicationContext(), "Item removed from cart successfully.",
+                                Toast.LENGTH_LONG).show();
+                        break;
 
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        // No button clicked
+                        adapter.notifyItemChanged(position);
+//                        Toast.makeText(getApplicationContext(), "Delete Cancelled.",
+//                                Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to remove this item from cart?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
     /**
      * This method is used to calculate cart total
      */

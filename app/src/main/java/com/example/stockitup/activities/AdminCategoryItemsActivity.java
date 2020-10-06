@@ -80,7 +80,7 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
             @Override
             public void onItemClick(View view, DocumentSnapshot documentSnapshot, int position) {
                 CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
-                Intent intent = new Intent(getApplicationContext(), AdminUpdateItemsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AdminEditCategoryItemsActivity.class);
                 String documentId = documentSnapshot.getId();
                 intent.putExtra("category", category);
                 intent.putExtra("name", model.getName());
@@ -118,14 +118,14 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
                     case DialogInterface.BUTTON_POSITIVE:
                         // Yes button clicked
                         adapter.deleteItem(position);
-                        Toast.makeText(getApplicationContext(), "Deleted Successfully",
+                        Toast.makeText(getApplicationContext(), "Deleted Successfully.",
                                 Toast.LENGTH_LONG).show();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
                         // No button clicked
                         adapter.notifyItemChanged(position);
-                        Toast.makeText(getApplicationContext(), "Delete cancelled",
+                        Toast.makeText(getApplicationContext(), "Delete Cancelled.",
                                 Toast.LENGTH_LONG).show();
                         break;
                 }
@@ -133,7 +133,7 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure?")
+        builder.setMessage("Are you sure you want to delete this item?")
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }

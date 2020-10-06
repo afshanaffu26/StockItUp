@@ -180,7 +180,7 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful())
                             progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),"Category Added",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Category Added.",Toast.LENGTH_SHORT).show();
                     }
                 });
     }

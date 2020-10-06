@@ -58,7 +58,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         switch (view.getId())
         {
             case R.id.cardViewCategory:
-                startActivity(new Intent(getApplicationContext(), AdminViewCategoriesActivity.class));
+                startActivity(new Intent(getApplicationContext(), AdminCategoriesActivity.class));
                 break;
             case R.id.cardAddCategoryItems:
                 setCategoriesMapData();
