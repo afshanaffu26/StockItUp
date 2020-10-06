@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.EditAddressActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Delivery Address"
+                android:textColor="@color/colorText"
+                android:textSize="24sp" />
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:hint="Name"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+            <EditText
+                android:id="@+id/editAddressLine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:hint="Street and Apt/Suit#"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/editCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:hint="City"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editProvince"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:hint="Province"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editCountry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:hint="Country"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editPostalID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:hint="Postal Code/ZIP"
+                android:inputType="textPostalAddress" />
+            <EditText
+                android:id="@+id/editPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:hint="Telephone number"
+                android:inputType="number" />
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorButton"
+                android:text="Update Address"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

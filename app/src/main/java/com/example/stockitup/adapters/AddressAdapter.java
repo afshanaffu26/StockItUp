@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.AddressModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -18,6 +19,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,AddressAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
+    private OnDataChangeListener dataChangeListener;
     public AddressAdapter(@NonNull FirestoreRecyclerOptions<AddressModel> options) {
         super(options);
     }
@@ -44,7 +46,7 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView txtName,txtAddressLine,txtCity,txtProvince,txtCountry,txtPincode,txtPhone;
         private ImageView imgBtnEditAddress;
@@ -58,22 +60,31 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
             txtPincode = itemView.findViewById(R.id.txtPincode);
             txtPhone = itemView.findViewById(R.id.txtPhone);
             imgBtnEditAddress = itemView.findViewById(R.id.imgBtnEditAddress);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    //if an item is deleted from recycler view, this checks when its in delete animation position returning -1
-                    if (position != RecyclerView.NO_POSITION && listener != null)
-                    {
-                        listener.onItemClick(view,getSnapshots().getSnapshot(position),position);
-                    }
-                }
-            });
+            imgBtnEditAddress.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+            dataChangeListener.onDataChanged();
+        }
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            //if an item is deleted from recycler view, this checks when its in delete animation position returning -1
+            if (position != RecyclerView.NO_POSITION && listener != null) {
+                listener.onItemClick(view,getSnapshots().getSnapshot(position), position);
+            }
         }
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
     }
 }

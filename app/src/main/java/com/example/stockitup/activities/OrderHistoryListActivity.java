@@ -73,6 +73,7 @@ public class OrderHistoryListActivity extends AppCompatActivity{
                 intent.putExtra("desc", model.getDesc());
                 String documentId = documentSnapshot.getId();
                 intent.putExtra("documentId", documentId);
+                intent.putExtra("screen","orders");
                 startActivity(intent);
             }
         });

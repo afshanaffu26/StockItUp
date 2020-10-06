@@ -135,9 +135,12 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         address.put("pincode", ""+postalID);
         address.put("phone", ""+phone);
 
-        firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).add(address).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document("address"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
+                .add(address)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
+                finish();
                 Toast.makeText(AddAddressActivity.this, "Address Added.", Toast.LENGTH_SHORT).show();
             }
         });

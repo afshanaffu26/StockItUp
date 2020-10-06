@@ -83,6 +83,8 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
             floatingActionButton.setVisibility(View.VISIBLE);
         else if (getIntent().getStringExtra("screen").equalsIgnoreCase("cart"))
             floatingActionButton.setVisibility(View.GONE);
+        else if (getIntent().getStringExtra("screen").equalsIgnoreCase("orders"))
+            floatingActionButton.setVisibility(View.GONE);
 
         name = getIntent().getStringExtra("name");
         image = getIntent().getStringExtra("image");

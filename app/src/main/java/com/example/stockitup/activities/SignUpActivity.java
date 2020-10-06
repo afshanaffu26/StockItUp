@@ -155,7 +155,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 if(task.isSuccessful()) {
                     finish();
                     Intent i= new Intent(SignUpActivity.this,HomeScreenActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(name).build();
