@@ -1,5 +1,6 @@
 package com.example.stockitup.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,10 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.text.SimpleDateFormat;
 
-public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,OrderHistoryAdapter.ViewHolder> {
+public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,AdminAllOrdersAdapter.ViewHolder> {
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
-    public OrderHistoryAdapter(@NonNull FirestoreRecyclerOptions<OrdersModel> options) {
+    public AdminAllOrdersAdapter(@NonNull FirestoreRecyclerOptions<OrdersModel> options) {
         super(options);
     }
 
@@ -33,20 +34,32 @@ public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,Or
         holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge());
         holder.txtTotal.setText("Total: "+model.getTotal());
         holder.txtAddress.setText("Address: "+model.getAddress());
-        holder.txtStatus.setText("Status: "+model.getStatus());
+        holder.txtStatus.setText(model.getStatus());
+        if (model.getStatus().equalsIgnoreCase("pending"))
+        {
+            holder.txtStatus.setTextColor(Color.parseColor("#ffa700"));
+        }
+        else if (model.getStatus().equalsIgnoreCase("delivered"))
+        {
+            holder.txtStatus.setTextColor(Color.parseColor("#00b159"));
+        }
+        else
+        {
+            holder.txtStatus.setTextColor(Color.parseColor("#db2544"));
+        }
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_history,parent,false);
-        return new OrderHistoryAdapter.ViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_all_orders,parent,false);
+        return new AdminAllOrdersAdapter.ViewHolder(view);
     }
 
     @Override
     public void onDataChanged() {
         super.onDataChanged();
-        dataChangeListener.onDataChanged();
+       // dataChangeListener.onDataChanged();
     }
 
     public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){

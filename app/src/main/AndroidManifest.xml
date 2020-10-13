@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.EditAddressActivity"></activity>
+        <activity android:name=".activities.AdminUpdateOrderActivity"></activity>
+        <activity android:name=".activities.AdminAllOrdersActivity" />
+        <activity android:name=".activities.AdminManageOrdersActivity" />
+        <activity android:name=".activities.EditAddressActivity" />
         <activity android:name=".activities.AdminAddCategoryActivity" />
         <activity android:name=".activities.AdminEditCategoryActivity" />
         <activity android:name=".activities.AdminEditCategoryItemsActivity" />

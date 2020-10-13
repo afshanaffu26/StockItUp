@@ -12,17 +12,19 @@ public class OrdersModel {
     private String deliveryCharge;
     private String total;
     private String address;
+    private String status;
 
     public OrdersModel() {
     }
 
-    public OrdersModel(Date date, String subtotal, String tax, String deliveryCharge, String total, String address) {
+    public OrdersModel(Date date, String subtotal, String tax, String deliveryCharge, String total, String address, String status) {
         this.date = date;
         this.subtotal = subtotal;
         this.tax = tax;
         this.deliveryCharge = deliveryCharge;
         this.total = total;
         this.address = address;
+        this.status = status;
     }
 
     public Date getDate() {
@@ -71,5 +73,13 @@ public class OrdersModel {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

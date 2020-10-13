@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.models.CategoryItemsModel;
+import com.example.stockitup.models.ManageOrdersModel;
 import com.example.stockitup.models.OrdersModel;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -91,13 +94,15 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                             deliveryCharge = getIntent().getStringExtra("deliveryCharge");
                                             total = getIntent().getStringExtra("total");
                                             address = getIntent().getStringExtra("address");
-                                            OrdersModel ordersModel = new OrdersModel(date, subTotal, tax, deliveryCharge, total, address);
+                                            String status = "Pending";
+                                            OrdersModel ordersModel = new OrdersModel(date, subTotal, tax, deliveryCharge, total, address,status);
                                             //adding orders data to that particular docId
                                             firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId)
                                                     .set(ordersModel)
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
+                                                            addOrderDetails();
                                                             //get cart details to delete each item
                                                             firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
                                                                     .get()
@@ -126,6 +131,12 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 });
 
+    }
+
+    private void addOrderDetails() {
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        ManageOrdersModel manageOrdersModel = new ManageOrdersModel(uid,userEmail);
+        firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).set(manageOrdersModel);
     }
 
     /**

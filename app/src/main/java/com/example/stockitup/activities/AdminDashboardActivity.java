@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class AdminDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CardView cardLogout,cardViewCategory,cardAddCategoryItems;
+    private CardView cardLogout,cardViewCategory,cardAddCategoryItems,cardManageOrders;
     private FirebaseFirestore firebaseFirestore;
     private ProgressBar progressBar;
     private Map<String,String> map=new HashMap<String,String>();
@@ -46,6 +46,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cardViewCategory.setOnClickListener(this);
         cardAddCategoryItems = findViewById(R.id.cardAddCategoryItems);
         cardAddCategoryItems.setOnClickListener(this);
+        cardManageOrders = findViewById(R.id.cardManageOrders);
+        cardManageOrders.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
     }
@@ -59,6 +61,9 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.cardAddCategoryItems:
                 setCategoriesMapData();
+                break;
+            case R.id.cardManageOrders:
+                startActivity(new Intent(getApplicationContext(),AdminManageOrdersActivity.class));
                 break;
             case R.id.cardLogout:
                 userLogout();
