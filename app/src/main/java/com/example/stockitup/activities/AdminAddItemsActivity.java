@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
@@ -38,25 +37,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class AdminAddCategoryItemsActivity extends AppCompatActivity implements View.OnClickListener {
+public class AdminAddItemsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    private String name,image,description,price,categoryName;
-    private String quantity = "0";
+    private String name,image,description,price;
+    String quantity = "0";
+    private Spinner spinner;
     private FirebaseFirestore firebaseFirestore;
-    private String documentId;
+    private String category,documentId;
     private EditText editName,editPrice,editDescription;
-    private ImageView imageView,imageViewEdit;
+    ImageView imageView,imageViewEdit;
     private Button btnAdd;
     private ProgressBar progressBar;
     private static final int CHOOSE_IMAGE = 101;
     private Uri uriItemImage = null;
     private String itemImageUrl = null;
-    private TextView txtCategoryName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_add_category_items);
+        setContentView(R.layout.activity_admin_add_items);
 
         String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -64,6 +63,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        spinner = findViewById(R.id.spinner);
         editName = findViewById(R.id.editName);
         editPrice = findViewById(R.id.editPrice);
         editDescription = findViewById(R.id.editDescription);
@@ -71,19 +71,40 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         imageView =  findViewById(R.id.imageView);
         imageViewEdit = findViewById(R.id.imageViewEdit);
         imageViewEdit.setOnClickListener(this);
-        txtCategoryName = findViewById(R.id.txtCategoryName);
-        documentId = getIntent().getStringExtra("categoryDocumentId");
-        categoryName = getIntent().getStringExtra("categoryName");
-        txtCategoryName.setText("Category: "+categoryName);
         btnAdd.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        spinner.setOnItemSelectedListener(this);
         progressBar = findViewById(R.id.progressBar);
+
+        ArrayList<String> categoriesList = new ArrayList<>();
+        categoriesList.add("Select a category..");
+        categoriesList.addAll(AppConstants.categories_map.keySet());
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categoriesList);
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        spinner.setAdapter(dataAdapter);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i!=0)
+            category = adapterView.getSelectedItem().toString();
+        else
+            category = "";
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     @Override
@@ -171,7 +192,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), "Category Item Added.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminAddItemsActivity.this, "Category Item Added.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -180,8 +201,14 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         name = editName.getText().toString();
         description = editDescription.getText().toString();
         image="";
+        documentId = AppConstants.categories_map.get(category);
+        if (category == "")
+        {
+            Toast.makeText(AdminAddItemsActivity.this, "Please select a category", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (uriItemImage == null){
-            Toast.makeText(getApplicationContext(), "Please select an image", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdminAddItemsActivity.this, "Please select an image", Toast.LENGTH_SHORT).show();
             return;
         }
         if(name.isEmpty())

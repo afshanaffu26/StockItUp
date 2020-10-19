@@ -83,7 +83,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                                 map.put(documentSnapshot.getString("name"),documentSnapshot.getId());
                             }
                             AppConstants.categories_map = map;
-                            Intent i = new Intent(getApplicationContext(), AdminAddCategoryItemsActivity.class);
+                            Intent i = new Intent(getApplicationContext(), AdminAddItemsActivity.class);
                             startActivity(i);
                         }
                         progressBar.setVisibility(View.GONE);

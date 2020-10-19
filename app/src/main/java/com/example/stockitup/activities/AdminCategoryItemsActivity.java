@@ -159,7 +159,11 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.floatingActionButton:
-                setCategoriesMapData();
+                //setCategoriesMapData();
+                Intent i = new Intent(getApplicationContext(), AdminAddCategoryItemsActivity.class);
+                i.putExtra("categoryDocumentId",categoryDocumentId);
+                i.putExtra("categoryName",category);
+                startActivity(i);
                 break;
         }
     }

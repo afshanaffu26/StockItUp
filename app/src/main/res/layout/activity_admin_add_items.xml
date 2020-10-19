@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".activities.AdminAddCategoryItemsActivity">
+    tools:context=".activities.AdminAddItemsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,12 +22,19 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/txtCategoryName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
                     android:textSize="16dp"
-                    android:text="Category: Pasta"/>
+                    android:text="Select the Category"/>
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/edit_text_background"
+                    android:layout_marginRight="15dp"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
