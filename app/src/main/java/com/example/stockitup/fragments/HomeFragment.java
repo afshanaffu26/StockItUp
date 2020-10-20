@@ -126,7 +126,8 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull HomeFragment.CategoryItemsViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
                 holder.txtName.setText(model.getName());
-                Picasso.get().load(model.getImage()).into(holder.imageView);
+                if (model.getImage()!= null && !model.getImage().isEmpty())
+                    Picasso.get().load(model.getImage()).into(holder.imageView);
                 holder.linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void

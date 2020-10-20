@@ -11,10 +11,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.CategoryItemsAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
@@ -30,9 +32,10 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
     private CategoryItemsAdapter adapter;
     private RecyclerView recyclerView;
     private String category ="";
-    private TextView txtCategory;
+    private TextView txtCategory,txtEmptyItems;
     private String categoryDocumentId;
     private FloatingActionButton floatingActionButton;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
         floatingActionButton = findViewById(R.id.floatingActionButton);
+        linearLayout = findViewById(R.id.linearLayout);
+        txtEmptyItems = findViewById(R.id.txtEmptyItems);
+
         floatingActionButton.setOnClickListener(this);
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
@@ -76,6 +82,21 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
                 intent.putExtra("desc", model.getDesc());
                 intent.putExtra("documentId", documentId);
                 startActivity(intent);
+            }
+        });
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
+            @Override
+            public void onDataChanged() {
+                if (adapter.getItemCount() != 0)
+                {
+                    txtEmptyItems.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    txtEmptyItems.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
+                }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));

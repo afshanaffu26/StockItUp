@@ -27,7 +27,7 @@ public class OrderHistoryListAdapter extends FirestoreRecyclerAdapter<CategoryIt
     protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
 
         holder.txtName.setText(model.getName());
-        holder.txtPrice.setText("Price: "+model.getPrice());
+        holder.txtPrice.setText("Price: "+model.getPrice()+"$");
         holder.txtQuantity.setText("Qty: "+model.getQuantity());
         if (model.getImage()!= null && !model.getImage().isEmpty())
             Picasso.get().load(model.getImage()).into(holder.imageView);

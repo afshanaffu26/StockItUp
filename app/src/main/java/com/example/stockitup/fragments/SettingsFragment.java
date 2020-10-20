@@ -65,7 +65,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         ImageView imgProfileBtn = v.findViewById(R.id.imgProfileBtn);
         imgProfileBtn.setOnClickListener(this);
@@ -79,13 +78,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.imgProfileBtn:
                 Intent i = new Intent(getActivity(), ProfileActivity.class);
                 startActivity(i);
-                ((Activity) getActivity()).overridePendingTransition(0, 0);
                 break;
             case R.id.imgAddressBtn:
                 Intent intent = new Intent(getActivity(), AddressActivity.class);
                 intent.putExtra("screen","settings");
                 startActivity(intent);
-                ((Activity) getActivity()).overridePendingTransition(0, 0);
                 break;
         }
     }

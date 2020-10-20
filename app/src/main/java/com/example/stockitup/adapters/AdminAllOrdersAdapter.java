@@ -29,10 +29,11 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull OrdersModel model) {
         String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(model.getDate());
         holder.txtOrderDate.setText("Ordered On: "+date);
-        holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal());
-        holder.txtTax.setText("Tax: "+model.getTax());
-        holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge());
-        holder.txtTotal.setText("Total: "+model.getTotal());
+        holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal()+"$");
+        holder.txtOffer.setText("Offer (-20%): -"+model.getOffer()+"$");
+        holder.txtTax.setText("Tax: "+model.getTax()+"$");
+        holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge()+"$");
+        holder.txtTotal.setText("Total: "+model.getTotal()+"$");
         holder.txtAddress.setText("Address: "+model.getAddress());
         holder.txtStatus.setText(model.getStatus());
         if (model.getStatus().equalsIgnoreCase("pending"))
@@ -71,12 +72,13 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus;
+        private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
             txtSubTotal = itemView.findViewById(R.id.txtSubTotal);
+            txtOffer = itemView.findViewById(R.id.txtOffer);
             txtTax = itemView.findViewById(R.id.txtTax);
             txtDeliveryCharge = itemView.findViewById(R.id.txtDeliveryCharge);
             txtTotal = itemView.findViewById(R.id.txtTotal);

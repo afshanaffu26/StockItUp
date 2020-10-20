@@ -51,13 +51,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_margin="20dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -67,6 +66,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="SubTotal"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/txtOfferName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Offer (-20%)"
                         android:textSize="18sp" />
 
                     <TextView
@@ -100,8 +107,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -109,13 +115,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:layout_gravity="right"
                         android:text="3.50"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/txtOffer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="right"
+                        android:text="1.25"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/txtTax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="right"
                         android:layout_weight="1"
                         android:text="1.25"
                         android:textSize="18sp" />
@@ -124,6 +141,7 @@
                         android:id="@+id/txtDeliveryCharge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="right"
                         android:layout_weight="1"
                         android:text="1.25"
                         android:textSize="18sp" />
@@ -132,14 +150,13 @@
                         android:id="@+id/txtTotal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="right"
                         android:layout_weight="1"
                         android:text="6.00"
                         android:textStyle="bold"
                         android:textColor="@color/colorText"
                         android:textSize="18sp" />
-
                 </LinearLayout>
-
             </LinearLayout>
 
             <Button

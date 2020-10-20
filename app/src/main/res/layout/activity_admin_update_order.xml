@@ -27,6 +27,7 @@
                     android:layout_margin="15dp"
                     android:textSize="18dp"
                     android:layout_gravity="center"
+                    android:textStyle="bold"
                     android:textColor="@color/colorText"
                     android:text="OrderDetails"/>
 
@@ -38,6 +39,14 @@
                     android:text="Ordered On:"
                     android:textColor="@color/colorText"
                     android:textSize="18dp"/>
+
+                <TextView
+                    android:id="@+id/txtOffer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Offer (-20%): -5$"
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/txtSubTotal"
@@ -89,9 +98,16 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="18sp"
-                        android:text="Status"
-                        android:layout_gravity="center_vertical"
-                        android:textColor="@color/colorText" />
+                        android:text="Status:"
+                        android:layout_gravity="center_vertical" />
+                    <TextView
+                        android:id="@+id/txtStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="18sp"
+                        android:text="Pending"
+                        android:layout_gravity="center_vertical" />
                     <Spinner
                         android:id="@+id/spinner"
                         android:layout_width="match_parent"

@@ -61,7 +61,7 @@
                     android:inputType="text" />
 
                 <EditText
-                    android:id="@+id/editEmail"
+                    android:id="@+id/editCardNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"

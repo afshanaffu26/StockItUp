@@ -1,5 +1,6 @@
 package com.example.stockitup.adapters;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +29,25 @@ public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,Or
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull OrdersModel model) {
         String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(model.getDate());
         holder.txtOrderDate.setText("Ordered On: "+date);
-        holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal());
-        holder.txtTax.setText("Tax: "+model.getTax());
-        holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge());
-        holder.txtTotal.setText("Total: "+model.getTotal());
+        holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal()+"$");
+        holder.txtOffer.setText("Offer (-20%): -"+model.getOffer()+"$");
+        holder.txtTax.setText("Tax: "+model.getTax()+"$");
+        holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge()+"$");
+        holder.txtTotal.setText("Total: "+model.getTotal()+"$");
         holder.txtAddress.setText("Address: "+model.getAddress());
-        holder.txtStatus.setText("Status: "+model.getStatus());
+        holder.txtStatus.setText(model.getStatus());
+        if (model.getStatus().equalsIgnoreCase("pending"))
+        {
+            holder.txtStatus.setTextColor(Color.parseColor("#ffa700"));
+        }
+        else if (model.getStatus().equalsIgnoreCase("delivered"))
+        {
+            holder.txtStatus.setTextColor(Color.parseColor("#00b159"));
+        }
+        else
+        {
+            holder.txtStatus.setTextColor(Color.parseColor("#db2544"));
+        }
     }
 
     @NonNull
@@ -58,12 +72,13 @@ public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,Or
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus;
+        private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
             txtSubTotal = itemView.findViewById(R.id.txtSubTotal);
+            txtOffer = itemView.findViewById(R.id.txtOffer);
             txtTax = itemView.findViewById(R.id.txtTax);
             txtDeliveryCharge = itemView.findViewById(R.id.txtDeliveryCharge);
             txtTotal = itemView.findViewById(R.id.txtTotal);

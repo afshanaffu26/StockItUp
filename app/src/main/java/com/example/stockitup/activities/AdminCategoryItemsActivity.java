@@ -12,12 +12,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.AdminCategoryItemsAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
@@ -39,11 +41,12 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
     private AdminCategoryItemsAdapter adapter;
     private RecyclerView recyclerView;
     private String category ="";
-    private TextView txtCategory;
+    private TextView txtCategory,txtEmptyItems;
     private String categoryDocumentId;
     private ProgressBar progressBar;
     private FloatingActionButton floatingActionButton;
     private Map<String,String> map=new HashMap<String,String>();
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,8 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);
+        linearLayout = findViewById(R.id.linearLayout);
+        txtEmptyItems = findViewById(R.id.txtEmptyItems);
 
         setRecyclerViewData();
     }
@@ -91,6 +96,21 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
                 intent.putExtra("documentId", documentId);
                 intent.putExtra("categoryDocumentId",categoryDocumentId);
                 startActivity(intent);
+            }
+        });
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
+            @Override
+            public void onDataChanged() {
+                if (adapter.getItemCount() != 0)
+                {
+                    txtEmptyItems.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    txtEmptyItems.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
+                }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
@@ -159,32 +179,11 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.floatingActionButton:
-                //setCategoriesMapData();
                 Intent i = new Intent(getApplicationContext(), AdminAddCategoryItemsActivity.class);
                 i.putExtra("categoryDocumentId",categoryDocumentId);
                 i.putExtra("categoryName",category);
                 startActivity(i);
                 break;
         }
-    }
-    private void setCategoriesMapData() {
-        progressBar.setVisibility(View.VISIBLE);
-        firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful())
-                        {
-                            for (DocumentSnapshot documentSnapshot: task.getResult())
-                            {
-                                map.put(documentSnapshot.getString("name"),documentSnapshot.getId());
-                            }
-                            AppConstants.categories_map = map;
-                            Intent i = new Intent(getApplicationContext(), AdminAddCategoryItemsActivity.class);
-                            startActivity(i);
-                        }
-                        progressBar.setVisibility(View.GONE);
-                    }
-                });
     }
 }

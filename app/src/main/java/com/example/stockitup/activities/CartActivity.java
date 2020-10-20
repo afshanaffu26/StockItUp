@@ -35,6 +35,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DecimalFormat;
+
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String uid;
@@ -45,8 +47,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private CartAdapter adapter;
     private RecyclerView recyclerView;
     private LinearLayout linearLayout;
-    private TextView txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtEmptyCart;
-    private double subTotal,deliveryCharge,tax,total;
+    private TextView txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtEmptyCart,txtOfferName,txtOffer;
+    private double subTotal,deliveryCharge,tax,total,offer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         progressBar = findViewById(R.id.progressbar);
         btnCheckout = findViewById(R.id.btnCheckout);
         recyclerView = findViewById(R.id.recyclerView);
+        txtOfferName = findViewById(R.id.txtOfferName);
+        txtOffer = findViewById(R.id.txtOffer);
 
         btnCheckout.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -202,15 +206,16 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
      * @param subTotal This param is total before taxes
      */
     private void calculateTotal(double subTotal){
-        txtSubTotal.setText(""+subTotal+"$");
+        txtSubTotal.setText(""+String.format("%.2f", subTotal)+"$");
+        offer = (20.0*subTotal)/100;
+        txtOffer.setText("-"+String.format("%.2f", offer)+"$");
         tax = (15.0*subTotal)/100;
-        txtTax.setText(""+tax+"$");
-        deliveryCharge = 3;
-        txtDeliveryCharge.setText(""+deliveryCharge+"$");
-        total = subTotal + tax + deliveryCharge;
-        txtTotal.setText(""+total+"$");
+        txtTax.setText(""+String.format("%.2f", tax)+"$");
+        deliveryCharge = 3.00;
+        txtDeliveryCharge.setText(""+String.format("%.2f", deliveryCharge)+"$");
+        total = subTotal - offer + tax + deliveryCharge;
+        txtTotal.setText(""+String.format("%.2f", total)+"$");
         progressBar.setVisibility(View.GONE);
-
     }
 
     /**
@@ -221,10 +226,11 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btnCheckout:
                 Intent intent = new Intent(getApplicationContext(), AddressActivity.class);
-                intent.putExtra("subTotal", ""+subTotal);
-                intent.putExtra("tax", ""+tax);
-                intent.putExtra("deliveryCharge", ""+deliveryCharge);
-                intent.putExtra("total", ""+total);
+                intent.putExtra("subTotal", ""+String.format("%.2f", subTotal));
+                intent.putExtra("offer", ""+String.format("%.2f", offer));
+                intent.putExtra("tax", ""+String.format("%.2f", tax));
+                intent.putExtra("deliveryCharge", ""+String.format("%.2f", deliveryCharge));
+                intent.putExtra("total", ""+String.format("%.2f", total));
                 startActivity(intent);
                 break;
         }

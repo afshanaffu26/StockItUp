@@ -16,14 +16,6 @@
         android:paddingTop="10dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <!--            <TextView-->
-        <!--                android:id="@+id/txtOrderId"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginLeft="10dp"-->
-        <!--                android:text="Order Id:"-->
-        <!--                android:textColor="@color/myTextColor"-->
-        <!--                android:textSize="18dp"/>-->
         <TextView
             android:id="@+id/txtOrderDate"
             android:layout_width="match_parent"
@@ -39,6 +31,14 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Subtotal: 55$"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/txtOffer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Offer (20%): 2s$"
             android:textSize="16dp" />
 
         <TextView
@@ -71,6 +71,16 @@
             android:layout_marginLeft="10dp"
             android:text="Address:"
             android:textSize="16dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Status:"
+            android:textSize="16dp"/>
         <TextView
             android:id="@+id/txtStatus"
             android:layout_width="match_parent"
@@ -78,6 +88,7 @@
             android:layout_marginLeft="10dp"
             android:text="Status"
             android:textSize="16dp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <ImageButton

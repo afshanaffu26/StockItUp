@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
@@ -37,8 +38,10 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private Button btnPay;
     private FirebaseFirestore firebaseFirestore;
     private String uid;
-    private String subTotal, deliveryCharge, tax, total;
+    private String subTotal, deliveryCharge, tax, total, offer;
     private String address;
+    private EditText editName,editCardNo,editCVV,editExpDate;
+    private String name,cardNo,cvv,expDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,11 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        editName = findViewById(R.id.editName);
+        editCardNo = findViewById(R.id.editCardNo);
+        editCVV = findViewById(R.id.editCVV);
+        editExpDate = findViewById(R.id.editExpDate);
 
         btnPay = findViewById(R.id.btnPay);
         btnPay.setOnClickListener(this);
@@ -63,7 +71,6 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
      */
     @Override
     public void onClick(View view) {
-        Toast.makeText(getApplicationContext(), "Payment is being Processed, Please don't refresh", Toast.LENGTH_SHORT).show();
         cartCheckout();
     }
 
@@ -71,6 +78,37 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
      * This method is used to checkout the items added to cart
      */
     private void cartCheckout() {
+        name = editName.getText().toString();
+        cardNo = editCardNo.getText().toString();
+        cvv = editCVV.getText().toString();
+        expDate = editExpDate.getText().toString();
+
+        if(name.isEmpty())
+        {
+            editName.setError("Name is required");
+            editName.requestFocus();
+            return;
+        }
+        if(cardNo.isEmpty())
+        {
+            editCardNo.setError("Card Number is required");
+            editCardNo.requestFocus();
+            return;
+        }
+        if(cvv.isEmpty())
+        {
+            editCVV.setError("CVV is required");
+            editCVV.requestFocus();
+            return;
+        }
+        if(expDate.isEmpty())
+        {
+            editExpDate.setError("Expiry Date is required");
+            editExpDate.requestFocus();
+            return;
+        }
+        Toast.makeText(getApplicationContext(), "Payment is being Processed, Please don't refresh", Toast.LENGTH_SHORT).show();
+
         final String docId = "" + UUID.randomUUID().toString();
         //fetch cart items
         firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).get().addOnCompleteListener(
@@ -90,12 +128,13 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                         if (task.isSuccessful()) {
                                             Date date = new Date();
                                             subTotal = getIntent().getStringExtra("subTotal");
+                                            offer = getIntent().getStringExtra("offer");
                                             tax = getIntent().getStringExtra("tax");
                                             deliveryCharge = getIntent().getStringExtra("deliveryCharge");
                                             total = getIntent().getStringExtra("total");
                                             address = getIntent().getStringExtra("address");
                                             String status = "Pending";
-                                            OrdersModel ordersModel = new OrdersModel(date, subTotal, tax, deliveryCharge, total, address,status);
+                                            OrdersModel ordersModel = new OrdersModel(date, subTotal, offer, tax, deliveryCharge, total, address,status);
                                             //adding orders data to that particular docId
                                             firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId)
                                                     .set(ordersModel)

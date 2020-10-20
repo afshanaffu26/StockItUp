@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -19,6 +20,8 @@ import com.squareup.picasso.Picasso;
 public class CategoryItemsAdapter extends FirestoreRecyclerAdapter<CategoryItemsModel,CategoryItemsAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
+    private OnDataChangeListener dataChangeListener;
+
     public CategoryItemsAdapter(@NonNull FirestoreRecyclerOptions<CategoryItemsModel> options) {
         super(options);
     }
@@ -61,6 +64,16 @@ public class CategoryItemsAdapter extends FirestoreRecyclerAdapter<CategoryItems
                 }
             });
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

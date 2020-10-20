@@ -39,10 +39,9 @@ import java.io.IOException;
  */
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView txtVerifyUser;
     private EditText editName;
     private Button btnSave;
-    private ImageView imgUser;
+    private ImageView imgUser,imageViewEdit;
     private Uri uriProfileImage;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
@@ -67,12 +66,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         editName = (EditText) findViewById(R.id.editDisplayName);
         btnSave = findViewById(R.id.btnSave);
-        imgUser = findViewById(R.id.imageUserProfile);
+        imageViewEdit = findViewById(R.id.imageViewEdit);
+        imgUser = findViewById(R.id.imageView);
         progressBar = findViewById(R.id.progressbar);
-        txtVerifyUser=findViewById(R.id.txtVerifyUser);
 
         btnSave.setOnClickListener(this);
-        imgUser.setOnClickListener(this);
+        imageViewEdit.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
         loadUserInformation();
@@ -92,27 +91,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 String displayName = user.getDisplayName();
                 editName.setText(displayName);
                 editName.setSelection(user.getDisplayName().length());
-            }
-            if (user.isEmailVerified())
-            {
-                txtVerifyUser.setText("Email Verified");
-            }
-            else
-            {
-                txtVerifyUser.setText("Email Not Verified(Click to verify)");
-                txtVerifyUser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        progressBar.setVisibility(View.VISIBLE);
-                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                progressBar.setVisibility(View.GONE);
-                                Toast.makeText(ProfileActivity.this,"Verification Email Sent",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
             }
         }
     }
@@ -136,7 +114,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btnSave:
                 saveUserInfoUpdateName();
                 break;
-            case R.id.imageUserProfile:
+            case R.id.imageViewEdit:
                 showImageChooser();
                 //handleImageClick();
                 break;
@@ -147,38 +125,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      * This method update name in user profile in firebase
      */
     private void saveUserInfoUpdateName() {
-
         displayName=editName.getText().toString();
         if(displayName.isEmpty()){
             editName.setError("Name required");
             editName.requestFocus();
             return;
         }
-        btnSave.setEnabled(false);
         progressBar.setVisibility(View.VISIBLE);
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
         uploadImageToFirebaseStorage();
-        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                .setDisplayName(displayName)
-                .build();
-        firebaseUser.updateProfile(request)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        btnSave.setEnabled(true);
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),"Profile name updated successfully",Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        btnSave.setEnabled(true);
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
-
-                    }
-                });
     }
     private void showImageChooser() {
         Intent i = new Intent();
@@ -194,7 +148,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImage);
                 imgUser.setImageBitmap(bitmap);
-//                uploadImageToFirebaseStorage();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -205,7 +158,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      * This method is used to upload image to firebase
      */
     private void uploadImageToFirebaseStorage() {
-        //final StorageReference profileImageRef = FirebaseStorage.getInstance().getReference("profilepics/" + System.currentTimeMillis() + ".jpg");
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final StorageReference profileImageRef = FirebaseStorage.getInstance().getReference()
                 .child("profileImages")
@@ -216,15 +168,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //progressBar.setVisibility(View.GONE);
                             //profileImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
                             profileImageRef.getDownloadUrl()
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            //progressBar.setVisibility(View.GONE);
                                             profileImageUrl = uri.toString();
-                                            //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
                                             saveUserInfo(uri);
                                         }
                                     })
@@ -245,6 +194,29 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     });
         }
+        else
+        {
+            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+            UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(displayName)
+                    .build();
+            firebaseUser.updateProfile(request)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(),"Profile updated successfully",Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+        }
     }
 
     /**
@@ -252,29 +224,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
      * @param uri
      */
     private void saveUserInfo(Uri uri) {
-
-//        String displayName= editName.getText().toString();
-//        if(displayName.isEmpty()){
-//            editName.setError("Name required");
-//            editName.requestFocus();
-//            return;
-//        }
-
-        FirebaseUser user = mAuth.getCurrentUser();
-
-        if (user!=null) {
-            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder()
-                    // .setDisplayName(displayName)
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser!=null) {
+            UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(displayName)
                     //   .setPhotoUri(Uri.parse(profileImageUrl))
                     .setPhotoUri(uri)
                     .build();
-            user.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
+            firebaseUser.updateProfile(request).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful())
                     {
-                        Toast.makeText(ProfileActivity.this,"Profile updated",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this,"Profile updated successfully",Toast.LENGTH_SHORT).show();
                     }
                     else
                     {

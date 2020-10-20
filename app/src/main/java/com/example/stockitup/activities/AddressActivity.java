@@ -160,15 +160,17 @@ public class AddressActivity extends AppCompatActivity{
      * Navigates to payment page to show break up of total amount being charged.
      */
     private void goToPayment(String address) {
-        String subTotal,deliveryCharge,tax,total;
+        String subTotal,deliveryCharge,tax,total,offer;
 
         Intent intent = new Intent(getApplicationContext(), PaymentActivity.class);
         subTotal = getIntent().getStringExtra("subTotal");
+        offer = getIntent().getStringExtra("offer");
         tax = getIntent().getStringExtra("tax");
         deliveryCharge = getIntent().getStringExtra("deliveryCharge");
         total = getIntent().getStringExtra("total");
 
         intent.putExtra("subTotal", subTotal);
+        intent.putExtra("offer", offer);
         intent.putExtra("tax", tax);
         intent.putExtra("deliveryCharge", deliveryCharge);
         intent.putExtra("total", total);

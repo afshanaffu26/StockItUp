@@ -26,7 +26,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
-                    android:textSize="16dp"
+                    android:textSize="18dp"
+                    android:textColor="@color/colorText"
                     android:text="Category: Pasta"/>
                 <RelativeLayout
                     android:layout_width="match_parent"

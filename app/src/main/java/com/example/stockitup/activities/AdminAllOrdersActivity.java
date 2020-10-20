@@ -67,6 +67,7 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
                 intent.putExtra("orderDocumentId", orderDocumentId);
                 intent.putExtra("date", date);
                 intent.putExtra("subtotal", model.getSubtotal());
+                intent.putExtra("offer", model.getOffer());
                 intent.putExtra("tax", model.getTax());
                 intent.putExtra("deliveryCharge", model.getDeliveryCharge());
                 intent.putExtra("total", model.getTotal());

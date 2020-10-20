@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -19,6 +20,8 @@ import com.squareup.picasso.Picasso;
 public class AdminCategoryItemsAdapter extends FirestoreRecyclerAdapter<CategoryItemsModel,AdminCategoryItemsAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
+    private OnDataChangeListener dataChangeListener;
+
     public AdminCategoryItemsAdapter(@NonNull FirestoreRecyclerOptions<CategoryItemsModel> options) {
         super(options);
     }
@@ -26,7 +29,6 @@ public class AdminCategoryItemsAdapter extends FirestoreRecyclerAdapter<Category
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
         holder.txtName.setText(model.getName());
-        holder.txtDesc.setText(model.getDesc());
         holder.txtPrice.setText("Price: "+model.getPrice()+"$");
         if (model.getImage()!= null && !model.getImage().isEmpty())
             Picasso.get().load(model.getImage()).into(holder.imageView);
@@ -65,6 +67,16 @@ public class AdminCategoryItemsAdapter extends FirestoreRecyclerAdapter<Category
                 }
             });
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

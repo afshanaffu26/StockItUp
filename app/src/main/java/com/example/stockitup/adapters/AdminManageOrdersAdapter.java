@@ -23,7 +23,7 @@ public class AdminManageOrdersAdapter extends FirestoreRecyclerAdapter<ManageOrd
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull final ManageOrdersModel model) {
-        holder.txtOrderId.setText(model.getUserId());
+        holder.txtOrderId.setText("ID: "+model.getUserId());
         holder.txtUserEmail.setText(model.getUserEmail());
     }
 

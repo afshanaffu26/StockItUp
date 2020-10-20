@@ -40,12 +40,12 @@ import java.util.UUID;
 public class AdminAddItemsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private String name,image,description,price;
-    String quantity = "0";
+    private String quantity = "0";
     private Spinner spinner;
     private FirebaseFirestore firebaseFirestore;
     private String category,documentId;
     private EditText editName,editPrice,editDescription;
-    ImageView imageView,imageViewEdit;
+    private ImageView imageView,imageViewEdit;
     private Button btnAdd;
     private ProgressBar progressBar;
     private static final int CHOOSE_IMAGE = 101;

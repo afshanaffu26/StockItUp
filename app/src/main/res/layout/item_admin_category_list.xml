@@ -36,12 +36,6 @@
             android:textSize="18dp"
             android:textColor="@color/colorText" />
         <TextView
-            android:id="@+id/txtDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:text="@string/item_description"/>
-        <TextView
             android:id="@+id/txtPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
