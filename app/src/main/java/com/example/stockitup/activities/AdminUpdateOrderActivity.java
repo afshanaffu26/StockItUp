@@ -15,18 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
-import com.example.stockitup.models.OrdersModel;
 import com.example.stockitup.utils.AppConstants;
+import com.example.stockitup.utils.JavaMailAPI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AdminUpdateOrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
@@ -35,8 +33,9 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     private Button btnUpdate;
     private FirebaseFirestore firebaseFirestore;
     private String userDocumentId,orderDocumentId;
-    private String date,subtotal,tax,deliveryCharge,total,address,status,offer;
+    private String date,subtotal,tax,deliveryCharge,total,address,status,offer,userEmail;
     private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +57,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         txtAddress = findViewById(R.id.txtAddress);
         txtStatus = findViewById(R.id.txtStatus);
         spinner = (Spinner) findViewById(R.id.spinner);
+        firebaseAuth = FirebaseAuth.getInstance();
 
         btnUpdate = findViewById(R.id.btnUpdate);
         btnUpdate.setOnClickListener(this);
@@ -65,6 +65,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
 
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         orderDocumentId = getIntent().getStringExtra("orderDocumentId");
+        userEmail = getIntent().getStringExtra("userEmail");
         status = getIntent().getStringExtra("status");
         date = getIntent().getStringExtra("date");
         subtotal = getIntent().getStringExtra("subtotal");
@@ -81,6 +82,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         txtDeliveryCharge.setText("Delivery Charge: "+deliveryCharge+"$");
         txtTotal.setText("Total: "+total+"$");
         txtAddress.setText("Delivery Address: "+address);
+
         setSpinner();
         setViewByOrderStatus();
     }
@@ -158,16 +160,39 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         DocumentReference documentReference = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document(userDocumentId).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderDocumentId);
         documentReference.update(map).addOnSuccessListener(
                 new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                setViewByOrderStatus();
-                Toast.makeText(AdminUpdateOrderActivity.this, "Status Updated", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        if (status.equalsIgnoreCase("delivered"))
+                            sendInvoice();
+                        setViewByOrderStatus();
+                        Toast.makeText(AdminUpdateOrderActivity.this, "Status Updated", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(AdminUpdateOrderActivity.this, "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * This method sends email via Email app with provided data.
+     */
+    private void sendInvoice() {
+        String mEmail = userEmail;
+        String mSubject = "Invoice for your purchase at StockItUp";
+        String mMessage = "Hello, \n\nThank you for ordering at StockItUp.\n\nYour order is delivered successfully to "+address+".\n\nPlease find the invoice for your order #"+orderDocumentId +"\n\n\n"+
+                "Ordered date: "+date+"\n" +
+                "Subtotal: "+subtotal+"$\n"+
+                "Offer (-20%): -"+offer+"$\n" +
+                "Tax: "+tax+"$\n"+
+                "Delivery charge: "+deliveryCharge+"$\n" +
+                "Total: "+total+"$\n\n\n\n\n\nThank you,\nTeam StockItUp";
+
+
+
+        JavaMailAPI javaMailAPI = new JavaMailAPI(this, mEmail, mSubject, mMessage);
+
+        javaMailAPI.execute();
     }
 }

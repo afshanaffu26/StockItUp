@@ -13,4 +13,5 @@ public class AppConstants {
     public static final String ORDERS_COLLECTION_DOCUMENT = "AllOrders";
     public static final String ADMIN_EMAIL = "teamstockitup@gmail.com";
     public static final String APP_NAME = "StockItUp";  //stockitup.8
+    public static final String ADMIN_PASSWORD = "gvzungbsuznhniux";
 }

@@ -56,9 +56,10 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
             public void onItemClick(View view, DocumentSnapshot documentSnapshot, int position) {
                 ManageOrdersModel model = documentSnapshot.toObject(ManageOrdersModel.class);
                 String documentId = documentSnapshot.getId();
-                    Intent intent = new Intent(getApplicationContext(), AdminAllOrdersActivity.class);
-                    intent.putExtra("userDocumentId", documentId);
-                    startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), AdminAllOrdersActivity.class);
+                intent.putExtra("userDocumentId", documentId);
+                intent.putExtra("userEmail", model.getUserEmail());
+                startActivity(intent);
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
