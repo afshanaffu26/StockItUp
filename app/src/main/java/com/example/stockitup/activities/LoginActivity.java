@@ -17,9 +17,16 @@ import android.widget.Toast;
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class manages user authentication
@@ -32,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth mAuth;
     private EditText editEmail,editPassword;
     private ProgressBar progressBar;
+    private FirebaseFirestore firebaseFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         editEmail= findViewById(R.id.editEmail);
         editPassword= findViewById(R.id.editPassword);
@@ -148,10 +157,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void userLoginSuccess() {
         String user = AppConstants.ADMIN_EMAIL;
-        if (mAuth.getCurrentUser().getEmail().equalsIgnoreCase(user))
-            startActivity(new Intent(this,AdminDashboardActivity.class));
-        else
-            startActivity(new Intent(this,HomeScreenActivity.class));
+        if (mAuth.getCurrentUser().getEmail().equalsIgnoreCase(user)) {
+            startActivity(new Intent(this, AdminDashboardActivity.class));
+        }
+        else {
+            final Map<String,String> map = new HashMap<String, String>();
+            firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful())
+                            {
+                                for (DocumentSnapshot documentSnapshot: task.getResult())
+                                {
+                                    map.put(documentSnapshot.getString("name"),documentSnapshot.getString("value"));
+                                }
+                                AppConstants.OFFERS_MAP = map;
+                            }
+                        }
+                    });
+            startActivity(new Intent(this, HomeScreenActivity.class));
+        }
     }
 
 }

@@ -34,7 +34,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     private FirebaseFirestore firebaseFirestore;
     private String userDocumentId,orderDocumentId;
     private String date,subtotal,tax,deliveryCharge,total,address,status,offer,userEmail;
-    private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer;
+    private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer,txtOrderId;
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -56,6 +56,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         txtTotal = findViewById(R.id.txtTotal);
         txtAddress = findViewById(R.id.txtAddress);
         txtStatus = findViewById(R.id.txtStatus);
+        txtOrderId = findViewById(R.id.txtOrderId);
         spinner = (Spinner) findViewById(R.id.spinner);
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -82,7 +83,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         txtDeliveryCharge.setText("Delivery Charge: "+deliveryCharge+"$");
         txtTotal.setText("Total: "+total+"$");
         txtAddress.setText("Delivery Address: "+address);
-
+        txtOrderId.setText("Order Id: "+orderDocumentId);
         setSpinner();
         setViewByOrderStatus();
     }
@@ -155,6 +156,11 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
 
     private void updateStatus() {
         status = spinner.getSelectedItem().toString();
+        if (status.equalsIgnoreCase("pending"))
+        {
+            Toast.makeText(getApplicationContext(),"Order is already in pending state.",Toast.LENGTH_SHORT).show();
+            return;
+        }
         Map<String,Object> map = new HashMap<>();
         map.put("status",status);
         DocumentReference documentReference = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document(userDocumentId).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderDocumentId);

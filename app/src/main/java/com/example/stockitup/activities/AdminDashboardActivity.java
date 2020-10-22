@@ -25,7 +25,7 @@ import java.util.Map;
 
 public class AdminDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private CardView cardLogout,cardViewCategory,cardAddCategoryItems,cardManageOrders;
+    private CardView cardLogout,cardViewCategory,cardAddItems,cardManageOrders,cardEssentialItems,cardSettings;
     private FirebaseFirestore firebaseFirestore;
     private ProgressBar progressBar;
     private Map<String,String> map=new HashMap<String,String>();
@@ -44,10 +44,14 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cardLogout.setOnClickListener(this);
         cardViewCategory = findViewById(R.id.cardViewCategory);
         cardViewCategory.setOnClickListener(this);
-        cardAddCategoryItems = findViewById(R.id.cardAddCategoryItems);
-        cardAddCategoryItems.setOnClickListener(this);
+        cardAddItems = findViewById(R.id.cardAddItems);
+        cardAddItems.setOnClickListener(this);
         cardManageOrders = findViewById(R.id.cardManageOrders);
         cardManageOrders.setOnClickListener(this);
+        cardEssentialItems = findViewById(R.id.cardEssentialItems);
+        cardEssentialItems.setOnClickListener(this);
+        cardSettings = findViewById(R.id.cardSettings);
+        cardSettings.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
     }
@@ -59,11 +63,20 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
             case R.id.cardViewCategory:
                 startActivity(new Intent(getApplicationContext(), AdminCategoriesActivity.class));
                 break;
-            case R.id.cardAddCategoryItems:
+            case R.id.cardAddItems:
                 setCategoriesMapData();
                 break;
             case R.id.cardManageOrders:
                 startActivity(new Intent(getApplicationContext(),AdminManageOrdersActivity.class));
+                break;
+            case R.id.cardEssentialItems:
+                Intent i = new Intent(getApplicationContext(),AdminCategoryItemsActivity.class);
+                i.putExtra("categoryDocumentId","");
+                i.putExtra("name","Essential Items");
+                startActivity(i);
+                break;
+            case R.id.cardSettings:
+                startActivity(new Intent(getApplicationContext(), AdminSettingsActivity.class));
                 break;
             case R.id.cardLogout:
                 userLogout();
@@ -82,7 +95,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                             {
                                 map.put(documentSnapshot.getString("name"),documentSnapshot.getId());
                             }
-                            AppConstants.categories_map = map;
+                            AppConstants.CATEGORIES_MAP = map;
                             Intent i = new Intent(getApplicationContext(), AdminAddItemsActivity.class);
                             startActivity(i);
                         }

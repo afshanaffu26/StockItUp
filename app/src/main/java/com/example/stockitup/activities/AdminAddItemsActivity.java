@@ -78,7 +78,7 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
 
         ArrayList<String> categoriesList = new ArrayList<>();
         categoriesList.add("Select a category..");
-        categoriesList.addAll(AppConstants.categories_map.keySet());
+        categoriesList.addAll(AppConstants.CATEGORIES_MAP.keySet());
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categoriesList);
@@ -201,7 +201,7 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         name = editName.getText().toString();
         description = editDescription.getText().toString();
         image="";
-        documentId = AppConstants.categories_map.get(category);
+        documentId = AppConstants.CATEGORIES_MAP.get(category);
         if (category == "")
         {
             Toast.makeText(AdminAddItemsActivity.this, "Please select a category", Toast.LENGTH_SHORT).show();

@@ -21,6 +21,7 @@ import com.example.stockitup.R;
 import com.example.stockitup.activities.ItemDescriptionActivity;
 import com.example.stockitup.adapters.CartAdapter;
 import com.example.stockitup.adapters.CategoriesAdapter;
+import com.example.stockitup.adapters.EssentialsAdapter;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoriesModel;
 import com.example.stockitup.models.CategoryItemsModel;
@@ -45,7 +46,7 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView,recyclerViewCategory;
-    private FirestoreRecyclerAdapter adapter;
+    private EssentialsAdapter essentialsAdapter;
     private CategoriesAdapter categoriesAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -102,56 +103,42 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getContext(), CartActivity.class));
             }
         });
-        setRecyclerViewData();
+        setRecyclerViewDataForEssentials();
+        setRecyclerViewDataForCategories();
+
+        return v;
+    }
+
+    private void setRecyclerViewDataForEssentials() {
         //Query
         Query query = firebaseFirestore.collection("Essentials");
         //RecyclerOptions
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query, CategoryItemsModel.class)
                 .build();
-        adapter = new FirestoreRecyclerAdapter<CategoryItemsModel, HomeFragment.CategoryItemsViewHolder>(options) {
-            @NonNull
-            @Override
-            public HomeFragment.CategoryItemsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category_banner,parent,false);
-                return new HomeFragment.CategoryItemsViewHolder(view);
-            }
 
-            @NonNull
+        essentialsAdapter = new EssentialsAdapter(options);
+        essentialsAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public CategoryItemsModel getItem(int position) {
-                return super.getItem(position);
+            public void onItemClick(View view, DocumentSnapshot documentSnapshot, int position) {
+                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
+                Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
+                intent.putExtra("name", model.getName());
+                intent.putExtra("image", model.getImage());
+                intent.putExtra("price", model.getPrice());
+                intent.putExtra("desc", model.getDesc());
+                documentId = documentSnapshot.getId();
+                intent.putExtra("documentId", documentId);
+                startActivity(intent);
             }
-
-            @Override
-            protected void onBindViewHolder(@NonNull HomeFragment.CategoryItemsViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
-                holder.txtName.setText(model.getName());
-                if (model.getImage()!= null && !model.getImage().isEmpty())
-                    Picasso.get().load(model.getImage()).into(holder.imageView);
-                holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void
-                    onClick(View view) {
-                        Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
-                        intent.putExtra("name", model.getName());
-                        intent.putExtra("image", model.getImage());
-                        intent.putExtra("price", model.getPrice());
-                        intent.putExtra("desc", model.getDesc());
-                        documentId = getSnapshots().getSnapshot(position).getId();
-                        intent.putExtra("documentId", documentId);
-                        startActivity(intent);
-                    } });
-            }
-        };
+        });
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        adapter.startListening();
-        recyclerView.setAdapter(adapter);
-
-        return v;
+        essentialsAdapter.startListening();
+        recyclerView.setAdapter(essentialsAdapter);
     }
 
-    private void setRecyclerViewData() {
+    private void setRecyclerViewDataForCategories() {
         Query query = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION);
         FirestoreRecyclerOptions<CategoriesModel> options = new FirestoreRecyclerOptions.Builder<CategoriesModel>()
                 .setQuery(query,CategoriesModel.class)

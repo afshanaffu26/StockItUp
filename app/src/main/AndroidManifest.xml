@@ -12,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.AdminAddOrEditOffersActivity"></activity>
+        <activity android:name=".activities.AdminSettingsActivity" />
         <activity android:name=".activities.AdminUpdateOrderActivity" />
         <activity android:name=".activities.AdminAllOrdersActivity" />
         <activity android:name=".activities.AdminManageOrdersActivity" />
@@ -49,7 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.AdminOffersActivity" />
     </application>
 
 </manifest>

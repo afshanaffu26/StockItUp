@@ -54,8 +54,8 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardAddCategoryItems"
-                android:layout_width="@dimen/activity_horizontal_margin"
+                android:id="@+id/cardAddItems"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="1"
@@ -78,7 +78,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add Category Items"
+                        android:text="Add Items"
                         android:layout_centerInParent="true"
                         android:textStyle="bold"
                         android:textAlignment="center"
@@ -87,7 +87,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardManageUserDetails"
+                android:id="@+id/cardEssentialItems"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
@@ -107,11 +107,11 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/ic_baseline_group_24"/>
+                        android:src="@drawable/ic_e_action_name"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Manage Users"
+                        android:text="Essential Items"
                         android:layout_centerInParent="true"
                         android:textStyle="bold"
                         android:textAlignment="center"

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="40dp"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.AdminOffersActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"

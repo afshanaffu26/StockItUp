@@ -24,7 +24,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -36,7 +39,7 @@ import java.util.UUID;
 public class AdminEditCategoryItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editName, editDesc, editPrice;
-    String quantity ="0";
+    private String quantity ="0";
     private String name, desc, price, image, documentId, categoryDocumentId;
     private ImageView imageView, imageViewEdit;
     private ProgressBar progressBar;
@@ -179,14 +182,18 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
             name = editName.getText().toString();
             desc = editDesc.getText().toString();
             price = editPrice.getText().toString();
+            DocumentReference documentReference;
             CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, desc, price,quantity);
-            firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId)
-                    .set(categoryItemsModel)
+            if (categoryDocumentId.equalsIgnoreCase(""))
+                documentReference = firebaseFirestore.collection(AppConstants.ESSENTIALS_COLLECTION).document(documentId);
+            else
+                documentReference = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId);
+                    documentReference.set(categoryItemsModel)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(AdminEditCategoryItemsActivity.this, "Category Item Updated.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminEditCategoryItemsActivity.this, "Item Updated.", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -197,9 +204,13 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         desc = editDesc.getText().toString();
         price = editPrice.getText().toString();
         image = itemImageUrl;
+        DocumentReference documentReference;
         CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, desc, price,quantity);
-        firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId)
-                .set(categoryItemsModel)
+        if (categoryDocumentId.equalsIgnoreCase(""))
+            documentReference = firebaseFirestore.collection(AppConstants.ESSENTIALS_COLLECTION).document(documentId);
+        else
+            documentReference = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId);
+        documentReference.set(categoryItemsModel)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

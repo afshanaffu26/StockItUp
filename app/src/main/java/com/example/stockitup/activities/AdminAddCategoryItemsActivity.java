@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -52,6 +53,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
     private Uri uriItemImage = null;
     private String itemImageUrl = null;
     private TextView txtCategoryName;
+    private String isEssential;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,14 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         txtCategoryName = findViewById(R.id.txtCategoryName);
         documentId = getIntent().getStringExtra("categoryDocumentId");
         categoryName = getIntent().getStringExtra("categoryName");
-        txtCategoryName.setText("Category: "+categoryName);
+        isEssential = getIntent().getStringExtra("isEssential");
+        if (isEssential.equals("true")) {
+            txtCategoryName.setVisibility(View.GONE);
+        }
+        else {
+            txtCategoryName.setVisibility(View.VISIBLE);
+            txtCategoryName.setText("Category: " + categoryName);
+        }
         btnAdd.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
@@ -165,13 +174,17 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
     private void onUploadImageSuccess(String itemImageUrl) {
         image = itemImageUrl;
         CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, description, price,quantity);
-        firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(documentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
-                .add(categoryItemsModel)
+        CollectionReference collectionReference;
+        if (isEssential.equals("true"))
+            collectionReference = firebaseFirestore.collection(AppConstants.ESSENTIALS_COLLECTION);
+        else
+            collectionReference = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(documentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);;
+        collectionReference.add(categoryItemsModel)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), "Category Item Added.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Item Added.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

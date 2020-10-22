@@ -74,11 +74,15 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         setRecyclerViewData();
     }
     private void setRecyclerViewData() {
-        Query query = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).orderBy("name",Query.Direction.ASCENDING);
+        Query query;
+        if (categoryDocumentId.equalsIgnoreCase(""))
+            query = firebaseFirestore.collection(AppConstants.ESSENTIALS_COLLECTION);
+        else
+            query = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).orderBy("name",Query.Direction.ASCENDING);
+
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query, CategoryItemsModel.class)
                 .build();
-
 
         adapter= new AdminCategoryItemsAdapter(options);
         adapter.setOnItemClickListener(new OnItemClickListener() {
@@ -182,6 +186,10 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
                 Intent i = new Intent(getApplicationContext(), AdminAddCategoryItemsActivity.class);
                 i.putExtra("categoryDocumentId",categoryDocumentId);
                 i.putExtra("categoryName",category);
+                if (categoryDocumentId.equalsIgnoreCase(""))
+                    i.putExtra("isEssential","true");
+                else
+                    i.putExtra("isEssential","false");
                 startActivity(i);
                 break;
         }

@@ -29,12 +29,13 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull OrdersModel model) {
         String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(model.getDate());
         holder.txtOrderDate.setText("Ordered On: "+date);
-        holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal()+"$");
-        holder.txtOffer.setText("Offer (-20%): -"+model.getOffer()+"$");
-        holder.txtTax.setText("Tax: "+model.getTax()+"$");
-        holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge()+"$");
-        holder.txtTotal.setText("Total: "+model.getTotal()+"$");
-        holder.txtAddress.setText("Address: "+model.getAddress());
+        holder.txtOrderId.setText(" "+getSnapshots().getSnapshot(position).getId());
+//        holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal()+"$");
+//        holder.txtOffer.setText("Offer (-20%): -"+model.getOffer()+"$");
+//        holder.txtTax.setText("Tax: "+model.getTax()+"$");
+//        holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge()+"$");
+//        holder.txtTotal.setText("Total: "+model.getTotal()+"$");
+//        holder.txtAddress.setText("Address: "+model.getAddress());
         holder.txtStatus.setText(model.getStatus());
         if (model.getStatus().equalsIgnoreCase("pending"))
         {
@@ -72,17 +73,18 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer;
+        private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer,txtOrderId;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
-            txtSubTotal = itemView.findViewById(R.id.txtSubTotal);
-            txtOffer = itemView.findViewById(R.id.txtOffer);
-            txtTax = itemView.findViewById(R.id.txtTax);
-            txtDeliveryCharge = itemView.findViewById(R.id.txtDeliveryCharge);
-            txtTotal = itemView.findViewById(R.id.txtTotal);
-            txtAddress = itemView.findViewById(R.id.txtAddress);
+            txtOrderId = itemView.findViewById(R.id.txtOrderId);
+//            txtSubTotal = itemView.findViewById(R.id.txtSubTotal);
+//            txtOffer = itemView.findViewById(R.id.txtOffer);
+//            txtTax = itemView.findViewById(R.id.txtTax);
+//            txtDeliveryCharge = itemView.findViewById(R.id.txtDeliveryCharge);
+//            txtTotal = itemView.findViewById(R.id.txtTotal);
+//            txtAddress = itemView.findViewById(R.id.txtAddress);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
