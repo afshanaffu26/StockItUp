@@ -15,11 +15,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
-import com.example.stockitup.adapters.AddressAdapter;
-import com.example.stockitup.adapters.OffersAdapter;
+import com.example.stockitup.adapters.AdminOffersAdapter;
 import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
-import com.example.stockitup.models.AddressModel;
 import com.example.stockitup.models.OffersModel;
 import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -32,7 +30,7 @@ import com.google.firebase.firestore.Query;
 public class AdminOffersActivity extends AppCompatActivity{
 
     private FirebaseFirestore firebaseFirestore;
-    private OffersAdapter adapter;
+    private AdminOffersAdapter adapter;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private String uid;
@@ -71,7 +69,7 @@ public class AdminOffersActivity extends AppCompatActivity{
         FirestoreRecyclerOptions<OffersModel> options = new FirestoreRecyclerOptions.Builder<OffersModel>()
                 .setQuery(query,OffersModel.class)
                 .build();
-        adapter = new OffersAdapter(options);
+        adapter = new AdminOffersAdapter(options);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, DocumentSnapshot documentSnapshot, int position) {

@@ -3,12 +3,22 @@ package com.example.stockitup.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.stockitup.R;
+import com.example.stockitup.adapters.AdminOffersAdapter;
+import com.example.stockitup.adapters.OffersAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
+import com.example.stockitup.models.OffersModel;
+import com.example.stockitup.utils.AppConstants;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +26,10 @@ import com.example.stockitup.R;
  * create an instance of this fragment.
  */
 public class OffersFragment extends Fragment {
+
+    private OffersAdapter adapter;
+    private RecyclerView recyclerView;
+    private FirebaseFirestore firebaseFirestore;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +74,21 @@ public class OffersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_offers, container, false);
+        View v = inflater.inflate(R.layout.fragment_offers, container, false);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        recyclerView = v.findViewById(R.id.recyclerView);
+
+        final Query query = firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION);
+        FirestoreRecyclerOptions<OffersModel> options = new FirestoreRecyclerOptions.Builder<OffersModel>()
+                .setQuery(query,OffersModel.class)
+                .build();
+        adapter = new OffersAdapter(options);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(false);
+        adapter.startListening();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
+        return v;
     }
 }

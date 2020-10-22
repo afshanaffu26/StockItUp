@@ -161,24 +161,37 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(this, AdminDashboardActivity.class));
         }
         else {
-            final Map<String,String> map = new HashMap<String, String>();
-            firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful())
-                            {
-                                for (DocumentSnapshot documentSnapshot: task.getResult())
-                                {
-                                    map.put(documentSnapshot.getString("name"),documentSnapshot.getString("value"));
-                                }
-                                AppConstants.OFFERS_MAP = map;
-                            }
-                        }
-                    });
+            fetchAllConfigurations();
             startActivity(new Intent(this, HomeScreenActivity.class));
         }
     }
 
+    private void fetchAllConfigurations() {
+        final Map<String,String> map = new HashMap<String, String>();
+        firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            for (DocumentSnapshot documentSnapshot: task.getResult())
+                            {
+                                map.put(documentSnapshot.getString("name"),documentSnapshot.getString("value"));
+                            }
+                            AppConstants.OFFERS_MAP = map;
+                        }
+                    }
+                });
+        firebaseFirestore.collection(AppConstants.APP_SUPPORT_COLLECTION)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        task.getResult().getDocuments().get(0).get("customerCareNumber");
+                        AppConstants.TOLL_FREE_NUMBER = task.getResult().getDocuments().get(0).get("tollFreeNumber").toString();
+                        AppConstants.CUSTOMER_CARE_NUMBER = task.getResult().getDocuments().get(0).get("customerCareNumber").toString();
+                    }
+                });
+    }
 }

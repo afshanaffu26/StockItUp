@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AdminAddOrEditOffersActivity"></activity>
+        <activity android:name=".activities.AdminFAQActivity"></activity>
+        <activity android:name=".activities.AdminAddOrEditOffersActivity" />
         <activity android:name=".activities.AdminSettingsActivity" />
         <activity android:name=".activities.AdminUpdateOrderActivity" />
         <activity android:name=".activities.AdminAllOrdersActivity" />

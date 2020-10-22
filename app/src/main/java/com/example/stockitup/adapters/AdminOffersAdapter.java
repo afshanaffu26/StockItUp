@@ -10,15 +10,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.OffersModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAdapter.ViewHolder> {
+public class AdminOffersAdapter extends FirestoreRecyclerAdapter<OffersModel, AdminOffersAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
-    public OffersAdapter(@NonNull FirestoreRecyclerOptions<OffersModel> options) {
+    private OnDataChangeListener dataChangeListener;
+    public AdminOffersAdapter(@NonNull FirestoreRecyclerOptions<OffersModel> options) {
         super(options);
     }
 
@@ -31,7 +33,7 @@ public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_offers,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_offers,parent,false);
         return new ViewHolder(view);
     }
 
@@ -47,6 +49,9 @@ public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAd
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
             txtValue = itemView.findViewById(R.id.txtValue);
+            imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
+            imageViewEdit.setOnClickListener(this);
+            dataChangeListener.onDataChanged();
         }
         @Override
         public void onClick(View view) {
@@ -60,5 +65,15 @@ public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAd
 
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
     }
 }

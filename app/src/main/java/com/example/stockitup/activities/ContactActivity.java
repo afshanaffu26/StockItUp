@@ -1,5 +1,6 @@
 package com.example.stockitup.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,19 +12,28 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * This class deals with contact us details for user to contact
  */
 public class ContactActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageView imgCall1,imgCall2;
-    private String number;
+
+    private TextView txtEmail,txtCustomerCarePhone,txtTollFreePhone;
+    private ImageView imgCall1,imgCall2,imgEmail;
+    private FirebaseFirestore firebaseFirestore;
 
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
@@ -46,11 +56,23 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         //display back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         imgCall1 = findViewById(R.id.imgCall1);
         imgCall2 = findViewById(R.id.imgCall2);
+        imgEmail = findViewById(R.id.imgEmail);
+        txtEmail = findViewById(R.id.txtEmail);
+        txtCustomerCarePhone = findViewById(R.id.txtCustomerCarePhone);
+        txtTollFreePhone = findViewById(R.id.txtTollFreePhone);
 
         imgCall1.setOnClickListener(this);
         imgCall2.setOnClickListener(this);
+        imgEmail.setOnClickListener(this);
+
+
+        txtEmail.setText("Email - "+AppConstants.ADMIN_EMAIL);
+        txtCustomerCarePhone.setText("Customer Care - "+AppConstants.CUSTOMER_CARE_NUMBER);
+        txtTollFreePhone.setText("Toll Free - "+AppConstants.TOLL_FREE_NUMBER);
     }
 
     /**
@@ -62,13 +84,36 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imgCall1:
-                number = "4388961212";
-                callToHelplineNumber(number);
+                callToHelplineNumber(AppConstants.CUSTOMER_CARE_NUMBER);
                 break;
             case R.id.imgCall2:
-                number = "1800776665";
-                callToHelplineNumber(number);
+                callToHelplineNumber(AppConstants.TOLL_FREE_NUMBER);
                 break;
+            case R.id.imgEmail:
+                sendEmailWithoutChooser();
+                break;
+        }
+    }
+
+    /**
+     * This method sends email via Email app with provided data.
+     */
+    private void sendEmailWithoutChooser() {
+        String email = AppConstants.ADMIN_EMAIL;
+        String feedback_msg = "";
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        String aEmailList[] = {email};
+        emailIntent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, aEmailList);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("<i><font color='your color'>" + feedback_msg + "</font></i>"));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Request help from Customer Support");
+
+        PackageManager packageManager = getApplicationContext().getPackageManager();
+        boolean isIntentSafe = emailIntent.resolveActivity(packageManager) != null;
+        if (isIntentSafe) {
+            startActivity(emailIntent);
+        } else {
+            Toast.makeText(getApplicationContext(), "Email app is not found", Toast.LENGTH_SHORT).show();
         }
     }
 

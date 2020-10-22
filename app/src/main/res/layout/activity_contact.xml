@@ -1,110 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    tools:context=".activities.ContactActivity">
+
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progressbar"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground"
-        android:orientation="vertical"
-        tools:context=".activities.ContactActivity">
+        android:orientation="vertical">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
-        <ProgressBar
-            android:visibility="gone"
-            android:id="@+id/progressbar"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/contact"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Contact Us"
+            android:textColor="@color/colorText"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/img_width_height"
+            android:layout_marginTop="30dp"
+            android:layout_height="@dimen/img_width_height"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/app_icon" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
             <TextView
-                android:id="@+id/contact"
-                android:layout_width="match_parent"
+                android:id="@+id/txtCustomerCarePhone"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:text="Contact Us"
-                android:textColor="@color/colorText"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="Customer Care - "
+                android:textSize="18sp" />
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="@dimen/img_width_height"
-                android:layout_marginTop="30dp"
-                android:layout_height="@dimen/img_width_height"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/app_icon" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:id="@+id/txtPhone1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="Customer Care - 4388961212"
-                    android:textSize="18sp" />
-                <ImageView
-                    android:id="@+id/imgCall1"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/call_24" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <TextView
-                    android:id="@+id/txtPhone2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="Toll Free - 1800776665"
-                    android:textSize="18sp" />
-                <ImageView
-                    android:id="@+id/imgCall2"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/call_24" />
-            </RelativeLayout>
+                android:id="@+id/imgCall1"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_call" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
             <TextView
-                android:id="@+id/contactc"
+                android:id="@+id/txtTollFreePhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="Toll Free - "
+                android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/imgCall2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_call" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/txtEmail"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
-                android:text="Email - stockitup@gmail.com"
+                android:text="Email - "
                 android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/imgEmail"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_email" />
+        </RelativeLayout>
 
+    </LinearLayout>
 
-        </LinearLayout>
-
-    </RelativeLayout>
+</RelativeLayout>

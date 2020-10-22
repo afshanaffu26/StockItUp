@@ -13,7 +13,7 @@ import com.example.stockitup.utils.AppConstants;
 
 public class AdminSettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView imgNextOffers;
+    private ImageView imgNextOffers,imgNextFAQ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,8 @@ public class AdminSettingsActivity extends AppCompatActivity implements View.OnC
 
         imgNextOffers = findViewById(R.id.imgNextOffers);
         imgNextOffers.setOnClickListener(this);
+        imgNextFAQ = findViewById(R.id.imgNextFAQ);
+        imgNextFAQ.setOnClickListener(this);
     }
 
     @Override
@@ -41,6 +43,9 @@ public class AdminSettingsActivity extends AppCompatActivity implements View.OnC
         switch(view.getId()) {
             case R.id.imgNextOffers:
                 startActivity(new Intent(getApplicationContext(),AdminOffersActivity.class));
+                break;
+            case R.id.imgNextFAQ:
+                startActivity(new Intent(getApplicationContext(), AdminFAQActivity.class));
                 break;
         }
     }

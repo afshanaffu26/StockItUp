@@ -31,13 +31,10 @@
             android:layout_width="match_parent"
             android:layout_margin="10dp"
             android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="50dp"
-                    android:textSize="18dp"
-                    android:text="20% off on all items" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
     </LinearLayout>
 
