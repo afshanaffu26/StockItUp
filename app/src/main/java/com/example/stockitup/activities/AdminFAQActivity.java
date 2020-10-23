@@ -12,10 +12,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.AdminFAQAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.FAQModel;
 import com.example.stockitup.utils.AppConstants;
@@ -33,6 +36,8 @@ public class AdminFAQActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private String uid;
+    private TextView txtEmptyFAQ;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,12 @@ public class AdminFAQActivity extends AppCompatActivity{
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
+        txtEmptyFAQ = findViewById(R.id.txtEmptyFAQ);
+        linearLayout = findViewById(R.id.linearLayout);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        txtEmptyFAQ.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +90,31 @@ public class AdminFAQActivity extends AppCompatActivity{
                 intent.putExtra("flow", "edit");
                 intent.putExtra("documentId", documentId);
                 startActivity(intent);
+            }
+        });
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
+            @Override
+            public void onDataChanged() {
+
+                if (adapter.getItemCount() != 0)
+                {
+                    if (adapter.getItemCount() < 3)
+                    {
+                        floatingActionButton.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        floatingActionButton.setVisibility(View.GONE);
+                    }
+                    txtEmptyFAQ.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    floatingActionButton.setVisibility(View.VISIBLE);
+                    txtEmptyFAQ.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
+                }
             }
         });
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {

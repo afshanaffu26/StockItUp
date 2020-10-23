@@ -9,11 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.models.FAQModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class FAQAdapter extends FirestoreRecyclerAdapter<FAQModel, FAQAdapter.ViewHolder> {
+
+    private OnDataChangeListener dataChangeListener;
 
     public FAQAdapter(@NonNull FirestoreRecyclerOptions<FAQModel> options) {
         super(options);
@@ -38,6 +41,17 @@ public class FAQAdapter extends FirestoreRecyclerAdapter<FAQModel, FAQAdapter.Vi
             super(itemView);
             txtQuestion = itemView.findViewById(R.id.txtQuestion);
             txtAnswer = itemView.findViewById(R.id.txtAnswer);
+            dataChangeListener.onDataChanged();
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
     }
 }

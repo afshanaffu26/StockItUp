@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.AdminAddOrEditFAQActivity"></activity>
+        <activity android:name=".activities.AdminContactActivity"></activity>
+        <activity android:name=".activities.AdminAddOrEditFAQActivity" />
         <activity android:name=".activities.AdminFAQActivity" />
         <activity android:name=".activities.AdminAddOrEditOffersActivity" />
-        <activity android:name=".activities.AdminSettingsActivity" />
+        <activity android:name=".activities.AdminMoreActivity" />
         <activity android:name=".activities.AdminUpdateOrderActivity" />
         <activity android:name=".activities.AdminAllOrdersActivity" />
         <activity android:name=".activities.AdminManageOrdersActivity" />

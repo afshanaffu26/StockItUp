@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.OffersModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -18,6 +19,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
+    private OnDataChangeListener dataChangeListener;
+
     public OffersAdapter(@NonNull FirestoreRecyclerOptions<OffersModel> options) {
         super(options);
     }
@@ -47,6 +50,7 @@ public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAd
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
             txtValue = itemView.findViewById(R.id.txtValue);
+            dataChangeListener.onDataChanged();
         }
         @Override
         public void onClick(View view) {
@@ -56,6 +60,16 @@ public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAd
                 listener.onItemClick(view,getSnapshots().getSnapshot(position), position);
             }
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

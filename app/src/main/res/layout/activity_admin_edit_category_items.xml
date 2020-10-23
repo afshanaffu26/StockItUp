@@ -33,7 +33,7 @@
                         android:layout_margin="15dp"
                         android:scaleType="centerCrop"
                         android:layout_centerHorizontal="true"
-                        android:src="@drawable/app_icon"/>
+                        android:src="@drawable/image_bg"/>
 
                     <ImageView
                         android:id="@+id/imageViewEdit"

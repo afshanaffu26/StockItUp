@@ -36,7 +36,7 @@
                         android:layout_height="180dp"
                         android:layout_margin="15dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/app_icon"/>
+                        android:src="@drawable/image_bg"/>
 
                     <ImageView
                         android:id="@+id/imageViewEdit"

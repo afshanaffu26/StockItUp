@@ -6,10 +6,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.FAQAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.models.FAQModel;
 import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -22,6 +27,8 @@ public class FaqActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private FAQAdapter adapter;
+    private ScrollView scrollView;
+    private TextView txtEmptyFAQ;
 
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
@@ -48,6 +55,10 @@ public class FaqActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         recyclerView = findViewById(R.id.recyclerView);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        scrollView = findViewById(R.id.scrollView);
+        txtEmptyFAQ = findViewById(R.id.txtEmptyFAQ);
+        txtEmptyFAQ.setVisibility(View.GONE);
+        scrollView.setVisibility(View.GONE);
 
         setRecyclerViewData();
 
@@ -59,6 +70,21 @@ public class FaqActivity extends AppCompatActivity {
                 .setQuery(query, FAQModel.class)
                 .build();
         adapter= new FAQAdapter(options);
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
+            @Override
+            public void onDataChanged() {
+                if (adapter.getItemCount() != 0)
+                {
+                    txtEmptyFAQ.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    txtEmptyFAQ.setVisibility(View.VISIBLE);
+                    scrollView.setVisibility(View.GONE);
+                }
+            }
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(false);

@@ -10,11 +10,11 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
     <TextView
-        android:id="@+id/txtEmptyItems"
+        android:id="@+id/txtEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No Items yet!" />
+        android:text="No address yet!" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_below="@+id/toolbar"

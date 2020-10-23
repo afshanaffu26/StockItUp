@@ -12,6 +12,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
@@ -34,6 +36,8 @@ public class AdminOffersActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private String uid;
+    private TextView txtEmptyOffers;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,12 @@ public class AdminOffersActivity extends AppCompatActivity{
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
+        txtEmptyOffers = findViewById(R.id.txtEmptyOffers);
+        linearLayout = findViewById(R.id.linearLayout);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        txtEmptyOffers.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,13 +107,25 @@ public class AdminOffersActivity extends AppCompatActivity{
         adapter.setOnDataChangeListener(new OnDataChangeListener() {
             @Override
             public void onDataChanged() {
-                if (adapter.getItemCount() < 3)
+
+                if (adapter.getItemCount() != 0)
                 {
-                    floatingActionButton.setVisibility(View.VISIBLE);
+                    if (adapter.getItemCount() < 3)
+                    {
+                        floatingActionButton.setVisibility(View.VISIBLE);
+                    }
+                    else
+                    {
+                        floatingActionButton.setVisibility(View.GONE);
+                    }
+                    txtEmptyOffers.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
                 }
                 else
                 {
-                    floatingActionButton.setVisibility(View.GONE);
+                    floatingActionButton.setVisibility(View.VISIBLE);
+                    txtEmptyOffers.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
                 }
             }
         });

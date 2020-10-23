@@ -11,14 +11,14 @@ import android.widget.ImageView;
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
 
-public class AdminSettingsActivity extends AppCompatActivity implements View.OnClickListener {
+public class AdminMoreActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView imgNextOffers,imgNextFAQ;
+    private ImageView imgNextOffers,imgNextFAQ,imgNextContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_settings);
+        setContentView(R.layout.activity_admin_more);
 
         String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -30,6 +30,8 @@ public class AdminSettingsActivity extends AppCompatActivity implements View.OnC
         imgNextOffers.setOnClickListener(this);
         imgNextFAQ = findViewById(R.id.imgNextFAQ);
         imgNextFAQ.setOnClickListener(this);
+        imgNextContact = findViewById(R.id.imgNextContact);
+        imgNextContact.setOnClickListener(this);
     }
 
     @Override
@@ -46,6 +48,9 @@ public class AdminSettingsActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.imgNextFAQ:
                 startActivity(new Intent(getApplicationContext(), AdminFAQActivity.class));
+                break;
+            case R.id.imgNextContact:
+                startActivity(new Intent(getApplicationContext(), AdminContactActivity.class));
                 break;
         }
     }

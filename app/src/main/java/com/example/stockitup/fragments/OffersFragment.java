@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.AdminOffersAdapter;
@@ -30,6 +33,8 @@ public class OffersFragment extends Fragment {
     private OffersAdapter adapter;
     private RecyclerView recyclerView;
     private FirebaseFirestore firebaseFirestore;
+    private LinearLayout linearLayout;
+    private TextView txtEmptyOffers;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,12 +83,31 @@ public class OffersFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = v.findViewById(R.id.recyclerView);
+        linearLayout = v.findViewById(R.id.linearLayout);
+        txtEmptyOffers = v.findViewById(R.id.txtEmptyOffers);
+        txtEmptyOffers.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
 
         final Query query = firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION);
         FirestoreRecyclerOptions<OffersModel> options = new FirestoreRecyclerOptions.Builder<OffersModel>()
                 .setQuery(query,OffersModel.class)
                 .build();
         adapter = new OffersAdapter(options);
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
+            @Override
+            public void onDataChanged() {
+                if (adapter.getItemCount() != 0)
+                {
+                    txtEmptyOffers.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    txtEmptyOffers.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
+                }
+            }
+        });
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setHasFixedSize(false);
         adapter.startListening();

@@ -6,7 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     tools:context=".fragments.OffersFragment">
+    <TextView
+        android:id="@+id/txtEmptyOffers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="No offers yet!" />
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -28,6 +36,7 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/app_icon" />
         <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_margin="10dp"
             android:layout_height="match_parent">

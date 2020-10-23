@@ -20,6 +20,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 public class AdminFAQAdapter extends FirestoreRecyclerAdapter<FAQModel, AdminFAQAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
+    private OnDataChangeListener dataChangeListener;
+
     public AdminFAQAdapter(@NonNull FirestoreRecyclerOptions<FAQModel> options) {
         super(options);
     }
@@ -51,6 +53,7 @@ public class AdminFAQAdapter extends FirestoreRecyclerAdapter<FAQModel, AdminFAQ
             txtAnswer = itemView.findViewById(R.id.txtAnswer);
             imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
             imageViewEdit.setOnClickListener(this);
+            dataChangeListener.onDataChanged();
         }
         @Override
         public void onClick(View view) {
@@ -60,6 +63,16 @@ public class AdminFAQAdapter extends FirestoreRecyclerAdapter<FAQModel, AdminFAQ
                 listener.onItemClick(view,getSnapshots().getSnapshot(position), position);
             }
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){

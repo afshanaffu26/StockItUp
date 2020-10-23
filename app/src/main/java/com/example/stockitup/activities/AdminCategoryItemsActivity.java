@@ -71,6 +71,9 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         linearLayout = findViewById(R.id.linearLayout);
         txtEmptyItems = findViewById(R.id.txtEmptyItems);
 
+        txtEmptyItems.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
+
         setRecyclerViewData();
     }
     private void setRecyclerViewData() {
