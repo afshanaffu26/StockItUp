@@ -41,7 +41,7 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
     private AdminCategoryItemsAdapter adapter;
     private RecyclerView recyclerView;
     private String category ="";
-    private TextView txtCategory,txtEmptyItems;
+    private TextView txtCategory,txtEmpty;
     private String categoryDocumentId;
     private ProgressBar progressBar;
     private FloatingActionButton floatingActionButton;
@@ -69,9 +69,9 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);
         linearLayout = findViewById(R.id.linearLayout);
-        txtEmptyItems = findViewById(R.id.txtEmptyItems);
+        txtEmpty = findViewById(R.id.txtEmpty);
 
-        txtEmptyItems.setVisibility(View.GONE);
+        txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
 
         setRecyclerViewData();
@@ -110,12 +110,12 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
             public void onDataChanged() {
                 if (adapter.getItemCount() != 0)
                 {
-                    txtEmptyItems.setVisibility(View.GONE);
+                    txtEmpty.setVisibility(View.GONE);
                     linearLayout.setVisibility(View.VISIBLE);
                 }
                 else
                 {
-                    txtEmptyItems.setVisibility(View.VISIBLE);
+                    txtEmpty.setVisibility(View.VISIBLE);
                     linearLayout.setVisibility(View.GONE);
                 }
             }

@@ -38,7 +38,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private Button btnPay;
     private FirebaseFirestore firebaseFirestore;
     private String uid;
-    private String subTotal, deliveryCharge, tax, total, offer;
+    private String subTotal, deliveryCharge, tax, total, offer, offerPercent;
     private String address;
     private EditText editName,editCardNo,editCVV,editExpDate;
     private String name,cardNo,cvv,expDate;
@@ -128,13 +128,14 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
                                         if (task.isSuccessful()) {
                                             Date date = new Date();
                                             subTotal = getIntent().getStringExtra("subTotal");
+                                            offerPercent = getIntent().getStringExtra("offerPercent");
                                             offer = getIntent().getStringExtra("offer");
                                             tax = getIntent().getStringExtra("tax");
                                             deliveryCharge = getIntent().getStringExtra("deliveryCharge");
                                             total = getIntent().getStringExtra("total");
                                             address = getIntent().getStringExtra("address");
                                             String status = "Pending";
-                                            OrdersModel ordersModel = new OrdersModel(date, subTotal, offer, tax, deliveryCharge, total, address,status);
+                                            OrdersModel ordersModel = new OrdersModel(date, subTotal, offerPercent, offer, tax, deliveryCharge, total, address,status);
                                             //adding orders data to that particular docId
                                             firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId)
                                                     .set(ordersModel)
@@ -174,7 +175,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
     private void addOrderDetails() {
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        ManageOrdersModel manageOrdersModel = new ManageOrdersModel(uid,userEmail);
+        String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        ManageOrdersModel manageOrdersModel = new ManageOrdersModel(uid,userEmail,userName);
         firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).set(manageOrdersModel);
     }
 

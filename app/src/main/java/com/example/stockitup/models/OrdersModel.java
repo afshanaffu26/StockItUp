@@ -8,6 +8,7 @@ import java.util.Date;
 public class OrdersModel {
     private Date date;
     private String subtotal;
+    private String offerPercent;
     private String offer;
     private String tax;
     private String deliveryCharge;
@@ -21,6 +22,18 @@ public class OrdersModel {
     public OrdersModel(Date date, String subtotal,String offer, String tax, String deliveryCharge, String total, String address, String status) {
         this.date = date;
         this.subtotal = subtotal;
+        this.offer = offer;
+        this.tax = tax;
+        this.deliveryCharge = deliveryCharge;
+        this.total = total;
+        this.address = address;
+        this.status = status;
+    }
+
+    public OrdersModel(Date date, String subtotal, String offerPercent, String offer, String tax, String deliveryCharge, String total, String address, String status) {
+        this.date = date;
+        this.subtotal = subtotal;
+        this.offerPercent = offerPercent;
         this.offer = offer;
         this.tax = tax;
         this.deliveryCharge = deliveryCharge;
@@ -43,6 +56,14 @@ public class OrdersModel {
 
     public void setSubtotal(String subtotal) {
         this.subtotal = subtotal;
+    }
+
+    public String getOfferPercent() {
+        return offerPercent;
+    }
+
+    public void setOfferPercent(String offerPercent) {
+        this.offerPercent = offerPercent;
     }
 
     public String getOffer() {

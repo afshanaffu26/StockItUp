@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     tools:context=".activities.CartActivity">
     <TextView
-        android:id="@+id/txtEmptyCart"
+        android:id="@+id/txtEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -73,7 +73,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Offer (-20%)"
+                        android:text="Offer"
                         android:textSize="18sp" />
 
                     <TextView
@@ -158,7 +158,43 @@
                         android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txtPromo"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="18dp"
+                    android:text="Promo"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/colorText"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+            <EditText
+                android:id="@+id/editPromo"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Enter Promo Code"
+                android:layout_marginLeft="15dp"
+                android:visibility="visible"
+                android:background="@drawable/edit_text_background"
+                android:ems="10"
+                android:inputType="text" />
+            <Button
+                android:id="@+id/btnPromo"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorButton"
+                android:text="Apply/Remove"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+            </LinearLayout>
             <Button
                 android:id="@+id/btnCheckout"
                 android:layout_width="300dp"
@@ -170,7 +206,6 @@
                 android:text="CheckOut Order"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
-
         </LinearLayout>
 
 

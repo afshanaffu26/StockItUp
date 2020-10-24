@@ -33,7 +33,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     private Button btnUpdate;
     private FirebaseFirestore firebaseFirestore;
     private String userDocumentId,orderDocumentId;
-    private String date,subtotal,tax,deliveryCharge,total,address,status,offer,userEmail;
+    private String date,subtotal,tax,deliveryCharge,total,address,status,offer,offerPercent,userEmail,userName;
     private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer,txtOrderId;
     private FirebaseAuth firebaseAuth;
 
@@ -67,9 +67,11 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         orderDocumentId = getIntent().getStringExtra("orderDocumentId");
         userEmail = getIntent().getStringExtra("userEmail");
+        userName = getIntent().getStringExtra("userName");
         status = getIntent().getStringExtra("status");
         date = getIntent().getStringExtra("date");
         subtotal = getIntent().getStringExtra("subtotal");
+        offerPercent = getIntent().getStringExtra("offerPercent");
         offer = getIntent().getStringExtra("offer");
         tax = getIntent().getStringExtra("tax");
         deliveryCharge = getIntent().getStringExtra("deliveryCharge");
@@ -78,7 +80,14 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
 
         txtOrderDate.setText("Ordered On: "+date);
         txtSubTotal.setText("Subtotal: "+subtotal+"$");
-        txtOffer.setText("Offer (-20%): -"+offer+"$");
+        double off = Double.parseDouble(offerPercent);
+        if (!(off == (double)0.0)){
+            txtOffer.setText("Offer (-" + offerPercent + "%): -" + offer + "$");
+            txtOffer.setVisibility(View.VISIBLE);
+        }
+        else {
+            txtOffer.setVisibility(View.GONE);
+        }
         txtTax.setText("Tax: "+tax+"$");
         txtDeliveryCharge.setText("Delivery Charge: "+deliveryCharge+"$");
         txtTotal.setText("Total: "+total+"$");
@@ -187,10 +196,10 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     private void sendInvoice() {
         String mEmail = userEmail;
         String mSubject = "Invoice for your purchase at StockItUp";
-        String mMessage = "Hello, \n\nThank you for ordering at StockItUp.\n\nYour order is delivered successfully to "+address+".\n\nPlease find the invoice for your order #"+orderDocumentId +"\n\n\n"+
+        String mMessage = "Hello "+userName+", \n\nThank you for ordering at StockItUp.\n\nYour order is delivered successfully to "+address+".\n\nPlease find the invoice for your order #"+orderDocumentId +"\n\n\n"+
                 "Ordered date: "+date+"\n" +
                 "Subtotal: "+subtotal+"$\n"+
-                "Offer (-20%): -"+offer+"$\n" +
+                "Offer (-"+offerPercent+"%): -"+offer+"$\n" +
                 "Tax: "+tax+"$\n"+
                 "Delivery charge: "+deliveryCharge+"$\n" +
                 "Total: "+total+"$\n\n\n\n\n\nThank you,\nTeam StockItUp";

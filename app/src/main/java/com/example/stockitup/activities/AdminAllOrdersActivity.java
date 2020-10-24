@@ -28,7 +28,7 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private AdminAllOrdersAdapter adapter;
     private ProgressBar progressBar;
-    private String userDocumentId,userEmail;
+    private String userDocumentId,userEmail,userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
 
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         userEmail = getIntent().getStringExtra("userEmail");
+        userName = getIntent().getStringExtra("userName");
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
@@ -67,8 +68,10 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
                 intent.putExtra("userDocumentId", userDocumentId);
                 intent.putExtra("orderDocumentId", orderDocumentId);
                 intent.putExtra("userEmail", userEmail);
+                intent.putExtra("userName", userName);
                 intent.putExtra("date", date);
                 intent.putExtra("subtotal", model.getSubtotal());
+                intent.putExtra("offerPercent", model.getOfferPercent());
                 intent.putExtra("offer", model.getOffer());
                 intent.putExtra("tax", model.getTax());
                 intent.putExtra("deliveryCharge", model.getDeliveryCharge());

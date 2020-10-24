@@ -3,13 +3,15 @@ package com.example.stockitup.models;
 public class ManageOrdersModel {
     private String userId;
     private String userEmail;
+    private String userName;
 
     public ManageOrdersModel() {
     }
 
-    public ManageOrdersModel(String userId, String userEmail) {
+    public ManageOrdersModel(String userId, String userEmail, String userName) {
         this.userId = userId;
         this.userEmail = userEmail;
+        this.userName = userName;
     }
 
     public String getUserId() {
@@ -26,5 +28,13 @@ public class ManageOrdersModel {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

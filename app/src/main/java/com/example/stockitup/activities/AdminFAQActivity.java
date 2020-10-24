@@ -36,13 +36,13 @@ public class AdminFAQActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private String uid;
-    private TextView txtEmptyFAQ;
+    private TextView txtEmpty;
     private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_f_a_q);
+        setContentView(R.layout.activity_admin_faq);
 
         String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -53,11 +53,11 @@ public class AdminFAQActivity extends AppCompatActivity{
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
-        txtEmptyFAQ = findViewById(R.id.txtEmptyFAQ);
+        txtEmpty = findViewById(R.id.txtEmpty);
         linearLayout = findViewById(R.id.linearLayout);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        txtEmptyFAQ.setVisibility(View.GONE);
+        txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +106,13 @@ public class AdminFAQActivity extends AppCompatActivity{
                     {
                         floatingActionButton.setVisibility(View.GONE);
                     }
-                    txtEmptyFAQ.setVisibility(View.GONE);
+                    txtEmpty.setVisibility(View.GONE);
                     linearLayout.setVisibility(View.VISIBLE);
                 }
                 else
                 {
                     floatingActionButton.setVisibility(View.VISIBLE);
-                    txtEmptyFAQ.setVisibility(View.VISIBLE);
+                    txtEmpty.setVisibility(View.VISIBLE);
                     linearLayout.setVisibility(View.GONE);
                 }
             }

@@ -30,7 +30,14 @@ public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,Or
         String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(model.getDate());
         holder.txtOrderDate.setText("Ordered On: "+date);
         holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal()+"$");
-        holder.txtOffer.setText("Offer (-20%): -"+model.getOffer()+"$");
+        double off = Double.parseDouble(model.getOfferPercent());
+        if (!(off == (double)0.0)){
+            holder.txtOffer.setText("Offer (-" + model.getOfferPercent() + "%): -" + model.getOffer() + "$");
+            holder.txtOffer.setVisibility(View.VISIBLE);
+        }
+        else {
+            holder.txtOffer.setVisibility(View.GONE);
+        }
         holder.txtTax.setText("Tax: "+model.getTax()+"$");
         holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge()+"$");
         holder.txtTotal.setText("Total: "+model.getTotal()+"$");

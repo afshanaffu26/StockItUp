@@ -21,6 +21,7 @@ public class CategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesModel,
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
+
     public CategoriesAdapter(@NonNull FirestoreRecyclerOptions<CategoriesModel> options) {
         super(options);
     }

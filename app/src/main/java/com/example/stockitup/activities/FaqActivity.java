@@ -28,7 +28,7 @@ public class FaqActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FAQAdapter adapter;
     private ScrollView scrollView;
-    private TextView txtEmptyFAQ;
+    private TextView txtEmpty;
 
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
@@ -56,8 +56,8 @@ public class FaqActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         firebaseFirestore = FirebaseFirestore.getInstance();
         scrollView = findViewById(R.id.scrollView);
-        txtEmptyFAQ = findViewById(R.id.txtEmptyFAQ);
-        txtEmptyFAQ.setVisibility(View.GONE);
+        txtEmpty = findViewById(R.id.txtEmpty);
+        txtEmpty.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
 
         setRecyclerViewData();
@@ -75,12 +75,12 @@ public class FaqActivity extends AppCompatActivity {
             public void onDataChanged() {
                 if (adapter.getItemCount() != 0)
                 {
-                    txtEmptyFAQ.setVisibility(View.GONE);
+                    txtEmpty.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
                 }
                 else
                 {
-                    txtEmptyFAQ.setVisibility(View.VISIBLE);
+                    txtEmpty.setVisibility(View.VISIBLE);
                     scrollView.setVisibility(View.GONE);
                 }
             }

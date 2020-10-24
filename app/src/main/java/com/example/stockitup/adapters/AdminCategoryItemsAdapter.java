@@ -55,6 +55,7 @@ public class AdminCategoryItemsAdapter extends FirestoreRecyclerAdapter<Category
             txtPrice = itemView.findViewById(R.id.txtPrice);
             txtDesc = itemView.findViewById(R.id.txtDesc);
             imageView = itemView.findViewById(R.id.imageView);
+            dataChangeListener.onDataChanged();
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

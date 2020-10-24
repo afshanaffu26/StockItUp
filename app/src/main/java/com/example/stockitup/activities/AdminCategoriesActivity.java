@@ -12,11 +12,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.AdminCategoriesAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.listeners.OnItemDeleteListener;
 import com.example.stockitup.models.CategoriesModel;
@@ -39,6 +42,8 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
     private AdminCategoriesAdapter adapter;
     private ProgressBar progressBar;
     private FloatingActionButton floatingActionButton;
+    private LinearLayout linearLayout;
+    private TextView txtEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +61,11 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
         progressBar = findViewById(R.id.progressbar);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton.setOnClickListener(this);
+        linearLayout = findViewById(R.id.linearLayout);
+        txtEmpty = findViewById(R.id.txtEmpty);
 
+        txtEmpty.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
         setRecyclerViewData();
     }
 
@@ -84,6 +93,21 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
                     intent.putExtra("name", model.getName());
                     intent.putExtra("categoryDocumentId", documentId);
                     startActivity(intent);
+                }
+            }
+        });
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
+            @Override
+            public void onDataChanged() {
+                if (adapter.getItemCount() != 0)
+                {
+                    txtEmpty.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    txtEmpty.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
                 }
             }
         });

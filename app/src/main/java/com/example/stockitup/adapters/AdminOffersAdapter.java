@@ -20,6 +20,7 @@ public class AdminOffersAdapter extends FirestoreRecyclerAdapter<OffersModel, Ad
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
+
     public AdminOffersAdapter(@NonNull FirestoreRecyclerOptions<OffersModel> options) {
         super(options);
     }

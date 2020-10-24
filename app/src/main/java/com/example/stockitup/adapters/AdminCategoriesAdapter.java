@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.listeners.OnItemDeleteListener;
 import com.example.stockitup.models.CategoriesModel;
@@ -21,6 +22,8 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
 
     private OnItemClickListener listener;
     private OnItemDeleteListener itemDeleteListener;
+    private OnDataChangeListener dataChangeListener;
+
     public AdminCategoriesAdapter(@NonNull FirestoreRecyclerOptions<CategoriesModel> options) {
         super(options);
     }
@@ -54,6 +57,7 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
             imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
             imageViewEdit.setOnClickListener(this);
             itemView.setOnClickListener(this);
+            dataChangeListener.onDataChanged();
         }
 
         @Override
@@ -71,5 +75,14 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
     }
     public void setOnItemDeleteListener(OnItemDeleteListener listener){
         this.itemDeleteListener = listener;
+    }
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
     }
 }

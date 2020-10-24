@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.AdminManageOrdersAdapter;
+import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.ManageOrdersModel;
 import com.example.stockitup.utils.AppConstants;
@@ -26,6 +29,8 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private AdminManageOrdersAdapter adapter;
     private ProgressBar progressBar;
+    private TextView txtEmpty;
+    private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +46,10 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressbar);
-
+        txtEmpty = findViewById(R.id.txtEmpty);
+        linearLayout = findViewById(R.id.linearLayout);
+        txtEmpty.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
         setRecyclerViewData();
     }
 
@@ -59,7 +67,23 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), AdminAllOrdersActivity.class);
                 intent.putExtra("userDocumentId", documentId);
                 intent.putExtra("userEmail", model.getUserEmail());
+                intent.putExtra("userName", model.getUserName());
                 startActivity(intent);
+            }
+        });
+        adapter.setOnDataChangeListener(new OnDataChangeListener() {
+            @Override
+            public void onDataChanged() {
+                if (adapter.getItemCount() != 0)
+                {
+                    txtEmpty.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    txtEmpty.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.GONE);
+                }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));

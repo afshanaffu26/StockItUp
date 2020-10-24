@@ -32,7 +32,7 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
     private CategoryItemsAdapter adapter;
     private RecyclerView recyclerView;
     private String category ="";
-    private TextView txtCategory,txtEmptyItems;
+    private TextView txtCategory,txtEmpty;
     private String categoryDocumentId;
     private FloatingActionButton floatingActionButton;
     private LinearLayout linearLayout;
@@ -53,8 +53,9 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         txtCategory = findViewById(R.id.txtCategory);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         linearLayout = findViewById(R.id.linearLayout);
-        txtEmptyItems = findViewById(R.id.txtEmptyItems);
-
+        txtEmpty = findViewById(R.id.txtEmpty);
+        txtEmpty.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
         floatingActionButton.setOnClickListener(this);
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
@@ -89,12 +90,12 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
             public void onDataChanged() {
                 if (adapter.getItemCount() != 0)
                 {
-                    txtEmptyItems.setVisibility(View.GONE);
+                    txtEmpty.setVisibility(View.GONE);
                     linearLayout.setVisibility(View.VISIBLE);
                 }
                 else
                 {
-                    txtEmptyItems.setVisibility(View.VISIBLE);
+                    txtEmpty.setVisibility(View.VISIBLE);
                     linearLayout.setVisibility(View.GONE);
                 }
             }

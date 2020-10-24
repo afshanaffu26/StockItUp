@@ -36,7 +36,7 @@ public class AdminOffersActivity extends AppCompatActivity{
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private String uid;
-    private TextView txtEmptyOffers;
+    private TextView txtEmpty;
     private LinearLayout linearLayout;
 
     @Override
@@ -53,11 +53,11 @@ public class AdminOffersActivity extends AppCompatActivity{
         firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
-        txtEmptyOffers = findViewById(R.id.txtEmptyOffers);
+        txtEmpty = findViewById(R.id.txtEmpty);
         linearLayout = findViewById(R.id.linearLayout);
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        txtEmptyOffers.setVisibility(View.GONE);
+        txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -118,13 +118,13 @@ public class AdminOffersActivity extends AppCompatActivity{
                     {
                         floatingActionButton.setVisibility(View.GONE);
                     }
-                    txtEmptyOffers.setVisibility(View.GONE);
+                    txtEmpty.setVisibility(View.GONE);
                     linearLayout.setVisibility(View.VISIBLE);
                 }
                 else
                 {
                     floatingActionButton.setVisibility(View.VISIBLE);
-                    txtEmptyOffers.setVisibility(View.VISIBLE);
+                    txtEmpty.setVisibility(View.VISIBLE);
                     linearLayout.setVisibility(View.GONE);
                 }
             }
