@@ -24,6 +24,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class is used to sign up a user to firebase
@@ -36,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private CheckBox checkBox;
     private EditText editName,editEmail,editPassword,editConfirmPassword;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseFirestore;
     private Button btnSignUp;
 
     @Override
@@ -59,6 +66,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         txtLogin.setOnClickListener(this);
         txtConditions = findViewById(R.id.txtConditions);
         txtConditions.setOnClickListener(this);
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         editName=(EditText) findViewById(R.id.editName);
         editEmail=(EditText) findViewById(R.id.editEmail);
@@ -161,6 +169,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(name).build();
                     user.updateProfile(profileUpdates);
+                    fetchAllConfigurations();
                     //if (user.getMetadata().getCreationTimestamp() == user.getMetadata().getLastSignInTimestamp()) {
                     //FirebaseAuth.getInstance().signOut();
                     //finish();
@@ -180,5 +189,33 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+    }
+    private void fetchAllConfigurations() {
+        final Map<String,String> map = new HashMap<String, String>();
+        firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            for (DocumentSnapshot documentSnapshot: task.getResult())
+                            {
+                                map.put(documentSnapshot.getString("name"),documentSnapshot.getString("value"));
+                            }
+                            AppConstants.OFFERS_MAP = map;
+                        }
+                    }
+                });
+        firebaseFirestore.collection(AppConstants.APP_SUPPORT_COLLECTION)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        task.getResult().getDocuments().get(0).get("customerCareNumber");
+                        AppConstants.TOLL_FREE_NUMBER = task.getResult().getDocuments().get(0).get("tollFreeNumber").toString();
+                        AppConstants.CUSTOMER_CARE_NUMBER = task.getResult().getDocuments().get(0).get("customerCareNumber").toString();
+                    }
+                });
     }
 }

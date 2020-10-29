@@ -22,19 +22,19 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class OrderHistoryListActivity extends AppCompatActivity{
+public class AdminOrderHistoryListActivity extends AppCompatActivity{
     private FirebaseFirestore firebaseFirestore;
     private OrderHistoryListAdapter adapter;
     private RecyclerView recyclerView;
     private String orderHistoryDocumentId;
-    private String uid;
+    private String userDocumentId;
     private TextView txtEmptyOrders;
     private LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_history_list);
+        setContentView(R.layout.activity_admin_order_history_list);
 
         String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -46,7 +46,7 @@ public class OrderHistoryListActivity extends AppCompatActivity{
         recyclerView = findViewById(R.id.recyclerView);
         txtEmptyOrders = findViewById(R.id.txtEmptyOrders);
         linearLayout = findViewById(R.id.linearLayout);
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userDocumentId = getIntent().getStringExtra("userDocumentId");
         orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
 
         setRecyclerViewData();
@@ -54,7 +54,7 @@ public class OrderHistoryListActivity extends AppCompatActivity{
 
     private void setRecyclerViewData() {
 
-        Query query = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderHistoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
+        Query query = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document(userDocumentId).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderHistoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query,CategoryItemsModel.class)
                 .build();
@@ -62,21 +62,6 @@ public class OrderHistoryListActivity extends AppCompatActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-//        adapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, DocumentSnapshot documentSnapshot, int position) {
-//                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
-//                Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
-//                intent.putExtra("name", model.getName());
-//                intent.putExtra("image", model.getImage());
-//                intent.putExtra("price", model.getPrice());
-//                intent.putExtra("desc", model.getDesc());
-//                String documentId = documentSnapshot.getId();
-//                intent.putExtra("documentId", documentId);
-//                intent.putExtra("screen","orders");
-//                startActivity(intent);
-//            }
-//        });
     }
     @Override
     protected void onStart() {

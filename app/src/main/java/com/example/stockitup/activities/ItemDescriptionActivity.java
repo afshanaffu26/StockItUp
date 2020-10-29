@@ -79,12 +79,18 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
 
-        if (getIntent().getStringExtra("screen") == null )
+        if (getIntent().getStringExtra("screen") == null ) {
+            btnAddToCart.setText("Add to Cart");
             floatingActionButton.setVisibility(View.VISIBLE);
-        else if (getIntent().getStringExtra("screen").equalsIgnoreCase("cart"))
+        }
+        else if (getIntent().getStringExtra("screen").equalsIgnoreCase("cart")) {
+            btnAddToCart.setText("Update Cart");
             floatingActionButton.setVisibility(View.GONE);
-        else if (getIntent().getStringExtra("screen").equalsIgnoreCase("orders"))
+        }
+        else if (getIntent().getStringExtra("screen").equalsIgnoreCase("orders")) {
+            btnAddToCart.setText("Add to Cart");
             floatingActionButton.setVisibility(View.GONE);
+        }
 
         name = getIntent().getStringExtra("name");
         image = getIntent().getStringExtra("image");

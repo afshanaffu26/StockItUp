@@ -38,6 +38,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     private String date,subtotal,tax,deliveryCharge,total,address,status,offer,offerPercent,userEmail,userName,userID;
     private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer,txtOrderId;
     private FirebaseAuth firebaseAuth;
+    private Button btnViewOrderDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,8 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
 
         btnUpdate = findViewById(R.id.btnUpdate);
         btnUpdate.setOnClickListener(this);
+        btnViewOrderDetails = findViewById(R.id.btnViewOrderDetails);
+        btnViewOrderDetails.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         userDocumentId = getIntent().getStringExtra("userDocumentId");
@@ -163,7 +166,17 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
             case R.id.btnUpdate:
                 updateStatus();
                 break;
+            case R.id.btnViewOrderDetails:
+                viewOrderDetails();
+                break;
         }
+    }
+
+    private void viewOrderDetails() {
+        Intent intent = new Intent(getApplicationContext(),AdminOrderHistoryListActivity.class);
+        intent.putExtra("orderHistoryDocumentId",orderDocumentId);
+        intent.putExtra("userDocumentId",userDocumentId);
+        startActivity(intent);
     }
 
     private void updateStatus() {
