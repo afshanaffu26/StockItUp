@@ -66,6 +66,7 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
                 String documentId = documentSnapshot.getId();
                 Intent intent = new Intent(getApplicationContext(), AdminAllOrdersActivity.class);
                 intent.putExtra("userDocumentId", documentId);
+                intent.putExtra("userID", model.getUserId());
                 intent.putExtra("userEmail", model.getUserEmail());
                 intent.putExtra("userName", model.getUserName());
                 startActivity(intent);

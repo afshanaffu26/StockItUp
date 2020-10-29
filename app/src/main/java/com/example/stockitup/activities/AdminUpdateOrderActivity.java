@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.stockitup.Notifications.SendNotification;
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
 import com.example.stockitup.utils.JavaMailAPI;
@@ -33,7 +35,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     private Button btnUpdate;
     private FirebaseFirestore firebaseFirestore;
     private String userDocumentId,orderDocumentId;
-    private String date,subtotal,tax,deliveryCharge,total,address,status,offer,offerPercent,userEmail,userName;
+    private String date,subtotal,tax,deliveryCharge,total,address,status,offer,offerPercent,userEmail,userName,userID;
     private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer,txtOrderId;
     private FirebaseAuth firebaseAuth;
 
@@ -66,6 +68,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
 
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         orderDocumentId = getIntent().getStringExtra("orderDocumentId");
+        userID = getIntent().getStringExtra("userID");
         userEmail = getIntent().getStringExtra("userEmail");
         userName = getIntent().getStringExtra("userName");
         status = getIntent().getStringExtra("status");
@@ -177,8 +180,12 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
                 new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        if (status.equalsIgnoreCase("delivered"))
+                        if (status.equalsIgnoreCase("delivered")) {
                             sendInvoice();
+                            Intent intent = new Intent(getApplicationContext(), OrderHistoryListActivity.class);
+                            intent.putExtra("orderHistoryDocumentId", orderDocumentId);
+                            new SendNotification().sendNotification(userID, "Update on order status", "Hi " + userName + ", your order is delivered successfully. Invoice is sent to your email.",intent);
+                        }
                         setViewByOrderStatus();
                         Toast.makeText(AdminUpdateOrderActivity.this, "Status Updated", Toast.LENGTH_SHORT).show();
                     }

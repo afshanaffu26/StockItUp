@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.stockitup.Notifications.SendNotification;
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -161,7 +162,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(this, AdminDashboardActivity.class));
         }
         else {
+
             fetchAllConfigurations();
+            new SendNotification().updateToken(FirebaseAuth.getInstance().getCurrentUser().getUid());
             startActivity(new Intent(this, HomeScreenActivity.class));
         }
     }
