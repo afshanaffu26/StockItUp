@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
+import com.example.stockitup.activities.OrderHistoryDetailsActivity;
 import com.example.stockitup.activities.OrderHistoryListActivity;
 import com.example.stockitup.adapters.OrderHistoryAdapter;
 import com.example.stockitup.listeners.OnDataChangeListener;
@@ -27,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.text.SimpleDateFormat;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -111,9 +114,19 @@ public class OrderHistoryFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view,DocumentSnapshot documentSnapshot, int position) {
-                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
-                Intent intent = new Intent(getContext(), OrderHistoryListActivity.class);
+                OrdersModel ordersModel = documentSnapshot.toObject(OrdersModel.class);
+                Intent intent = new Intent(getContext(), OrderHistoryDetailsActivity.class);
                 orderHistoryDocumentId = documentSnapshot.getId();
+                String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(ordersModel.getDate());
+                intent.putExtra("date",date);
+                intent.putExtra("subtotal", ordersModel.getSubtotal());
+                intent.putExtra("offerPercent", ordersModel.getOfferPercent());
+                intent.putExtra("offer", ordersModel.getOffer());
+                intent.putExtra("tax", ordersModel.getTax());
+                intent.putExtra("deliveryCharge", ordersModel.getDeliveryCharge());
+                intent.putExtra("total", ordersModel.getTotal());
+                intent.putExtra("address", ordersModel.getAddress());
+                intent.putExtra("status",ordersModel.getStatus());
                 intent.putExtra("orderHistoryDocumentId", orderHistoryDocumentId);
                 startActivity(intent);
             }

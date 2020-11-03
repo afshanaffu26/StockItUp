@@ -29,19 +29,6 @@ public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,Or
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull OrdersModel model) {
         String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(model.getDate());
         holder.txtOrderDate.setText("Ordered On: "+date);
-        holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal()+"$");
-        double off = Double.parseDouble(model.getOfferPercent());
-        if (!(off == (double)0.0)){
-            holder.txtOffer.setText("Offer (-" + model.getOfferPercent() + "%): -" + model.getOffer() + "$");
-            holder.txtOffer.setVisibility(View.VISIBLE);
-        }
-        else {
-            holder.txtOffer.setVisibility(View.GONE);
-        }
-        holder.txtTax.setText("Tax: "+model.getTax()+"$");
-        holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge()+"$");
-        holder.txtTotal.setText("Total: "+model.getTotal()+"$");
-        holder.txtAddress.setText("Address: "+model.getAddress());
         holder.txtStatus.setText(model.getStatus());
         if (model.getStatus().equalsIgnoreCase("pending"))
         {

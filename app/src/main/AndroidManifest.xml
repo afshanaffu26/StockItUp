@@ -30,7 +30,7 @@
         <activity android:name=".activities.ContactActivity" />
         <activity android:name=".activities.FaqActivity" />
         <activity android:name=".activities.AdminAddItemsActivity" />
-        <activity android:name=".activities.ManageUsersActivity" />
+        <activity android:name=".activities.OrderHistoryDetailsActivity" />
         <activity android:name=".activities.OrderHistoryListActivity" />
         <activity android:name=".activities.AdminDashboardActivity" />
         <activity android:name=".activities.AddressActivity" />

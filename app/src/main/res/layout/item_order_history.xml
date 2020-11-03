@@ -9,6 +9,14 @@
     android:layout_marginEnd="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginStart="8dp">
+    <ImageButton
+        android:id="@+id/imgNext"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right|center"
+        android:layout_weight="2"
+        android:background="@color/colorWhite"
+        android:src="@drawable/navigate_next_24" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -24,53 +32,6 @@
             android:text="Ordered On:"
             android:textColor="@color/colorText"
             android:textSize="18dp"/>
-
-        <TextView
-            android:id="@+id/txtSubTotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Subtotal: 55$"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/txtOffer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Offer (20%): 2s$"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/txtTax"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Tax: 5$"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/txtDeliveryCharge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="DeliveryCharge: 5$"
-            android:textSize="16dp" />
-
-        <TextView
-            android:id="@+id/txtTotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Total: 70$"
-            android:textSize="16dp" />
-        <TextView
-            android:id="@+id/txtAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Address:"
-            android:textSize="16dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -90,13 +51,4 @@
             android:textSize="16dp"/>
         </LinearLayout>
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/imgNext"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right|center"
-        android:layout_weight="2"
-        android:background="@color/colorWhite"
-        android:src="@drawable/navigate_next_24" />
 </androidx.cardview.widget.CardView>

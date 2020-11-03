@@ -99,6 +99,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:textColor="@color/colorText"
+                    android:background="@color/colorWhite"
+                    android:padding="10dp"
                     android:text="View Order Details"/>
                 <LinearLayout
                     android:layout_width="match_parent"
