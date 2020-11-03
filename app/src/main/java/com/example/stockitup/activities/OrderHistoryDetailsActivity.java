@@ -1,10 +1,12 @@
 package com.example.stockitup.activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -135,23 +137,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
             Toast.makeText(getApplicationContext(),"Order Cannot be cancelled.",Toast.LENGTH_SHORT).show();
             return;
         }
-        Map<String,Object> map = new HashMap<>();
-        map.put("status","Cancelled");
-        String uid = firebaseAuth.getUid();
-        DocumentReference documentReference = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderHistoryDocumentId);
-        documentReference.update(map).addOnSuccessListener(
-                new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        setViewByOrderStatus();
-                        Toast.makeText(getApplicationContext(), "Order is Cancelled.", Toast.LENGTH_SHORT).show();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        alertMessage();
     }
 
     private void viewOrderDetails() {
@@ -164,5 +150,42 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         txtStatus.setTextColor(Color.parseColor("#db2544"));
         txtStatus.setText("Cancelled");
         btnCancelOrder.setVisibility(View.GONE);
+    }
+    public void alertMessage() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        // Yes button clicked
+                        Map<String,Object> map = new HashMap<>();
+                        map.put("status","Cancelled");
+                        String uid = firebaseAuth.getUid();
+                        DocumentReference documentReference = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderHistoryDocumentId);
+                        documentReference.update(map).addOnSuccessListener(
+                                new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        setViewByOrderStatus();
+                                        Toast.makeText(getApplicationContext(), "Order is Cancelled.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        // No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to cancel this order?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
     }
 }

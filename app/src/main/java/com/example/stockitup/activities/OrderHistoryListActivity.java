@@ -5,20 +5,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
 import com.example.stockitup.adapters.OrderHistoryListAdapter;
-import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -59,24 +55,10 @@ public class OrderHistoryListActivity extends AppCompatActivity{
                 .setQuery(query,CategoryItemsModel.class)
                 .build();
         adapter = new OrderHistoryListAdapter(options);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
-//        adapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, DocumentSnapshot documentSnapshot, int position) {
-//                CategoryItemsModel model = documentSnapshot.toObject(CategoryItemsModel.class);
-//                Intent intent = new Intent(view.getContext(), ItemDescriptionActivity.class);
-//                intent.putExtra("name", model.getName());
-//                intent.putExtra("image", model.getImage());
-//                intent.putExtra("price", model.getPrice());
-//                intent.putExtra("desc", model.getDesc());
-//                String documentId = documentSnapshot.getId();
-//                intent.putExtra("documentId", documentId);
-//                intent.putExtra("screen","orders");
-//                startActivity(intent);
-//            }
-//        });
     }
     @Override
     protected void onStart() {

@@ -59,8 +59,9 @@ public class AdminOrderHistoryListActivity extends AppCompatActivity{
                 .setQuery(query,CategoryItemsModel.class)
                 .build();
         adapter = new OrderHistoryListAdapter(options);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
     }
     @Override

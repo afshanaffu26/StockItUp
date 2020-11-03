@@ -156,7 +156,7 @@ public class AdminOffersActivity extends AppCompatActivity{
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete this category?")
+        builder.setMessage("Are you sure you want to delete this offer?")
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }

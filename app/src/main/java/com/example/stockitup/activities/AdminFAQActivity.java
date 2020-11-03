@@ -156,7 +156,7 @@ public class AdminFAQActivity extends AppCompatActivity{
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete this category?")
+        builder.setMessage("Are you sure you want to delete this FAQ?")
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }

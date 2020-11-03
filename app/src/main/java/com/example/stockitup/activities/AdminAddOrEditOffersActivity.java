@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class AdminAddOrEditOffersActivity extends AppCompatActivity {
+public class AdminAddOrEditOffersActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String name,value,flow,documentId;
     private EditText editName,editValue;
@@ -39,34 +39,7 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity {
         btnSubmit = findViewById(R.id.btnSubmit);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                name = editName.getText().toString();
-                value = editValue.getText().toString();
-                OffersModel model = new OffersModel(name, value);
-                if (flow.equalsIgnoreCase("add")) {
-                    firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION)
-                            .add(model).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getApplicationContext(),"Offer Added.",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                else
-                {
-                    firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION).document(documentId)
-                            .set(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(),"Offer Updated.",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            }
-        });
-
+        btnSubmit.setOnClickListener(this);
         flow = getIntent().getStringExtra("flow");
         if (flow.equalsIgnoreCase("edit"))
         {
@@ -83,6 +56,36 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity {
         }
     }
 
+    private void submitOffer() {
+        name = editName.getText().toString();
+        value = editValue.getText().toString();
+        int off = Integer.parseInt(value);
+        if (off < (int)0 || off > (int)100 ) {
+            Toast.makeText(this, "Offer should be between 0 to 100%.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        OffersModel model = new OffersModel(name, value);
+        if (flow.equalsIgnoreCase("add")) {
+            firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION)
+                    .add(model).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Toast.makeText(getApplicationContext(),"Offer Added.",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else
+        {
+            firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION).document(documentId)
+                    .set(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(getApplicationContext(),"Offer Updated.",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
      * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
@@ -91,5 +94,10 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        submitOffer();
     }
 }

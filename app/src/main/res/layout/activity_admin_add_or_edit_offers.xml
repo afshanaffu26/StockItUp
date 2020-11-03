@@ -46,7 +46,7 @@
             android:hint="Enter Value"
             android:background="@drawable/edit_text_background"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="number" />
 
         <Button
             android:id="@+id/btnSubmit"

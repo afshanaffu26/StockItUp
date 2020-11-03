@@ -82,6 +82,7 @@
                     android:hint="CVV"
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
+                    android:maxLength="3"
                     android:inputType="numberPassword" />
 
                 <EditText
