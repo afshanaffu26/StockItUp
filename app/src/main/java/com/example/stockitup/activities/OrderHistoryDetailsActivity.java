@@ -1,14 +1,38 @@
 package com.example.stockitup.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.stockitup.Notifications.SendNotification;
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-public class OrderHistoryDetailsActivity extends AppCompatActivity{
+import java.util.HashMap;
+import java.util.Map;
+
+public class OrderHistoryDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private String subtotal,tax,offer,offerPercent,deliveryCharge,total,address,date,status;
+    private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer,txtOrderId;
+    private Button btnViewOrderDetails,btnCancelOrder;
+    private String orderHistoryDocumentId;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +44,66 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        subtotal = getIntent().getStringExtra("subtotal");
+        tax = getIntent().getStringExtra("tax");
+        offer = getIntent().getStringExtra("offer");
+        offerPercent = getIntent().getStringExtra("offerPercent");
+        deliveryCharge = getIntent().getStringExtra("deliveryCharge");
+        total = getIntent().getStringExtra("total");
+        address = getIntent().getStringExtra("address");
+        orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
+        date = getIntent().getStringExtra("date");
+        status = getIntent().getStringExtra("status");
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        txtOrderDate = findViewById(R.id.txtOrderDate);
+        txtSubTotal = findViewById(R.id.txtSubTotal);
+        txtOffer = findViewById(R.id.txtOffer);
+        txtTax = findViewById(R.id.txtTax);
+        txtDeliveryCharge = findViewById(R.id.txtDeliveryCharge);
+        txtTotal = findViewById(R.id.txtTotal);
+        txtAddress = findViewById(R.id.txtAddress);
+        txtStatus = findViewById(R.id.txtStatus);
+        txtOrderId = findViewById(R.id.txtOrderId);
+        btnViewOrderDetails = findViewById(R.id.btnViewOrderDetails);
+        btnViewOrderDetails.setOnClickListener(this);
+        btnCancelOrder = findViewById(R.id.btnCancelOrder);
+        btnCancelOrder.setOnClickListener(this);
+
+        txtOrderId.setText("OrderId: "+orderHistoryDocumentId);
+        txtOrderDate.setText("Ordered On: "+date);
+        txtSubTotal.setText("Subtotal: "+subtotal+"$");
+
+        double off = Double.parseDouble(offerPercent);
+        if (!(off == (double)0.0)){
+            txtOffer.setText("Offer (-" + offerPercent + "%): -" + offer + "$");
+            txtOffer.setVisibility(View.VISIBLE);
+        }
+        else {
+            txtOffer.setVisibility(View.GONE);
+        }
+        txtTax.setText("Tax: "+tax+"$");
+        txtDeliveryCharge.setText("DeliveryCharge: "+deliveryCharge+"$");
+        txtTotal.setText("Total: "+total+"$");
+        txtAddress.setText("Address: "+address+"$");
+        txtStatus.setText(status);
+        if (status.equalsIgnoreCase("pending"))
+        {
+            txtStatus.setTextColor(Color.parseColor("#ffa700"));
+            btnCancelOrder.setVisibility(View.VISIBLE);
+        }
+        else if (status.equalsIgnoreCase("delivered"))
+        {
+            txtStatus.setTextColor(Color.parseColor("#00b159"));
+            btnCancelOrder.setVisibility(View.GONE);
+        }
+        else
+        {
+            txtStatus.setTextColor(Color.parseColor("#db2544"));
+            btnCancelOrder.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -30,5 +114,55 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity{
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId())
+        {
+            case R.id.btnViewOrderDetails:
+                viewOrderDetails();
+                break;
+            case R.id.btnCancelOrder:
+                cancelOrder();
+                break;
+        }
+    }
+
+    private void cancelOrder() {
+        if (!status.equalsIgnoreCase("pending"))
+        {
+            Toast.makeText(getApplicationContext(),"Order Cannot be cancelled.",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String,Object> map = new HashMap<>();
+        map.put("status","Cancelled");
+        String uid = firebaseAuth.getUid();
+        DocumentReference documentReference = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderHistoryDocumentId);
+        documentReference.update(map).addOnSuccessListener(
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        setViewByOrderStatus();
+                        Toast.makeText(getApplicationContext(), "Order is Cancelled.", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void viewOrderDetails() {
+        Intent intent = new Intent(getApplicationContext(),OrderHistoryListActivity.class);
+        intent.putExtra("orderHistoryDocumentId",orderHistoryDocumentId);
+        startActivity(intent);
+    }
+
+    private void setViewByOrderStatus() {
+        txtStatus.setTextColor(Color.parseColor("#db2544"));
+        txtStatus.setText("Cancelled");
+        btnCancelOrder.setVisibility(View.GONE);
     }
 }
