@@ -5,6 +5,9 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
+/**
+ * This interface is used make a request to FCM
+ */
 public interface APIService {
     @Headers(
             {

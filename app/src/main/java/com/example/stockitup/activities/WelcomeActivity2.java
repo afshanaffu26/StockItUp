@@ -9,10 +9,17 @@ import android.widget.Button;
 
 import com.example.stockitup.R;
 
+/**
+ *  This class deals with Onboarding screens
+ */
 public class  WelcomeActivity2 extends AppCompatActivity  implements View.OnClickListener {
 
     private Button buttonNext;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +28,10 @@ public class  WelcomeActivity2 extends AppCompatActivity  implements View.OnClic
         buttonNext = findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
     }
+    /**
+     * Called when a view has been clicked.
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));

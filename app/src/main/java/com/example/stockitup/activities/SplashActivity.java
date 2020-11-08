@@ -11,10 +11,15 @@ import android.view.Window;
 import com.example.stockitup.R;
 
 /**
- *  Manages application main content
+ *  Application splash screen
  */
 public class SplashActivity extends AppCompatActivity {
     private Window window;
+
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

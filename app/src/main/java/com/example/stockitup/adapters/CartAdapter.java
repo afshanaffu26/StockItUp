@@ -17,10 +17,18 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
+/**
+ * This is an adapter class to bind data to cart recycler view
+ * */
 public class CartAdapter extends FirestoreRecyclerAdapter<CategoryItemsModel,CartAdapter.ViewHolder>{
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
+
+    /**
+     * Constructor CartAdapter is called to bind the data and view for cart
+     * @param options FirestoreRecyclerOptions for CategoryItemsModel
+     * */
     public CartAdapter(@NonNull FirestoreRecyclerOptions<CategoryItemsModel> options) {
         super(options);
     }

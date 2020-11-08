@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +37,9 @@ public class FeedbackFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Non-parameterized constructor
+     * */
     public FeedbackFragment() {
         // Required empty public constructor
     }

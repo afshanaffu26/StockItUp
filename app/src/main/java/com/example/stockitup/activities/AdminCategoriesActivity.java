@@ -34,6 +34,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+/**
+ * This class is related to admin.It deals with Categories
+ */
 
 public class AdminCategoriesActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -45,6 +48,10 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
     private LinearLayout linearLayout;
     private TextView txtEmpty;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,23 +194,38 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         adapter.startListening();
     }
-
+    /**
+     * Called when the activity is no longer visible to the user.
+     */
     @Override
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
     }
 
+
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
+
+    /**
+     * when a view has been clicked.
+     * @param view The view that was clicked.
+     */
 
     @Override
     public void onClick(View view) {

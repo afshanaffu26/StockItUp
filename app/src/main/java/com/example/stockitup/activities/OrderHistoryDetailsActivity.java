@@ -27,6 +27,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manages with recent order details
+ */
+
 public class OrderHistoryDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String subtotal,tax,offer,offerPercent,deliveryCharge,total,address,date,status;
@@ -36,6 +40,10 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +126,11 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         return true;
     }
 
+    /**
+     * Called when a view has been clicked.
+     * @param v The view that was clicked.
+     */
+
     @Override
     public void onClick(View v) {
         switch(v.getId())
@@ -151,6 +164,10 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         txtStatus.setText("Cancelled");
         btnCancelOrder.setVisibility(View.GONE);
     }
+
+    /**
+     * This method is used to show an alert with an appropriate message
+     */
     public void alertMessage() {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

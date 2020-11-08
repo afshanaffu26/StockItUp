@@ -19,12 +19,19 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class deals with creation of notification and channels.
+ */
 public class MyFireBaseMessagingService extends FirebaseMessagingService {
 
     public static final String CHANNEL_ONE_ID ="channel_one_id";
     public static final String CHANNEL_TWO_ID ="channel_one_two";
     PendingIntent pendingIntent = null;
 
+    /**
+     * This method is called when a notification is received
+     * @param remoteMessage
+     */
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 

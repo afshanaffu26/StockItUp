@@ -38,6 +38,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DecimalFormat;
 
+/**
+ * This class manages cart related functionalityi.
+ */
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String uid;
@@ -53,6 +56,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private double subTotal,deliveryCharge,tax,total,offer;
     private double offerPercent = 0;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -296,6 +303,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(getApplicationContext(),"Promo not available.",Toast.LENGTH_SHORT).show();
         }
     }
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
 
     @Override
     public boolean onSupportNavigateUp() {

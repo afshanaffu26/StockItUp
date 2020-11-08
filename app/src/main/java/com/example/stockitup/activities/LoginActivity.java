@@ -42,6 +42,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ProgressBar progressBar;
     private FirebaseFirestore firebaseFirestore;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +74,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar.setVisibility(View.GONE);
 
     }
-
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onStart() {
         super.onStart();

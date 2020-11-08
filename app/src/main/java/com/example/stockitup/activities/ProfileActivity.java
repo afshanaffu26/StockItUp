@@ -52,6 +52,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private static final String TAG = "ProfileActivity";
     private int TAKE_IMAGE_CODE = 10001;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +98,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
+
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onStart() {
         super.onStart();

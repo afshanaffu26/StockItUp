@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 /**
- * This class deals with contact us details for user to contact
+ * This class deals with contact details for user to contact
  */
 public class ContactActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,6 +44,10 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         finish();
         return true;
     }
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

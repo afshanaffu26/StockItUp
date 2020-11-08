@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.stockitup.BuildConfig;
 import com.example.stockitup.R;
@@ -22,6 +23,8 @@ import com.example.stockitup.utils.AppConstants;
  */
 public class InviteFragment extends Fragment implements View.OnClickListener {
 
+    private Button btnInvite;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,8 +34,9 @@ public class InviteFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
 
-    Button btnInvite;
-
+    /**
+     * Non-parameterized constructor
+     * */
     public InviteFragment() {
         // Required empty public constructor
     }
@@ -86,6 +90,10 @@ public class InviteFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
+    /**
+     * Called when a view has been clicked.
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -108,7 +116,7 @@ public class InviteFragment extends Fragment implements View.OnClickListener {
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             startActivity(Intent.createChooser(shareIntent, "Choose one"));
         } catch(Exception e) {
-            //e.toString();
+            Toast.makeText(getContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }

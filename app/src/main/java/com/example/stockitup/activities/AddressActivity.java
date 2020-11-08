@@ -29,6 +29,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+/**
+ * This class deals with user addresses
+ */
 public class AddressActivity extends AppCompatActivity{
 
     private FirebaseFirestore firebaseFirestore;
@@ -39,6 +42,10 @@ public class AddressActivity extends AppCompatActivity{
     private TextView txtEmpty;
     private LinearLayout linearLayout;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +79,9 @@ public class AddressActivity extends AppCompatActivity{
 
     }
 
+    /**
+     * This method is used to set the data to a recyclerview
+     */
     private void setRecyclerViewData() {
         final Query query = firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document("address"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
         FirestoreRecyclerOptions<AddressModel> options = new FirestoreRecyclerOptions.Builder<AddressModel>()
@@ -151,6 +161,11 @@ public class AddressActivity extends AppCompatActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
     }
+
+    /**
+     * This method is used to show an alert with an appropriate message
+     * @param position position of item in a recycler view
+     */
     public void alertMessage(final int position) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

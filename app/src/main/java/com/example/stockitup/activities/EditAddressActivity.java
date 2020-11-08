@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * This class deals with the Update functionality of Address
+ */
 public class EditAddressActivity extends AppCompatActivity {
 
     private String name,addressLine,city,province,country,pincode,phone;
@@ -28,6 +31,10 @@ public class EditAddressActivity extends AppCompatActivity {
     private String documentId;
     private String uid;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +75,10 @@ public class EditAddressActivity extends AppCompatActivity {
         editPhone.setText(phone);
 
         btnNext.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Called when a view has been clicked.
+             * @param view The view that was clicked.
+             */
             @Override
             public void onClick(View view) {
                 name = editName.getText().toString();

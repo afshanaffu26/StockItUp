@@ -15,11 +15,18 @@ import com.example.stockitup.models.ManageOrdersModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+/**
+ * This is an adapter class to bind data to manage orders recycler view
+ * */
 public class AdminManageOrdersAdapter extends FirestoreRecyclerAdapter<ManageOrdersModel,AdminManageOrdersAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
 
+    /**
+     * Constructor AdminManageOrdersAdapter is called to bind the data and view for manage orders in admin
+     * @param options FirestoreRecyclerOptions for ManageOrdersModel
+     * */
     public AdminManageOrdersAdapter(@NonNull FirestoreRecyclerOptions<ManageOrdersModel> options) {
         super(options);
     }

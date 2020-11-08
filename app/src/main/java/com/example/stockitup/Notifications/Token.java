@@ -1,5 +1,8 @@
 package com.example.stockitup.Notifications;
 
+/**
+ * This class is a model file for token
+ */
 public class Token {
     private String token;
     private String userID;

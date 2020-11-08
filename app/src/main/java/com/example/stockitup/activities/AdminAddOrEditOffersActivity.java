@@ -15,7 +15,9 @@ import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+/**
+ * This class is related to admin.It deals with add or edit of Offers
+ */
 public class AdminAddOrEditOffersActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String name,value,flow,documentId;
@@ -23,6 +25,10 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
     private Button btnSubmit;
     private FirebaseFirestore firebaseFirestore;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +102,10 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
         return true;
     }
 
+    /**
+     * Called when a view has been clicked.
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         submitOffer();

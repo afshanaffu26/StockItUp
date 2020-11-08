@@ -16,10 +16,18 @@ import com.example.stockitup.models.AddressModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+/**
+ * This is an adapter class to bind data to address recycler view
+ * */
 public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,AddressAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
+
+    /**
+     * Constructor AddressAdapter is called to bind the data and view for address
+     * @param options FirestoreRecyclerOptions for AddressModel
+     * */
     public AddressAdapter(@NonNull FirestoreRecyclerOptions<AddressModel> options) {
         super(options);
     }

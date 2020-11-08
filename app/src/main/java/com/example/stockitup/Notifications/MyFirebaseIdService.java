@@ -6,6 +6,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
+/**
+ * This class deals with background services
+ */
 public class MyFirebaseIdService extends FirebaseMessagingService {
 
     @Override

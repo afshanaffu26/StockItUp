@@ -2,6 +2,9 @@ package com.example.stockitup.Notifications;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * This is model file for notification
+ */
 public class RequestNotificaton {
 
     @SerializedName("to")
@@ -13,10 +16,20 @@ public class RequestNotificaton {
     @SerializedName("data")
     private SendDataModel sendDataModel;
 
+    /**
+     * This method is a getter.
+     * It is used to retrieve notification model
+     * @return Notification Model
+     */
     public SendNotificationModel getSendNotificationModel() {
         return sendNotificationModel;
     }
 
+    /**
+     * This method is setter
+     * It is used to set the notification model
+     * @param sendNotificationModel notification model to be set
+     */
     public void setSendNotificationModel(SendNotificationModel sendNotificationModel) {
         this.sendNotificationModel = sendNotificationModel;
     }

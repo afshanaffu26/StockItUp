@@ -16,11 +16,18 @@ import com.example.stockitup.models.OffersModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+/**
+ * This is an adapter class to bind data to admin offers recycler view
+ * */
 public class AdminOffersAdapter extends FirestoreRecyclerAdapter<OffersModel, AdminOffersAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
 
+    /**
+     * Constructor AdminOffersAdapter is called to bind the data and view for Offers in admin
+     * @param options FirestoreRecyclerOptions for OffersModel
+     * */
     public AdminOffersAdapter(@NonNull FirestoreRecyclerOptions<OffersModel> options) {
         super(options);
     }

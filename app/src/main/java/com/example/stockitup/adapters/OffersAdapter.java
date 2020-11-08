@@ -16,11 +16,18 @@ import com.example.stockitup.models.OffersModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+/**
+ * This is an adapter class to bind data to offers recycler view
+ * */
 public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
 
+    /**
+     * Constructor OffersAdapter is called to bind the data and view for Offers
+     * @param options FirestoreRecyclerOptions for OffersModel
+     * */
     public OffersAdapter(@NonNull FirestoreRecyclerOptions<OffersModel> options) {
         super(options);
     }

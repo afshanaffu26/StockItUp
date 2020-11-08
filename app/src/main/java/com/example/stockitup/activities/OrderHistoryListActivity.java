@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+/**
+ * Manages with recent orders
+ */
 public class OrderHistoryListActivity extends AppCompatActivity{
     private FirebaseFirestore firebaseFirestore;
     private OrderHistoryListAdapter adapter;
@@ -27,6 +30,10 @@ public class OrderHistoryListActivity extends AppCompatActivity{
     private TextView txtEmptyOrders;
     private LinearLayout linearLayout;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +67,19 @@ public class OrderHistoryListActivity extends AppCompatActivity{
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
     }
+
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         adapter.startListening();
     }
+
+    /**
+     * Called when the activity is no longer visible to the user.
+     */
     @Override
     protected void onStop() {
         super.onStop();

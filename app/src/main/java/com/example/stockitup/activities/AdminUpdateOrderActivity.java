@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is related to admin.It deals with updation of order status
+ */
+
 public class AdminUpdateOrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Spinner spinner;
@@ -40,6 +44,10 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     private FirebaseAuth firebaseAuth;
     private Button btnViewOrderDetails;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,12 +161,20 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
 
     }
 
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
 
+    /**
+     * Called when a view has been clicked.
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId())

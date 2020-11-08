@@ -1,5 +1,8 @@
 package com.example.stockitup.Notifications;
 
+/**
+ * This class deals with Notification structure
+ */
 public class SendDataModel {
 
     private String body,title, intent;

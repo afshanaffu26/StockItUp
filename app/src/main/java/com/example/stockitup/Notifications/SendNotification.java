@@ -19,6 +19,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This class deals with Notifications
+ */
 public class SendNotification extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private APIService apiService;

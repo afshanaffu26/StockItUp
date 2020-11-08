@@ -24,12 +24,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class manages addition of new user addresses
+ */
 public class AddAddressActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editName,editAddressLine,editProvince,editCity,editPostalID,editCountry,editPhone;
     private FirebaseFirestore firebaseFirestore;
     private String uid;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

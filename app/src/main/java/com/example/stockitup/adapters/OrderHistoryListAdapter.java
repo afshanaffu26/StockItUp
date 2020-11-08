@@ -16,9 +16,17 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
+/**
+ * This is an adapter class to bind data to order history list recycler view
+ * */
 public class OrderHistoryListAdapter extends FirestoreRecyclerAdapter<CategoryItemsModel,OrderHistoryListAdapter.ViewHolder>{
 
     private OnItemClickListener listener;
+
+    /**
+     * Constructor OrderHistoryListAdapter is called to bind the data and view for order history list
+     * @param options FirestoreRecyclerOptions for CategoryItemsModel
+     * */
     public OrderHistoryListAdapter(@NonNull FirestoreRecyclerOptions<CategoryItemsModel> options) {
         super(options);
     }

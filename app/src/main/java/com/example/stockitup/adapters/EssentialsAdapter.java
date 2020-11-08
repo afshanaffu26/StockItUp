@@ -1,6 +1,5 @@
 package com.example.stockitup.adapters;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,18 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
+/**
+ * This is an adapter class to bind data to essential items recycler view
+ * */
 public class EssentialsAdapter extends FirestoreRecyclerAdapter<CategoryItemsModel,EssentialsAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
+
+    /**
+     * Constructor EssentialsAdapter is called to bind the data and view for all essential items
+     * @param options FirestoreRecyclerOptions for CategoryItemsModel
+     * */
     public EssentialsAdapter(@NonNull FirestoreRecyclerOptions<CategoryItemsModel> options) {
         super(options);
     }

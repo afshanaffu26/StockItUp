@@ -1,6 +1,8 @@
 package com.example.stockitup.Notifications;
 
-
+/**
+ * This class is a model file for notification
+ */
 public class SendNotificationModel {
     private String body,title;
 

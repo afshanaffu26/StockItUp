@@ -34,6 +34,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+/**
+ * This class is related to admin.It deals with Category Items.
+ */
 
 public class AdminCategoryItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,6 +51,10 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
     private Map<String,String> map=new HashMap<String,String>();
     private LinearLayout linearLayout;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +145,10 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
             }
         }).attachToRecyclerView(recyclerView);
     }
+    /**
+     * his method is used to show an alert with an appropriate message
+     * @param position position of item in a recycler view
+     */
     public void alertMessage(final int position) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -164,24 +175,36 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
-
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         adapter.startListening();
     }
-
+    /**
+     * Called when the activity is no longer visible to the user.
+     */
     @Override
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
     }
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
 
+    /**
+     * Called when a view has been clicked.
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         switch(view.getId()){

@@ -29,6 +29,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+/**
+ * This class is related to admin.It deals with offers
+ */
 public class AdminOffersActivity extends AppCompatActivity{
 
     private FirebaseFirestore firebaseFirestore;
@@ -39,6 +42,10 @@ public class AdminOffersActivity extends AppCompatActivity{
     private TextView txtEmpty;
     private LinearLayout linearLayout;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,6 +141,10 @@ public class AdminOffersActivity extends AppCompatActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
     }
+    /**
+     * This method is used to show an alert with an appropriate message
+     * @param position position of item in a recycler view
+     */
     public void alertMessage(final int position) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -161,12 +172,18 @@ public class AdminOffersActivity extends AppCompatActivity{
                 .setNegativeButton("No", dialogClickListener).show();
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         adapter.startListening();
     }
 
+    /**
+     * Called when the activity is no longer visible to the user.
+     */
     @Override
     protected void onStop() {
         super.onStop();

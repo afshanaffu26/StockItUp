@@ -21,6 +21,10 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+/**
+ * This class deals with the faq.
+ */
+
 public class FaqActivity extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
@@ -39,7 +43,10 @@ public class FaqActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,13 +97,18 @@ public class FaqActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
     }
-
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         adapter.startListening();
     }
 
+    /**
+     * Called when the activity is no longer visible to the user.
+     */
     @Override
     protected void onStop() {
         super.onStop();

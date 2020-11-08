@@ -13,12 +13,21 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * This class JavaMailAPI is used to send email without opening the mail application
+ * */
 public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
 
     private Context context;
     private Session session;
     private String email, subject, message;
 
+    /**
+     * Constructor is used to initialize context, subject, message
+     * @param context the context of message
+     * @param subject the subject of message
+     * @param message the message content of message
+     * */
     public JavaMailAPI(Context context, String email, String subject, String message) {
         this.context = context;
         this.email = email;

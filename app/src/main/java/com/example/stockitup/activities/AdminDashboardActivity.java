@@ -23,6 +23,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is related to admin.It deals with Dashboard
+ */
+
+
 public class AdminDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CardView cardLogout,cardViewCategory,cardAddItems,cardManageOrders,cardEssentialItems,cardMore;
@@ -30,6 +35,10 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private ProgressBar progressBar;
     private Map<String,String> map=new HashMap<String,String>();
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +65,10 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         progressBar = findViewById(R.id.progressBar);
     }
 
+    /**
+     * Called when a view has been clicked.
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId())

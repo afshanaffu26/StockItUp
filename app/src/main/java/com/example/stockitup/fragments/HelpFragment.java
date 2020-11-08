@@ -15,6 +15,7 @@ import com.example.stockitup.activities.ContactActivity;
 import com.example.stockitup.activities.FaqActivity;
 
 /**
+ * This class deals with customer support of application
  * A simple {@link Fragment} subclass.
  * Use the {@link HelpFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -32,6 +33,9 @@ public class HelpFragment extends Fragment implements View.OnClickListener{
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Non-parameterized constructor
+     * */
     public HelpFragment() {
         // Required empty public constructor
     }

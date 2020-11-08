@@ -17,11 +17,19 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
+/**
+ * This is an adapter class to bind data to admin category items recycler view
+ * */
 public class AdminCategoryItemsAdapter extends FirestoreRecyclerAdapter<CategoryItemsModel,AdminCategoryItemsAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
 
+
+    /**
+     * Constructor AdminCategoryItemsAdapter is called to bind the data and view for all category items in admin
+     * @param options FirestoreRecyclerOptions for CategoryItemsModel
+     * */
     public AdminCategoryItemsAdapter(@NonNull FirestoreRecyclerOptions<CategoryItemsModel> options) {
         super(options);
     }

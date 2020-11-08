@@ -17,11 +17,18 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.squareup.picasso.Picasso;
 
+/**
+ * This is an adapter class to bind data to categories recycler view
+ * */
 public class CategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesModel,CategoriesAdapter.ViewHolder>{
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
 
+    /**
+     * Constructor CategoriesAdapter is called to bind the data and view for all categories
+     * @param options FirestoreRecyclerOptions for CategoriesModel
+     * */
     public CategoriesAdapter(@NonNull FirestoreRecyclerOptions<CategoriesModel> options) {
         super(options);
     }

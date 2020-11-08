@@ -14,10 +14,20 @@ import com.example.stockitup.models.FAQModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+/**
+ * This is an adapter class to bind data to faq recycler view
+ * This class extends FirestoreRecyclerAdapter
+ * The model file used is FAQModel
+ * It uses the model file and the view holder to create and bind data to recycler view
+ * */
 public class FAQAdapter extends FirestoreRecyclerAdapter<FAQModel, FAQAdapter.ViewHolder> {
 
     private OnDataChangeListener dataChangeListener;
 
+    /**
+     * Constructor FAQAdapter is called to bind the data and view for FAQ
+     * @param options FirestoreRecyclerOptions for FAQModel
+     * */
     public FAQAdapter(@NonNull FirestoreRecyclerOptions<FAQModel> options) {
         super(options);
     }

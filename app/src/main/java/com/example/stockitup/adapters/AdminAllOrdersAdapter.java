@@ -18,9 +18,18 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * This is an adapter class to bind data to all orders recycler view
+ * */
 public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,AdminAllOrdersAdapter.ViewHolder> {
+
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
+
+    /**
+     * Constructor AdminAllOrdersAdapter is called to bind the data and view for all orders
+     * @param options FirestoreRecyclerOptions for OrdersModel
+     * */
     public AdminAllOrdersAdapter(@NonNull FirestoreRecyclerOptions<OrdersModel> options) {
         super(options);
     }

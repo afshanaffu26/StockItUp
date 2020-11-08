@@ -36,6 +36,10 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * This class is related to admin.It deals with updation of category Items
+ */
+
 public class AdminEditCategoryItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editName, editDesc, editPrice;
@@ -49,6 +53,10 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
     private Uri uriItemImage;
     private String itemImageUrl=null;
 
+    /**
+     *  Called when the activity is starting.
+     * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,12 +94,19 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
             Picasso.get().load(image).into(imageView);
     }
 
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
-
+    /**
+     * Called when a view has been clicked.
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

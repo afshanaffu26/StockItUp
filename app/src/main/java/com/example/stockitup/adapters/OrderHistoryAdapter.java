@@ -18,9 +18,18 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import java.text.SimpleDateFormat;
 
+/**
+ * This is an adapter class to bind data to order history recycler view
+ * */
 public class OrderHistoryAdapter extends FirestoreRecyclerAdapter<OrdersModel,OrderHistoryAdapter.ViewHolder> {
+
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
+
+    /**
+     * Constructor OrderHistoryAdapter is called to bind the data and view for order history
+     * @param options FirestoreRecyclerOptions for OrdersModel
+     * */
     public OrderHistoryAdapter(@NonNull FirestoreRecyclerOptions<OrdersModel> options) {
         super(options);
     }

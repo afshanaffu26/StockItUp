@@ -17,11 +17,18 @@ import com.example.stockitup.models.OffersModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+/**
+ * This is an adapter class to bind data to admin faq recycler view
+ * */
 public class AdminFAQAdapter extends FirestoreRecyclerAdapter<FAQModel, AdminFAQAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
     private OnDataChangeListener dataChangeListener;
 
+    /**
+     * Constructor AdminFAQAdapter is called to bind the data and view for FAQ in admin
+     * @param options FirestoreRecyclerOptions for FAQModel
+     * */
     public AdminFAQAdapter(@NonNull FirestoreRecyclerOptions<FAQModel> options) {
         super(options);
     }

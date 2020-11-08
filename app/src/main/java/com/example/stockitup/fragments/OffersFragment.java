@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.stockitup.R;
-import com.example.stockitup.adapters.AdminOffersAdapter;
 import com.example.stockitup.adapters.OffersAdapter;
 import com.example.stockitup.listeners.OnDataChangeListener;
 import com.example.stockitup.models.OffersModel;
@@ -24,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 /**
+ * This class deals with offers of application
  * A simple {@link Fragment} subclass.
  * Use the {@link OffersFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -45,6 +44,9 @@ public class OffersFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Non-parameterized constructor
+     * */
     public OffersFragment() {
         // Required empty public constructor
     }
@@ -67,6 +69,11 @@ public class OffersFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Called to do initial creation of a fragment
+     * Note that this can be called while the fragment's activity is still in the process of being created. As such, you can not rely on things like the activity's content view hierarchy being initialized at this point. If you want to do work once the activity itself is created, add a {@link androidx.lifecycle.LifecycleObserver} on the activity's Lifecycle, removing it when it receives the Lifecycle.State.CREATED callback.
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +83,13 @@ public class OffersFragment extends Fragment {
         }
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view. This is optional, and non-graphical fragments can return null. This will be called between onCreate(Bundle) and onViewCreated(View, Bundle).
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to. The fragment should not add the view itself, but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
