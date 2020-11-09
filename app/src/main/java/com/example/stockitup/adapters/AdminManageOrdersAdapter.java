@@ -3,6 +3,7 @@ package com.example.stockitup.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,11 +49,14 @@ public class AdminManageOrdersAdapter extends FirestoreRecyclerAdapter<ManageOrd
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView txtOrderId,txtUserEmail,txtName;
+        private ImageView imgNext;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtOrderId = itemView.findViewById(R.id.txtOrderId);
             txtUserEmail = itemView.findViewById(R.id.txtUserEmail);
             txtName = itemView.findViewById(R.id.txtName);
+            imgNext = itemView.findViewById(R.id.imgNext);
+            imgNext.setOnClickListener(this);
             itemView.setOnClickListener(this);
             dataChangeListener.onDataChanged();
         }

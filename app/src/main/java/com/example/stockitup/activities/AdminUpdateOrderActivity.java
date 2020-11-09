@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,12 +37,12 @@ import java.util.Map;
 public class AdminUpdateOrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Spinner spinner;
-    private Button btnUpdate;
     private FirebaseFirestore firebaseFirestore;
     private String userDocumentId,orderDocumentId;
     private String date,subtotal,tax,deliveryCharge,total,address,status,offer,offerPercent,userEmail,userName,userID;
     private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer,txtOrderId;
     private FirebaseAuth firebaseAuth;
+    private ImageView imgEditStatus,imgStatus;
     private Button btnViewOrderDetails;
 
     /**
@@ -69,10 +70,12 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         txtStatus = findViewById(R.id.txtStatus);
         txtOrderId = findViewById(R.id.txtOrderId);
         spinner = (Spinner) findViewById(R.id.spinner);
+        imgEditStatus = findViewById(R.id.imgEditStatus);
+        imgEditStatus.setOnClickListener(this);
+        imgStatus = findViewById(R.id.imgStatus);
+        imgStatus.setOnClickListener(this);
+        imgStatus.setVisibility(View.GONE);
         firebaseAuth = FirebaseAuth.getInstance();
-
-        btnUpdate = findViewById(R.id.btnUpdate);
-        btnUpdate.setOnClickListener(this);
         btnViewOrderDetails = findViewById(R.id.btnViewOrderDetails);
         btnViewOrderDetails.setOnClickListener(this);
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -112,24 +115,26 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     }
 
     private void setViewByOrderStatus() {
+
+        if (status.equalsIgnoreCase("delivered"))
+            txtStatus.setTextColor(Color.parseColor("#00b159"));
+        else if (status.equalsIgnoreCase("cancelled"))
+            txtStatus.setTextColor(Color.parseColor("#db2544"));
+        else
+            txtStatus.setTextColor(Color.parseColor("#ffa700"));
+
+        txtStatus.setText(status);
+        txtStatus.setVisibility(View.VISIBLE);
+        spinner.setVisibility(View.GONE);
         if (status.equalsIgnoreCase("delivered") || status.equalsIgnoreCase("cancelled"))
         {
-            if (status.equalsIgnoreCase("delivered"))
-                txtStatus.setTextColor(Color.parseColor("#00b159"));
-            else if (status.equalsIgnoreCase("cancelled"))
-                txtStatus.setTextColor(Color.parseColor("#db2544"));
-
-            txtStatus.setText(status);
-            txtStatus.setVisibility(View.VISIBLE);
-            spinner.setVisibility(View.GONE);
-            btnUpdate.setVisibility(View.GONE);
+            imgEditStatus.setVisibility(View.GONE);
+            imgStatus.setVisibility(View.GONE);
         }
         else
         {
-            txtStatus.setVisibility(View.GONE);
-            spinner.setVisibility(View.VISIBLE);
-            btnUpdate.setVisibility(View.VISIBLE);
-            spinner.setSelection(0);
+            imgEditStatus.setVisibility(View.VISIBLE);
+            imgStatus.setVisibility(View.GONE);
         }
     }
 
@@ -179,13 +184,25 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     public void onClick(View view) {
         switch (view.getId())
         {
-            case R.id.btnUpdate:
-                updateStatus();
-                break;
             case R.id.btnViewOrderDetails:
                 viewOrderDetails();
                 break;
+            case R.id.imgEditStatus:
+                editStatus();
+                break;
+            case R.id.imgStatus:
+                updateStatus();
+                break;
         }
+    }
+
+    private void editStatus() {
+        txtStatus.setVisibility(View.GONE);
+        spinner.setVisibility(View.VISIBLE);
+        //btnUpdate.setVisibility(View.VISIBLE);
+        imgEditStatus.setVisibility(View.GONE);
+        imgStatus.setVisibility(View.VISIBLE);
+        spinner.setSelection(0);
     }
 
     private void viewOrderDetails() {
@@ -199,6 +216,10 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         status = spinner.getSelectedItem().toString();
         if (status.equalsIgnoreCase("pending"))
         {
+            imgEditStatus.setVisibility(View.VISIBLE);
+            imgStatus.setVisibility(View.GONE);
+            txtStatus.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(),"Order is already in pending state.",Toast.LENGTH_SHORT).show();
             return;
         }

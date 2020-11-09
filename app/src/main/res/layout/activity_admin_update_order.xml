@@ -94,15 +94,7 @@
                     android:layout_margin="10dp"
                     android:text="Address:"
                     android:textSize="14dp"/>
-                <Button
-                    android:id="@+id/btnViewOrderDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/colorText"
-                    android:background="@color/colorWhite"
-                    android:padding="10dp"
-                    android:text="View Order Details"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -118,42 +110,53 @@
                         android:layout_gravity="center_vertical" />
                     <TextView
                         android:id="@+id/txtStatus"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_marginLeft="10dp"
                         android:textSize="14sp"
                         android:text="Pending"
                         android:layout_gravity="center_vertical" />
                     <Spinner
                         android:id="@+id/spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="15dp"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/edit_text_background"
                         android:layout_marginRight="15dp"
                         />
+
+                    <ImageView
+                        android:id="@+id/imgEditStatus"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/edit_24" />
+
+                    <ImageView
+                        android:id="@+id/imgStatus"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_done" />
+
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                </LinearLayout>
                 <Button
-                    android:id="@+id/btnUpdate"
-                    android:layout_width="300dp"
+                    android:id="@+id/btnViewOrderDetails"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@color/colorButton"
-                    android:text="@string/update"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="30dp"
+                    android:background="@color/colorWhite"
+                    android:text="View Ordered Items"
+                    android:textColor="@color/colorText"
+                    android:layout_weight="1"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -50,6 +50,15 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
     private ImageView drawerImage;
 
     /**
+     * Overriding Android device back
+     * This method does nothing
+     * */
+    @Override
+    public void onBackPressed() {
+        //do Nothing
+    }
+
+    /**
      *  Called when the activity is starting.
      * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
      */

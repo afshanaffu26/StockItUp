@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,12 +40,6 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
         String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(model.getDate());
         holder.txtOrderDate.setText("Ordered On: "+date);
         holder.txtOrderId.setText(" "+getSnapshots().getSnapshot(position).getId());
-//        holder.txtSubTotal.setText("Subtotal: "+model.getSubtotal()+"$");
-//        holder.txtOffer.setText("Offer (-20%): -"+model.getOffer()+"$");
-//        holder.txtTax.setText("Tax: "+model.getTax()+"$");
-//        holder.txtDeliveryCharge.setText("Delivery Charge: "+model.getDeliveryCharge()+"$");
-//        holder.txtTotal.setText("Total: "+model.getTotal()+"$");
-//        holder.txtAddress.setText("Address: "+model.getAddress());
         holder.txtStatus.setText(model.getStatus());
         if (model.getStatus().equalsIgnoreCase("pending"))
         {
@@ -70,7 +65,7 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
     @Override
     public void onDataChanged() {
         super.onDataChanged();
-       // dataChangeListener.onDataChanged();
+        // dataChangeListener.onDataChanged();
     }
 
     public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
@@ -80,32 +75,29 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
     }
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView txtOrderDate,txtSubTotal,txtTax,txtDeliveryCharge,txtTotal,txtAddress,txtStatus,txtOffer,txtOrderId;
+        private TextView txtOrderDate,txtStatus,txtOrderId;
+        private ImageView imgNext;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
             txtOrderId = itemView.findViewById(R.id.txtOrderId);
-//            txtSubTotal = itemView.findViewById(R.id.txtSubTotal);
-//            txtOffer = itemView.findViewById(R.id.txtOffer);
-//            txtTax = itemView.findViewById(R.id.txtTax);
-//            txtDeliveryCharge = itemView.findViewById(R.id.txtDeliveryCharge);
-//            txtTotal = itemView.findViewById(R.id.txtTotal);
-//            txtAddress = itemView.findViewById(R.id.txtAddress);
             txtStatus = itemView.findViewById(R.id.txtStatus);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    //if an item is deleted from recycler view, this checks when its in delete animation position returning -1
-                    if (position != RecyclerView.NO_POSITION && listener != null)
-                    {
-                        listener.onItemClick(view,getSnapshots().getSnapshot(position),position);
-                    }
-                }
-            });
+            imgNext = itemView.findViewById(R.id.imgNext);
+            imgNext.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            //if an item is deleted from recycler view, this checks when its in delete animation position returning -1
+            if (position != RecyclerView.NO_POSITION && listener != null)
+            {
+                listener.onItemClick(view,getSnapshots().getSnapshot(position),position);
+            }
         }
     }
 }

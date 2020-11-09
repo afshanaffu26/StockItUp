@@ -60,7 +60,7 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
     }
 
     private void setRecyclerViewData() {
-        Query query = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document(userDocumentId).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT);
+        Query query = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document(userDocumentId).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).orderBy("date",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<OrdersModel> options = new FirestoreRecyclerOptions.Builder<OrdersModel>()
                 .setQuery(query,OrdersModel.class)
                 .build();
