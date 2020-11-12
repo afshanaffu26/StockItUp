@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.text.SimpleDateFormat;
+
 /**
  * This class is related to admin.It deals with all orders
  */
@@ -47,18 +48,22 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        recyclerView = findViewById(R.id.recyclerView);
+        progressBar = findViewById(R.id.progressbar);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         userID = getIntent().getStringExtra("userID");
         userEmail = getIntent().getStringExtra("userEmail");
         userName = getIntent().getStringExtra("userName");
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        recyclerView = findViewById(R.id.recyclerView);
-        progressBar = findViewById(R.id.progressbar);
-
         setRecyclerViewData();
     }
 
+    /**
+     * set data and functionality to recycler view
+     * */
     private void setRecyclerViewData() {
         Query query = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document(userDocumentId).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).orderBy("date",Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<OrdersModel> options = new FirestoreRecyclerOptions.Builder<OrdersModel>()
@@ -94,6 +99,7 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
     }
+
     /**
      * Called when the activity is becoming visible to the user.
      */
@@ -121,5 +127,4 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
 }

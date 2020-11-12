@@ -24,10 +24,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -39,7 +37,6 @@ import java.util.UUID;
 /**
  * This class is related to admin.It deals with updation of category Items
  */
-
 public class AdminEditCategoryItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editName, editDesc, editPrice;
@@ -68,16 +65,18 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         editName = findViewById(R.id.editName);
         editDesc = findViewById(R.id.editDesc);
         editPrice = findViewById(R.id.editPrice);
         imageView = findViewById(R.id.imageView);
         imageViewEdit = findViewById(R.id.imageViewEdit);
-        imageViewEdit.setOnClickListener(this);
         progressBar = findViewById(R.id.progressBar);
         btnUpdate = findViewById(R.id.btnUpdate);
+
+        imageViewEdit.setOnClickListener(this);
         btnUpdate.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         name = getIntent().getStringExtra("name");
         desc = getIntent().getStringExtra("desc");
@@ -89,7 +88,6 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         editName.setText(name);
         editDesc.setText(desc);
         editPrice.setText(price);
-
         if (image != null && !image.isEmpty())
             Picasso.get().load(image).into(imageView);
     }
@@ -103,6 +101,7 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         finish();
         return true;
     }
+
     /**
      * Called when a view has been clicked.
      * @param view The view that was clicked.
@@ -119,6 +118,9 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * This method is used to open device storage for choosing image
+     */
     private void showImageChooser() {
         Intent i = new Intent();
         i.setType("image/*");
@@ -126,6 +128,9 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         startActivityForResult(Intent.createChooser(i, "Select Image"), CHOOSE_IMAGE);
     }
 
+    /**
+     * This method is used to assign the chosen image from device to imageview
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -140,6 +145,9 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * This method is used validate fields to update Category Item
+     */
     private void updateItemData() {
         if (name.isEmpty()) {
             editName.setError("Name is required");
@@ -214,6 +222,10 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         }
     }
 
+    /**
+     * This method is used to make a database call for adding a category
+     * @param itemImageUrl the url of the category image
+     */
     private void onUploadImageSuccess(String itemImageUrl) {
         name = editName.getText().toString();
         desc = editDesc.getText().toString();

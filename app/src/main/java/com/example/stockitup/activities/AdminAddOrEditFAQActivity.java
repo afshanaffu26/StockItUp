@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.models.FAQModel;
-import com.example.stockitup.models.OffersModel;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 /**
  * This class is related to admin.It deals with add or edit of faq
  */
-public class AdminAddOrEditFAQActivity extends AppCompatActivity {
+public class AdminAddOrEditFAQActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String question,answer,flow,documentId;
     private EditText editQuestion,editAnswer;
@@ -45,39 +44,10 @@ public class AdminAddOrEditFAQActivity extends AppCompatActivity {
         editQuestion = findViewById(R.id.editQuestion);
         editAnswer = findViewById(R.id.editAnswer);
         btnSubmit = findViewById(R.id.btnSubmit);
-        firebaseFirestore = FirebaseFirestore.getInstance();
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Called when a view has been clicked.
-             * @param view The view that was clicked.
-             */
-            @Override
-            public void onClick(View view) {
-                question = editQuestion.getText().toString();
-                answer = editAnswer.getText().toString();
-                FAQModel model = new FAQModel(question, answer);
-                if (flow.equalsIgnoreCase("add")) {
-                    firebaseFirestore.collection(AppConstants.FAQ_COLLECTION)
-                            .add(model).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Toast.makeText(getApplicationContext(),"FAQ Added.",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                else
-                {
-                    firebaseFirestore.collection(AppConstants.FAQ_COLLECTION).document(documentId)
-                            .set(model).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Toast.makeText(getApplicationContext(),"FAQ Updated.",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            }
-        });
+        btnSubmit.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         flow = getIntent().getStringExtra("flow");
         if (flow.equalsIgnoreCase("edit"))
@@ -103,5 +73,46 @@ public class AdminAddOrEditFAQActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    /**
+     * Called when a view has been clicked.
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnSubmit:
+                addOrUpdateFAQ();
+                break;
+        }
+    }
+
+    /**
+     * This method is used to add or update a FAQ
+     */
+    private void addOrUpdateFAQ() {
+        question = editQuestion.getText().toString();
+        answer = editAnswer.getText().toString();
+        FAQModel model = new FAQModel(question, answer);
+        if (flow.equalsIgnoreCase("add")) {
+            firebaseFirestore.collection(AppConstants.FAQ_COLLECTION)
+                    .add(model).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Toast.makeText(getApplicationContext(),"FAQ Added.",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else
+        {
+            firebaseFirestore.collection(AppConstants.FAQ_COLLECTION).document(documentId)
+                    .set(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Toast.makeText(getApplicationContext(),"FAQ Updated.",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

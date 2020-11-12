@@ -29,7 +29,6 @@ import com.google.firebase.firestore.Query;
 /**
  * This class deals with items in a category.
  */
-
 public class CategoryItemsActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseFirestore firebaseFirestore;
@@ -56,21 +55,28 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         linearLayout = findViewById(R.id.linearLayout);
         txtEmpty = findViewById(R.id.txtEmpty);
-        txtEmpty.setVisibility(View.GONE);
-        linearLayout.setVisibility(View.GONE);
+
         floatingActionButton.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
+        txtEmpty.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
         txtCategory.setText(category);
+
         setRecyclerViewData();
     }
 
+    /**
+     * set data and functionality to recycler view
+     * */
     private void setRecyclerViewData() {
         Query query = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).orderBy("name",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()

@@ -57,16 +57,18 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         imageView = findViewById(R.id.imageView);
         txtName = findViewById(R.id.txtName);
         txtPrice = findViewById(R.id.price);
         txtDesc = findViewById(R.id.txtDesc);
         btnAddToCart = findViewById(R.id.btnAddToCart);
-        btnAddToCart.setOnClickListener(this);
         floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(this);
         spinner = (Spinner) findViewById(R.id.spinner);
+
+        btnAddToCart.setOnClickListener(this);
+        floatingActionButton.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
@@ -101,14 +103,20 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         desc = getIntent().getStringExtra("desc");
         quantity = getIntent().getStringExtra("quantity");
         documentId = getIntent().getStringExtra("documentId");
+
         if (image != null && !image.isEmpty())
             Picasso.get().load(image).into(imageView);
         txtName.setText(name);
         txtPrice.setText("Price : " + price+"$");
         txtDesc.setText(desc);
         spinner.setSelection(getIndex(spinner, quantity));
-
     }
+
+    /**
+     * This methods gets the index of spinner item
+     * @param spinner the spinner
+     * @param myString the spinner data to be set
+     * */
     private int getIndex(Spinner spinner, String myString){
         for (int i=0;i<spinner.getCount();i++){
             if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){

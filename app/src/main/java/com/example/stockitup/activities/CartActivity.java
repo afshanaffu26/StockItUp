@@ -36,10 +36,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.DecimalFormat;
-
 /**
- * This class manages cart related functionalityi.
+ * This class manages cart related functionality.
  */
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -85,15 +83,22 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         editPromo = findViewById(R.id.editPromo);
         btnPromo = findViewById(R.id.btnPromo);
         txtPromo = findViewById(R.id.txtPromo);
+
         btnPromo.setOnClickListener(this);
         btnCheckout.setOnClickListener(this);
-        btnPromo.setText("APPLY");
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         collectionReference = firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
+        btnPromo.setText("APPLY");
 
         setRecyclerViewData();
     }
+
+    /**
+     * set data and functionality to recycler view
+     * */
     private void setRecyclerViewData() {
         Query query = collectionReference.orderBy("name",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
@@ -144,6 +149,11 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
+    /**
+     * This method is used to show an alert with an appropriate message
+     * @param position position of item in a recycler view
+     */
     public void alertMessage(final int position) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -168,6 +178,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
+
     /**
      * This method is used to calculate cart total
      */
@@ -266,6 +277,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * This method is used to remove promo code
+     */
     private void removePromo() {
         btnPromo.setText("APPLY");
         txtPromo.setVisibility(View.GONE);
@@ -275,14 +289,11 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         calculateTotal();
     }
 
+    /**
+     * This method is used to apply promo code
+     */
     private void applyPromo() {
         String promo = editPromo.getText().toString();
-//        if(promo.isEmpty())
-//        {
-//            editPromo.setError("Promo is empty.");
-//            editPromo.requestFocus();
-//            return;
-//        }
         if (AppConstants.OFFERS_MAP.containsKey(promo))
         {
             double off = Double.parseDouble(AppConstants.OFFERS_MAP.get(promo));
@@ -303,23 +314,29 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(getApplicationContext(),"Promo not available.",Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
      * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
      */
-
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
 
+    /**
+     * Called when the activity is becoming visible to the user.
+     */
     @Override
     protected void onStart() {
         super.onStart();
         adapter.startListening();
     }
 
+    /**
+     * Called when the activity is no longer visible to the user.
+     */
     @Override
     protected void onStop() {
         super.onStop();

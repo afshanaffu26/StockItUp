@@ -11,7 +11,7 @@ import com.example.stockitup.utils.MyPreferences;
 import com.example.stockitup.R;
 
 /**
- *  This class deals with Onboarding screens
+ *  This class deals with first welcome screen
  */
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener  {
 
@@ -28,6 +28,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         buttonNext  = findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
+
         boolean isFirstTime = MyPreferences.isFirst(WelcomeActivity.this);
         if (!isFirstTime) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));

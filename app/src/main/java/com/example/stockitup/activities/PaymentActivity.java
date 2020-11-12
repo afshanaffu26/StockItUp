@@ -26,8 +26,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -62,9 +60,10 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         editCardNo = findViewById(R.id.editCardNo);
         editCVV = findViewById(R.id.editCVV);
         editExpDate = findViewById(R.id.editExpDate);
-
         btnPay = findViewById(R.id.btnPay);
+
         btnPay.setOnClickListener(this);
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
@@ -177,6 +176,9 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    /**
+     * This methods adds order details to database when order is placed
+     * */
     private void addOrderDetails() {
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();

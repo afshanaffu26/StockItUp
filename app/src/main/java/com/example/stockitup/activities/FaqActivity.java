@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -24,7 +23,6 @@ import com.google.firebase.firestore.Query;
 /**
  * This class deals with the faq.
  */
-
 public class FaqActivity extends AppCompatActivity {
 
     private FirebaseFirestore firebaseFirestore;
@@ -34,15 +32,6 @@ public class FaqActivity extends AppCompatActivity {
     private ScrollView scrollView;
     private TextView txtEmpty;
 
-    /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
     /**
      *  Called when the activity is starting.
      * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
@@ -61,16 +50,20 @@ public class FaqActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar);
         recyclerView = findViewById(R.id.recyclerView);
-        firebaseFirestore = FirebaseFirestore.getInstance();
         scrollView = findViewById(R.id.scrollView);
         txtEmpty = findViewById(R.id.txtEmpty);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         txtEmpty.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
 
         setRecyclerViewData();
-
     }
 
+    /**
+     * set data and functionality to recycler view
+     * */
     private void setRecyclerViewData() {
         Query query = firebaseFirestore.collection(AppConstants.FAQ_COLLECTION);
         FirestoreRecyclerOptions<FAQModel> options = new FirestoreRecyclerOptions.Builder<FAQModel>()
@@ -97,6 +90,7 @@ public class FaqActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
     }
+
     /**
      * Called when the activity is becoming visible to the user.
      */
@@ -115,4 +109,13 @@ public class FaqActivity extends AppCompatActivity {
         adapter.stopListening();
     }
 
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

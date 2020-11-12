@@ -46,15 +46,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private Button btnSignUp;
 
     /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
-    /**
      *  Called when the activity is starting.
      * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
      */
@@ -67,24 +58,23 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
-        //display back button
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         txtLogin = findViewById(R.id.txtLogin);
-        txtLogin.setOnClickListener(this);
         txtConditions = findViewById(R.id.txtConditions);
-        txtConditions.setOnClickListener(this);
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
         editName=(EditText) findViewById(R.id.editName);
         editEmail=(EditText) findViewById(R.id.editEmail);
         editPassword=(EditText) findViewById(R.id.editPassword);
         editConfirmPassword=(EditText) findViewById(R.id.editConfirmPassword);
         progressBar=(ProgressBar) findViewById(R.id.progressbar);
         checkBox = findViewById(R.id.checkBox);
-        mAuth = FirebaseAuth.getInstance();
         btnSignUp = findViewById(R.id.btnSignUp);
+
         btnSignUp.setOnClickListener(this);
+        txtLogin.setOnClickListener(this);
+        txtConditions.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
     }
 
     /**
@@ -109,6 +99,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
+
     /**
      * This method is used to sign up a user and redirect him to login page.
      */
@@ -198,6 +189,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+
+    /**
+     * Fetch all app configurations
+     * */
     private void fetchAllConfigurations() {
         final Map<String,String> map = new HashMap<String, String>();
         firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION)
@@ -225,5 +220,15 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         AppConstants.CUSTOMER_CARE_NUMBER = task.getResult().getDocuments().get(0).get("customerCareNumber").toString();
                     }
                 });
+    }
+
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

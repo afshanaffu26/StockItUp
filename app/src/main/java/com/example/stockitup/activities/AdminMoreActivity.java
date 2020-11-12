@@ -14,7 +14,6 @@ import com.example.stockitup.utils.AppConstants;
 /**
  * This class is related to admin.It deals with Additional menu options
  */
-
 public class AdminMoreActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView imgNextOffers,imgNextFAQ,imgNextContact;
@@ -35,10 +34,11 @@ public class AdminMoreActivity extends AppCompatActivity implements View.OnClick
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imgNextOffers = findViewById(R.id.imgNextOffers);
-        imgNextOffers.setOnClickListener(this);
         imgNextFAQ = findViewById(R.id.imgNextFAQ);
-        imgNextFAQ.setOnClickListener(this);
         imgNextContact = findViewById(R.id.imgNextContact);
+
+        imgNextOffers.setOnClickListener(this);
+        imgNextFAQ.setOnClickListener(this);
         imgNextContact.setOnClickListener(this);
     }
 

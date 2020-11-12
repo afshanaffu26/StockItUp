@@ -87,6 +87,7 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         inviteFragment = new InviteFragment();
         settingsFragment = new SettingsFragment();
         feedbackFragment = new FeedbackFragment();
+
         mAuth = FirebaseAuth.getInstance();
 
         setUserDetails();
@@ -110,6 +111,11 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
         actionBarDrawerToggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    /***
+     * set fragment to view
+     * @param fragment the fragment to be set
+     * */
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame,fragment);

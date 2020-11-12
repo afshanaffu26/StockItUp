@@ -3,7 +3,6 @@ package com.example.stockitup.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.stockitup.Notifications.SendNotification;
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,7 +28,6 @@ import java.util.Map;
 /**
  * Manages with recent order details
  */
-
 public class OrderHistoryDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String subtotal,tax,offer,offerPercent,deliveryCharge,total,address,date,status;
@@ -55,19 +52,6 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        subtotal = getIntent().getStringExtra("subtotal");
-        tax = getIntent().getStringExtra("tax");
-        offer = getIntent().getStringExtra("offer");
-        offerPercent = getIntent().getStringExtra("offerPercent");
-        deliveryCharge = getIntent().getStringExtra("deliveryCharge");
-        total = getIntent().getStringExtra("total");
-        address = getIntent().getStringExtra("address");
-        orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
-        date = getIntent().getStringExtra("date");
-        status = getIntent().getStringExtra("status");
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-
         txtOrderDate = findViewById(R.id.txtOrderDate);
         txtSubTotal = findViewById(R.id.txtSubTotal);
         txtOffer = findViewById(R.id.txtOffer);
@@ -78,14 +62,28 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         txtStatus = findViewById(R.id.txtStatus);
         txtOrderId = findViewById(R.id.txtOrderId);
         btnViewOrderDetails = findViewById(R.id.btnViewOrderDetails);
-        btnViewOrderDetails.setOnClickListener(this);
         btnCancelOrder = findViewById(R.id.btnCancelOrder);
+
+        btnViewOrderDetails.setOnClickListener(this);
         btnCancelOrder.setOnClickListener(this);
+
+        subtotal = getIntent().getStringExtra("subtotal");
+        tax = getIntent().getStringExtra("tax");
+        offer = getIntent().getStringExtra("offer");
+        offerPercent = getIntent().getStringExtra("offerPercent");
+        deliveryCharge = getIntent().getStringExtra("deliveryCharge");
+        total = getIntent().getStringExtra("total");
+        address = getIntent().getStringExtra("address");
+        orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
+        date = getIntent().getStringExtra("date");
+        status = getIntent().getStringExtra("status");
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         txtOrderId.setText("OrderId: "+orderHistoryDocumentId);
         txtOrderDate.setText("Ordered On: "+date);
         txtSubTotal.setText("Subtotal: "+subtotal+"$");
-
         double off = Double.parseDouble(offerPercent);
         if (!(off == (double)0.0)){
             txtOffer.setText("Offer (-" + offerPercent + "%): -" + offer + "$");
@@ -130,7 +128,6 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
      * Called when a view has been clicked.
      * @param v The view that was clicked.
      */
-
     @Override
     public void onClick(View v) {
         switch(v.getId())
@@ -144,6 +141,9 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         }
     }
 
+    /**
+     * This method is initiates cancel order
+     * */
     private void cancelOrder() {
         if (!status.equalsIgnoreCase("pending"))
         {
@@ -153,12 +153,18 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         alertMessage();
     }
 
+    /**
+     * Navigates to view order details
+     * */
     private void viewOrderDetails() {
         Intent intent = new Intent(getApplicationContext(),OrderHistoryListActivity.class);
         intent.putExtra("orderHistoryDocumentId",orderHistoryDocumentId);
         startActivity(intent);
     }
 
+    /**
+     * This method sets the view based on status
+     * */
     private void setViewByOrderStatus() {
         txtStatus.setTextColor(Color.parseColor("#db2544"));
         txtStatus.setText("Cancelled");

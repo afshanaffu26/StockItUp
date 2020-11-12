@@ -1,6 +1,5 @@
 package com.example.stockitup.activities;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,16 +14,12 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * This class deals with contact details for user to contact
@@ -35,15 +30,6 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView imgCall1,imgCall2,imgEmail;
     private FirebaseFirestore firebaseFirestore;
 
-    /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
     /**
      *  Called when the activity is starting.
      * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
@@ -60,8 +46,6 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         //display back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
         imgCall1 = findViewById(R.id.imgCall1);
         imgCall2 = findViewById(R.id.imgCall2);
         imgEmail = findViewById(R.id.imgEmail);
@@ -73,6 +57,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         imgCall2.setOnClickListener(this);
         imgEmail.setOnClickListener(this);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         txtEmail.setText("Email - "+AppConstants.ADMIN_EMAIL);
         txtCustomerCarePhone.setText("Customer Care - "+AppConstants.CUSTOMER_CARE_NUMBER);
@@ -122,7 +107,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     /**
-     * this method places a call to provided number by using native dialing
+     * This method places a call to provided number by using native dialing
      * @param number Phone number to place a call.
      */
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -145,5 +130,15 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
      */
     private void requestPermissions() {
         ActivityCompat.requestPermissions(ContactActivity.this,new String[]{Manifest.permission.CALL_PHONE},1);
+    }
+
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

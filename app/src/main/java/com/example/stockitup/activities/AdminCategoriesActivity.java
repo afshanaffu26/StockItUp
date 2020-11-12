@@ -34,10 +34,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
 /**
  * This class is related to admin.It deals with Categories
  */
-
 public class AdminCategoriesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
@@ -63,19 +63,25 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressbar);
         floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(this);
         linearLayout = findViewById(R.id.linearLayout);
         txtEmpty = findViewById(R.id.txtEmpty);
 
+        floatingActionButton.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
+
         setRecyclerViewData();
     }
 
+    /**
+     * set data and functionality to recycler view
+     * */
     private void setRecyclerViewData() {
         Query query = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION);
         FirestoreRecyclerOptions<CategoriesModel> options = new FirestoreRecyclerOptions.Builder<CategoriesModel>()
@@ -168,6 +174,11 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
             }
         }).attachToRecyclerView(recyclerView);
     }
+
+    /**
+     * This method is used to show an alert with an appropriate message
+     * @param position position of item in a recycler view
+     */
     public void alertMessage(final int position) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -194,6 +205,7 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
+
     /**
      * Called when the activity is becoming visible to the user.
      */
@@ -202,6 +214,7 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
         super.onStart();
         adapter.startListening();
     }
+
     /**
      * Called when the activity is no longer visible to the user.
      */
@@ -210,7 +223,6 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
         super.onStop();
         adapter.stopListening();
     }
-
 
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
@@ -226,7 +238,6 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
      * when a view has been clicked.
      * @param view The view that was clicked.
      */
-
     @Override
     public void onClick(View view) {
         switch(view.getId()){
@@ -235,5 +246,4 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
                 break;
         }
     }
-
 }

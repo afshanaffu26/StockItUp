@@ -81,10 +81,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
+
         ImageView imgProfileBtn = v.findViewById(R.id.imgProfileBtn);
-        imgProfileBtn.setOnClickListener(this);
         ImageView imgAddressBtn = v.findViewById(R.id.imgAddressBtn);
+
+        imgProfileBtn.setOnClickListener(this);
         imgAddressBtn.setOnClickListener(this);
+
         return v;
     }
 

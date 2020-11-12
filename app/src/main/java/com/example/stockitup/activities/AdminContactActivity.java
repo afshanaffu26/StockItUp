@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * This class is related to admin.It deals with Contact details
  */
-public class AdminContactActivity extends AppCompatActivity {
+public class AdminContactActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView txtCustomerCareNumber,txtTollFreeNumber;
     private EditText editCustomerCareNumber,editTollFreeNumber;
@@ -54,21 +54,16 @@ public class AdminContactActivity extends AppCompatActivity {
         editCustomerCareNumber = findViewById(R.id.editCustomerCareNumber);
         editTollFreeNumber = findViewById(R.id.editTollFreeNumber);
         btnSubmit = findViewById(R.id.btnSubmit);
+        progressBar = findViewById(R.id.progressBar);
+
+        btnSubmit.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         btnSubmit.setText("EDIT");
         editCustomerCareNumber.setVisibility(View.GONE);
         editTollFreeNumber.setVisibility(View.GONE);
-        progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (btnSubmit.getText().toString().equalsIgnoreCase("edit"))
-                    onContactEdit();
-                else
-                    onContactUpdate();
-            }
-        });
-        firebaseFirestore = FirebaseFirestore.getInstance();
 
         firebaseFirestore.collection(AppConstants.APP_SUPPORT_COLLECTION)
                 .get()
@@ -86,9 +81,11 @@ public class AdminContactActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                     }
                 });
-
     }
 
+    /**
+     * This methods updates the contact info
+     * */
     private void onContactUpdate() {
         customerCareNumber = editCustomerCareNumber.getText().toString();
         tollFreeNumber = editTollFreeNumber.getText().toString();
@@ -113,6 +110,9 @@ public class AdminContactActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * This methods updates view when edit is initiated
+     * */
     private void onContactEdit() {
         txtCustomerCareNumber.setVisibility(View.GONE);
         txtTollFreeNumber.setVisibility(View.GONE);
@@ -131,5 +131,28 @@ public class AdminContactActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    /**
+     * when a view has been clicked.
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.btnSubmit:
+                onContactSubmit();
+                break;
+        }
+    }
+
+    /**
+     * This method is checks if it is edit or update flow
+     * */
+    private void onContactSubmit() {
+        if (btnSubmit.getText().toString().equalsIgnoreCase("edit"))
+            onContactEdit();
+        else
+            onContactUpdate();
     }
 }

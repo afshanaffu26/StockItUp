@@ -32,7 +32,7 @@ import com.google.firebase.firestore.Query;
 /**
  * This class is related to admin.It deals with offers
  */
-public class AdminOffersActivity extends AppCompatActivity{
+public class AdminOffersActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore firebaseFirestore;
     private AdminOffersAdapter adapter;
@@ -57,29 +57,26 @@ public class AdminOffersActivity extends AppCompatActivity{
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         txtEmpty = findViewById(R.id.txtEmpty);
         linearLayout = findViewById(R.id.linearLayout);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AdminAddOrEditOffersActivity.class);
-                intent.putExtra("flow", "add");
-                startActivity(intent);
-            }
-        });
+        floatingActionButton.setOnClickListener(this);
 
         setRecyclerViewData();
 
     }
 
+    /**
+     * set data and functionality to recycler view
+     * */
     private void setRecyclerViewData() {
         final Query query = firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION);
         FirestoreRecyclerOptions<OffersModel> options = new FirestoreRecyclerOptions.Builder<OffersModel>()
@@ -141,6 +138,7 @@ public class AdminOffersActivity extends AppCompatActivity{
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
     }
+
     /**
      * This method is used to show an alert with an appropriate message
      * @param position position of item in a recycler view
@@ -198,5 +196,27 @@ public class AdminOffersActivity extends AppCompatActivity{
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    /**
+     * Called when a view has been clicked.
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.floatingActionButton:
+                onAddOffer();
+                break;
+        }
+    }
+
+    /**
+     * This method is called to add an offer
+     * */
+    private void onAddOffer() {
+        Intent intent = new Intent(getApplicationContext(), AdminAddOrEditOffersActivity.class);
+        intent.putExtra("flow", "add");
+        startActivity(intent);
     }
 }

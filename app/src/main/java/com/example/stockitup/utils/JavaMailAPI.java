@@ -35,6 +35,9 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
         this.message = message;
     }
 
+    /**
+     * This methods sets up the properties and sends message
+     * */
     @Override
     protected Void doInBackground(Void... voids) {
         Properties properties = new Properties();
@@ -60,8 +63,6 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
         return null;
-
     }
 }

@@ -11,13 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +33,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -79,11 +75,18 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         btnAdd = findViewById(R.id.btnAdd);
         imageView =  findViewById(R.id.imageView);
         imageViewEdit = findViewById(R.id.imageViewEdit);
-        imageViewEdit.setOnClickListener(this);
         txtCategoryName = findViewById(R.id.txtCategoryName);
+        progressBar = findViewById(R.id.progressBar);
+
+        imageViewEdit.setOnClickListener(this);
+        btnAdd.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         documentId = getIntent().getStringExtra("categoryDocumentId");
         categoryName = getIntent().getStringExtra("categoryName");
         isEssential = getIntent().getStringExtra("isEssential");
+
         if (isEssential.equals("true")) {
             txtCategoryName.setVisibility(View.GONE);
         }
@@ -91,9 +94,6 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
             txtCategoryName.setVisibility(View.VISIBLE);
             txtCategoryName.setText("Category: " + categoryName);
         }
-        btnAdd.setOnClickListener(this);
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        progressBar = findViewById(R.id.progressBar);
     }
 
     /**
@@ -123,12 +123,19 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         }
     }
 
+    /**
+     * This method is used to open device storage for choosing image
+     */
     private void showImageChooser() {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(i, "Select Image"), CHOOSE_IMAGE);
     }
+
+    /**
+     * This method is used to assign the chosen image from device to imageview
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -186,6 +193,10 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         }
     }
 
+    /**
+     * This method is used to make a database call for adding a category item
+     * @param itemImageUrl the url of the category item image
+     */
     private void onUploadImageSuccess(String itemImageUrl) {
         image = itemImageUrl;
         CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, description, price,quantity);
@@ -203,6 +214,10 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
                     }
                 });
     }
+
+    /**
+     * This method is used validate fields to add Category Item
+     */
     private void addItemToCategory() {
         price = editPrice.getText().toString();
         name = editName.getText().toString();

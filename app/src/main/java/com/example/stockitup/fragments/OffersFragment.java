@@ -95,13 +95,24 @@ public class OffersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_offers, container, false);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = v.findViewById(R.id.recyclerView);
         linearLayout = v.findViewById(R.id.linearLayout);
         txtEmptyOffers = v.findViewById(R.id.txtEmptyOffers);
+
         txtEmptyOffers.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        setRecyclerViewData();
+
+        return v;
+    }
+
+    /**
+     * This method sets data to recycler view
+     * */
+    private void setRecyclerViewData() {
         final Query query = firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION);
         FirestoreRecyclerOptions<OffersModel> options = new FirestoreRecyclerOptions.Builder<OffersModel>()
                 .setQuery(query,OffersModel.class)
@@ -127,6 +138,5 @@ public class OffersFragment extends Fragment {
         adapter.startListening();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
-        return v;
     }
 }

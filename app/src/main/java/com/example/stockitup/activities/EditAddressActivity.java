@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 /**
  * This class deals with the Update functionality of Address
  */
-public class EditAddressActivity extends AppCompatActivity {
+public class EditAddressActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String name,addressLine,city,province,country,pincode,phone;
     private EditText editName,editAddressLine,editProvince,editCity,editPostalID,editCountry,editPhone;
@@ -32,7 +31,7 @@ public class EditAddressActivity extends AppCompatActivity {
     private String uid;
 
     /**
-     *  Called when the activity is starting.
+     * Called when the activity is starting.
      * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
      */
     @Override
@@ -46,6 +45,18 @@ public class EditAddressActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        editName = findViewById(R.id.editName);
+        editAddressLine = findViewById(R.id.editAddressLine);
+        editProvince = findViewById(R.id.editProvince);
+        editCity = findViewById(R.id.editCity);
+        editPostalID = findViewById(R.id.editPostalID);
+        editCountry = findViewById(R.id.editCountry);
+        editPhone = findViewById(R.id.editPhone);
+        btnNext = findViewById(R.id.btnNext);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         name = getIntent().getStringExtra("name");
         addressLine = getIntent().getStringExtra("addressLine");
         city = getIntent().getStringExtra("city");
@@ -55,17 +66,6 @@ public class EditAddressActivity extends AppCompatActivity {
         phone = getIntent().getStringExtra("phone");
         documentId = getIntent().getStringExtra("documentId");
 
-        editName = findViewById(R.id.editName);
-        editAddressLine = findViewById(R.id.editAddressLine);
-        editProvince = findViewById(R.id.editProvince);
-        editCity = findViewById(R.id.editCity);
-        editPostalID = findViewById(R.id.editPostalID);
-        editCountry = findViewById(R.id.editCountry);
-        editPhone = findViewById(R.id.editPhone);
-        btnNext = findViewById(R.id.btnNext);
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
         editName.setText(name);
         editAddressLine.setText(addressLine);
         editCity.setText(city);
@@ -74,36 +74,34 @@ public class EditAddressActivity extends AppCompatActivity {
         editPostalID.setText(pincode);
         editPhone.setText(phone);
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Called when a view has been clicked.
-             * @param view The view that was clicked.
-             */
-            @Override
-            public void onClick(View view) {
-                name = editName.getText().toString();
-                addressLine = editAddressLine.getText().toString();
-                city = editCity.getText().toString();
-                province = editProvince.getText().toString();
-                country = editCountry.getText().toString();
-                pincode = editPostalID.getText().toString();
-                phone = editPhone.getText().toString();
+        btnNext.setOnClickListener(this);
+    }
 
-                AddressModel addressModel = new AddressModel(name,addressLine,city,province,country,pincode,phone);
-                firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document("address"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId)
-                        .set(addressModel)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful())
-                                {
-                                    finish();
-                                    Toast.makeText(getApplicationContext(),"Address Updated.",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-            }
-        });
+    /**
+     * This method updates the address
+     * */
+    private void editAddress() {
+        name = editName.getText().toString();
+        addressLine = editAddressLine.getText().toString();
+        city = editCity.getText().toString();
+        province = editProvince.getText().toString();
+        country = editCountry.getText().toString();
+        pincode = editPostalID.getText().toString();
+        phone = editPhone.getText().toString();
+
+        AddressModel addressModel = new AddressModel(name,addressLine,city,province,country,pincode,phone);
+        firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document("address"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId)
+                .set(addressModel)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful())
+                        {
+                            finish();
+                            Toast.makeText(getApplicationContext(),"Address Updated.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     /**
@@ -114,5 +112,19 @@ public class EditAddressActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+
+    /**
+     * Called when a view has been clicked te contact
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnNext:
+                editAddress();
+                break;
+        }
     }
 }

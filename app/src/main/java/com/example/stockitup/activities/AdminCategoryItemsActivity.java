@@ -24,20 +24,17 @@ import com.example.stockitup.listeners.OnItemClickListener;
 import com.example.stockitup.models.CategoryItemsModel;
 import com.example.stockitup.utils.AppConstants;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * This class is related to admin.It deals with Category Items.
  */
-
 public class AdminCategoryItemsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore firebaseFirestore;
@@ -67,22 +64,28 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBar = findViewById(R.id.progressbar);
-        firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
         floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(this);
-        categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
-        category = getIntent().getStringExtra("name");
-        txtCategory.setText(category);
         linearLayout = findViewById(R.id.linearLayout);
         txtEmpty = findViewById(R.id.txtEmpty);
 
+        floatingActionButton.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
+        category = getIntent().getStringExtra("name");
+        txtCategory.setText(category);
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
 
         setRecyclerViewData();
     }
+
+    /**
+     * set data and functionality to recycler view
+     * */
     private void setRecyclerViewData() {
         Query query;
         if (categoryDocumentId.equalsIgnoreCase(""))
@@ -145,8 +148,9 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
             }
         }).attachToRecyclerView(recyclerView);
     }
+
     /**
-     * his method is used to show an alert with an appropriate message
+     * This method is used to show an alert with an appropriate message
      * @param position position of item in a recycler view
      */
     public void alertMessage(final int position) {
@@ -175,6 +179,7 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
+
     /**
      * Called when the activity is becoming visible to the user.
      */
@@ -183,6 +188,7 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         super.onStart();
         adapter.startListening();
     }
+
     /**
      * Called when the activity is no longer visible to the user.
      */
@@ -191,6 +197,7 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         super.onStop();
         adapter.stopListening();
     }
+
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
      * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.

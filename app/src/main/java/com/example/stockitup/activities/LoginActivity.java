@@ -18,7 +18,6 @@ import com.example.stockitup.Notifications.SendNotification;
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,24 +55,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
 
+        editEmail= findViewById(R.id.editEmail);
+        editPassword= findViewById(R.id.editPassword);
+        progressBar= findViewById(R.id.progressbar);
         txtSignUp = findViewById(R.id.txtSignUp);
-        txtSignUp.setOnClickListener(this);
-
         txt_recover_password = findViewById(R.id.txt_recover_password);
-        txt_recover_password.setOnClickListener(this);
-
         btnLogin = findViewById(R.id.btnLogin);
+
+        txtSignUp.setOnClickListener(this);
+        txt_recover_password.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        editEmail= findViewById(R.id.editEmail);
-        editPassword= findViewById(R.id.editPassword);
-        progressBar= findViewById(R.id.progressbar);
         progressBar.setVisibility(View.GONE);
-
     }
+
     /**
      * Called when the activity is becoming visible to the user.
      */
@@ -162,19 +160,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    /**
+     * Navigate to admin to user screens post login
+     * */
     private void userLoginSuccess() {
         String user = AppConstants.ADMIN_EMAIL;
         if (mAuth.getCurrentUser().getEmail().equalsIgnoreCase(user)) {
             startActivity(new Intent(this, AdminDashboardActivity.class));
         }
         else {
-
             fetchAllConfigurations();
             new SendNotification().updateToken(FirebaseAuth.getInstance().getCurrentUser().getUid());
             startActivity(new Intent(this, HomeScreenActivity.class));
         }
     }
 
+    /**
+     * fetch all the app configurations
+     * */
     private void fetchAllConfigurations() {
         final Map<String,String> map = new HashMap<String, String>();
         firebaseFirestore.collection(AppConstants.OFFERS_COLLECTION)

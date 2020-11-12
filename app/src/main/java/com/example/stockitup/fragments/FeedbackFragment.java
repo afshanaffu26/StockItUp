@@ -86,13 +86,15 @@ public class FeedbackFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_feedback, container, false);
+
         buttonSend = v.findViewById(R.id.buttonSend);
         buttonDiscard = v.findViewById(R.id.buttonDiscard);
         editTextMultiLine = v.findViewById(R.id.editTextMultiLine);
+
         buttonSend.setOnClickListener(this);
         buttonDiscard.setOnClickListener(this);
+
         return v;
     }
 

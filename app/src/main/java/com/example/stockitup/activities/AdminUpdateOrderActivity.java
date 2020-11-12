@@ -33,7 +33,6 @@ import java.util.Map;
 /**
  * This class is related to admin.It deals with updation of order status
  */
-
 public class AdminUpdateOrderActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Spinner spinner;
@@ -71,13 +70,15 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         txtOrderId = findViewById(R.id.txtOrderId);
         spinner = (Spinner) findViewById(R.id.spinner);
         imgEditStatus = findViewById(R.id.imgEditStatus);
-        imgEditStatus.setOnClickListener(this);
         imgStatus = findViewById(R.id.imgStatus);
+        btnViewOrderDetails = findViewById(R.id.btnViewOrderDetails);
+
+        imgEditStatus.setOnClickListener(this);
         imgStatus.setOnClickListener(this);
         imgStatus.setVisibility(View.GONE);
-        firebaseAuth = FirebaseAuth.getInstance();
-        btnViewOrderDetails = findViewById(R.id.btnViewOrderDetails);
         btnViewOrderDetails.setOnClickListener(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         userDocumentId = getIntent().getStringExtra("userDocumentId");
@@ -110,12 +111,15 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         txtTotal.setText("Total: "+total+"$");
         txtAddress.setText("Delivery Address: "+address);
         txtOrderId.setText("Order Id: "+orderDocumentId);
+
         setSpinner();
         setViewByOrderStatus();
     }
 
+    /**
+     * This method sets view based on status of the order.
+     */
     private void setViewByOrderStatus() {
-
         if (status.equalsIgnoreCase("delivered"))
             txtStatus.setTextColor(Color.parseColor("#00b159"));
         else if (status.equalsIgnoreCase("cancelled"))
@@ -138,6 +142,9 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         }
     }
 
+    /**
+     * This method sets up spinner data
+     */
     private void setSpinner() {
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
@@ -196,6 +203,9 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         }
     }
 
+    /**
+     * This method updates view on edit click.
+     */
     private void editStatus() {
         txtStatus.setVisibility(View.GONE);
         spinner.setVisibility(View.VISIBLE);
@@ -205,6 +215,9 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         spinner.setSelection(0);
     }
 
+    /**
+     * This method is used to view order details.
+     */
     private void viewOrderDetails() {
         Intent intent = new Intent(getApplicationContext(),AdminOrderHistoryListActivity.class);
         intent.putExtra("orderHistoryDocumentId",orderDocumentId);
@@ -212,6 +225,9 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         startActivity(intent);
     }
 
+    /**
+     * This method updates the status of an order.
+     */
     private void updateStatus() {
         status = spinner.getSelectedItem().toString();
         if (status.equalsIgnoreCase("pending"))
@@ -261,10 +277,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
                 "Delivery charge: "+deliveryCharge+"$\n" +
                 "Total: "+total+"$\n\n\n\n\n\nThank you,\nTeam StockItUp";
 
-
-
         JavaMailAPI javaMailAPI = new JavaMailAPI(this, mEmail, mSubject, mMessage);
-
         javaMailAPI.execute();
     }
 }

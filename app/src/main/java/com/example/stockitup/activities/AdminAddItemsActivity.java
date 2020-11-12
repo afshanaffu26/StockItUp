@@ -77,16 +77,17 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         btnAdd = findViewById(R.id.btnAdd);
         imageView =  findViewById(R.id.imageView);
         imageViewEdit = findViewById(R.id.imageViewEdit);
+        progressBar = findViewById(R.id.progressBar);
+
         imageViewEdit.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
-        firebaseFirestore = FirebaseFirestore.getInstance();
         spinner.setOnItemSelectedListener(this);
-        progressBar = findViewById(R.id.progressBar);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         ArrayList<String> categoriesList = new ArrayList<>();
         categoriesList.add("Select a category..");
         categoriesList.addAll(AppConstants.CATEGORIES_MAP.keySet());
-
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categoriesList);
         // Drop down layout style - list view with radio button
@@ -114,9 +115,7 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) {    }
 
     /**
      * Called when a view has been clicked.
@@ -135,12 +134,19 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         }
     }
 
+    /**
+     * This method is used to open device storage for choosing image
+     */
     private void showImageChooser() {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(i, "Select Image"), CHOOSE_IMAGE);
     }
+
+    /**
+     * This method is used to assign the chosen image from device to imageview
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -198,6 +204,10 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         }
     }
 
+    /**
+     * This method is used to make a database call for adding an item
+     * @param itemImageUrl the url of the item image
+     */
     private void onUploadImageSuccess(String itemImageUrl) {
         image = itemImageUrl;
         CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, description, price,quantity);
@@ -211,6 +221,10 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
                     }
                 });
     }
+
+    /**
+     * This method is used validate fields to add Category Item
+     */
     private void addItemToCategory() {
         price = editPrice.getText().toString();
         name = editName.getText().toString();

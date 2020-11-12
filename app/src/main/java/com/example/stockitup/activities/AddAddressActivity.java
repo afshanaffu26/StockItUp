@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +13,6 @@ import android.widget.Toast;
 import com.example.stockitup.R;
 import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -32,6 +29,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     private EditText editName,editAddressLine,editProvince,editCity,editPostalID,editCountry,editPhone;
     private FirebaseFirestore firebaseFirestore;
     private String uid;
+    private Button btnNext;
 
     /**
      *  Called when the activity is starting.
@@ -48,8 +46,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Button btnNext = findViewById(R.id.btnNext);
-        btnNext.setOnClickListener(this);
+        btnNext = findViewById(R.id.btnNext);
         editName = findViewById(R.id.editName);
         editAddressLine = findViewById(R.id.editAddressLine);
         editProvince = findViewById(R.id.editProvince);
@@ -58,9 +55,10 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         editCountry = findViewById(R.id.editCountry);
         editPhone = findViewById(R.id.editPhone);
 
+        btnNext.setOnClickListener(this);
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
     }
 
     /**

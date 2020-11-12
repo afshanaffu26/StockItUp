@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -78,6 +77,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         imageViewEdit.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
+
         loadUserInformation();
     }
 
@@ -142,12 +142,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         progressBar.setVisibility(View.VISIBLE);
         uploadImageToFirebaseStorage();
     }
+
+    /**
+     * This method is used to open device storage for choosing image
+     */
     private void showImageChooser() {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(i, "Select Profile Image"), CHOOSE_IMAGE);
     }
+
+    /**
+     * This method is used to assign the chosen image from device to imageview
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -229,7 +237,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     /**
      * This method is used to save user data to firebase
-     * @param uri
+     * @param uri the image uri
      */
     private void saveUserInfo(Uri uri) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -255,6 +263,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             });
         }
     }
+
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
      * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.

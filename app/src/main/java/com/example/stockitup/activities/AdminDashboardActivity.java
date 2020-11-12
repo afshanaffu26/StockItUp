@@ -26,8 +26,6 @@ import java.util.Map;
 /**
  * This class is related to admin.It deals with Dashboard
  */
-
-
 public class AdminDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CardView cardLogout,cardViewCategory,cardAddItems,cardManageOrders,cardEssentialItems,cardMore;
@@ -36,7 +34,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private Map<String,String> map=new HashMap<String,String>();
 
     /**
-     *  Called when the activity is starting.
+     * Called when the activity is starting.
      * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
      */
     @Override
@@ -50,19 +48,21 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         getSupportActionBar().setTitle(appName);
 
         cardLogout = findViewById(R.id.cardLogout);
-        cardLogout.setOnClickListener(this);
         cardViewCategory = findViewById(R.id.cardViewCategory);
-        cardViewCategory.setOnClickListener(this);
         cardAddItems = findViewById(R.id.cardAddItems);
-        cardAddItems.setOnClickListener(this);
         cardManageOrders = findViewById(R.id.cardManageOrders);
-        cardManageOrders.setOnClickListener(this);
         cardEssentialItems = findViewById(R.id.cardEssentialItems);
-        cardEssentialItems.setOnClickListener(this);
         cardMore = findViewById(R.id.cardMore);
-        cardMore.setOnClickListener(this);
-        firebaseFirestore = FirebaseFirestore.getInstance();
         progressBar = findViewById(R.id.progressBar);
+
+        cardMore.setOnClickListener(this);
+        cardLogout.setOnClickListener(this);
+        cardViewCategory.setOnClickListener(this);
+        cardAddItems.setOnClickListener(this);
+        cardManageOrders.setOnClickListener(this);
+        cardEssentialItems.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     /**
@@ -96,6 +96,10 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                 break;
         }
     }
+
+    /**
+     * set data to CATEGORIES_MAP
+     * */
     private void setCategoriesMapData() {
         progressBar.setVisibility(View.VISIBLE);
         firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).get()
@@ -116,11 +120,14 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                     }
                 });
     }
+
+    /**
+     * This method is used to logout of the app
+     * */
     private void userLogout() {
         FirebaseAuth.getInstance().signOut();
         finish();
         Intent i= new Intent(this,LoginActivity.class);
         startActivity(i);
     }
-
 }

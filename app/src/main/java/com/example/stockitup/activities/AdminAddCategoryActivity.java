@@ -63,7 +63,6 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         editName = findViewById(R.id.editName);
         btnAdd = findViewById(R.id.btnAdd);
         imageViewEdit = findViewById(R.id.imageViewEdit);
@@ -72,6 +71,8 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
 
         imageViewEdit.setOnClickListener(this);
         btnAdd.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     /**
@@ -101,12 +102,19 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         }
     }
 
+    /**
+     * This method is used to open device storage for choosing image
+     */
     private void showImageChooser() {
         Intent i = new Intent();
         i.setType("image/*");
         i.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(i, "Select Image"), CHOOSE_IMAGE);
     }
+
+    /**
+     * This method is used to assign the chosen image from device to imageview
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -121,6 +129,9 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         }
     }
 
+    /**
+     * This method is used validate fields to add Category
+     */
     private void addCategory() {
         name = editName.getText().toString();
         if (uriItemImage == null){
@@ -183,6 +194,10 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         }
     }
 
+    /**
+     * This method is used to make a database call for adding a category
+     * @param itemImageUrl the url of the category image
+     */
     private void onUploadImageSuccess(String itemImageUrl) {
         image = itemImageUrl;
         CategoriesModel categoriesModel = new CategoriesModel(name,image);

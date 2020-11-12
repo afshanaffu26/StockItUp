@@ -51,16 +51,22 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressbar);
         txtEmpty = findViewById(R.id.txtEmpty);
         linearLayout = findViewById(R.id.linearLayout);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
+
         setRecyclerViewData();
     }
 
+    /**
+     * set data and functionality to recycler view
+     * */
     private void setRecyclerViewData() {
         Query query = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION);
         FirestoreRecyclerOptions<ManageOrdersModel> options = new FirestoreRecyclerOptions.Builder<ManageOrdersModel>()
@@ -100,6 +106,7 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(false);
         recyclerView.setAdapter(adapter);
     }
+
     /**
      * Called when the activity is becoming visible to the user.
      */
@@ -109,7 +116,6 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
         adapter.startListening();
     }
 
-
     /**
      * Called when the activity is no longer visible to the user.
      */
@@ -118,15 +124,14 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
      * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
      */
-
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
     }
-
 }

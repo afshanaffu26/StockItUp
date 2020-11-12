@@ -45,6 +45,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         String appName = AppConstants.APP_NAME;
         setSupportActionBar(toolbar);

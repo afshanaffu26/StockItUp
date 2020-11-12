@@ -32,7 +32,7 @@ import com.google.firebase.firestore.Query;
 /**
  * This class deals with user addresses
  */
-public class AddressActivity extends AppCompatActivity{
+public class AddressActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore firebaseFirestore;
     private AddressAdapter adapter;
@@ -57,26 +57,20 @@ public class AddressActivity extends AppCompatActivity{
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         txtEmpty = findViewById(R.id.txtEmpty);
         linearLayout = findViewById(R.id.linearLayout);
+
+        floatingActionButton.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
-                startActivity(intent);
-            }
-        });
-
         setRecyclerViewData();
-
     }
 
     /**
@@ -119,6 +113,7 @@ public class AddressActivity extends AppCompatActivity{
                 }
             }
         });
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -131,10 +126,10 @@ public class AddressActivity extends AppCompatActivity{
                 alertMessage(position);
             }
         }).attachToRecyclerView(recyclerView);
+
         adapter.setOnDataChangeListener(new OnDataChangeListener() {
             @Override
             public void onDataChanged() {
-
                 if (adapter.getItemCount() != 0)
                 {
                     if (adapter.getItemCount() < 3)
@@ -196,7 +191,9 @@ public class AddressActivity extends AppCompatActivity{
      * Navigates to payment page to show break up of total amount being charged.
      */
     private void goToPayment(String address) {
+
         String subTotal,deliveryCharge,tax,total,offer,offerPercent;
+
         subTotal = getIntent().getStringExtra("subTotal");
         offerPercent = getIntent().getStringExtra("offerPercent");
         offer = getIntent().getStringExtra("offer");
@@ -214,12 +211,18 @@ public class AddressActivity extends AppCompatActivity{
         intent.putExtra("address", address);
         startActivity(intent);
     }
+    /**
+     * When the activity enters the Started state, the system invokes this callback. The onStart() call makes the activity visible to the user, as the app prepares for the activity to enter the foreground and become interactive.
+     * */
     @Override
     protected void onStart() {
         super.onStart();
         adapter.startListening();
     }
 
+    /**
+     * onStop is called whenever an application goes out of view, and is no longer visible. This is usually caused by a new activity being created over the top of the old one.
+     * */
     @Override
     protected void onStop() {
         super.onStop();
@@ -234,5 +237,19 @@ public class AddressActivity extends AppCompatActivity{
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    /**
+     * Called when a view has been clicked.
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.floatingActionButton:
+                Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

@@ -11,7 +11,6 @@ import com.example.stockitup.utils.AppConstants;
 /**
  *  This class deals with Terms and conditions
  */
-
 public class TermsActivity extends AppCompatActivity {
 
     /**

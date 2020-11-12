@@ -15,6 +15,7 @@ import com.example.stockitup.utils.AppConstants;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 /**
  * This class is related to admin.It deals with add or edit of Offers
  */
@@ -43,9 +44,11 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
         editName = findViewById(R.id.editName);
         editValue = findViewById(R.id.editValue);
         btnSubmit = findViewById(R.id.btnSubmit);
-        firebaseFirestore = FirebaseFirestore.getInstance();
 
         btnSubmit.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         flow = getIntent().getStringExtra("flow");
         if (flow.equalsIgnoreCase("edit"))
         {
@@ -62,6 +65,9 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
         }
     }
 
+    /**
+     * This method is used  to add or update an offer
+     * */
     private void submitOffer() {
         name = editName.getText().toString();
         value = editValue.getText().toString();
@@ -108,6 +114,11 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
      */
     @Override
     public void onClick(View v) {
-        submitOffer();
+        switch (v.getId())
+        {
+            case R.id.btnSubmit:
+                submitOffer();
+                break;
+        }
     }
 }

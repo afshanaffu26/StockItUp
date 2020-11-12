@@ -32,7 +32,7 @@ import com.google.firebase.firestore.Query;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private String documentId;
     private FirebaseFirestore firebaseFirestore;
@@ -100,16 +100,15 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        firebaseFirestore = FirebaseFirestore.getInstance();
+
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerViewCategory = v.findViewById(R.id.recyclerViewCategory);
         floatingActionButton = v.findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), CartActivity.class));
-            }
-        });
+
+        floatingActionButton.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         setRecyclerViewDataForEssentials();
         setRecyclerViewDataForCategories();
 
@@ -172,5 +171,18 @@ public class HomeFragment extends Fragment {
         recyclerViewCategory.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         categoriesAdapter.startListening();
         recyclerViewCategory.setAdapter(categoriesAdapter);
+    }
+
+    /**
+     * Called when a view has been clicked.
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.floatingActionButton:
+                startActivity(new Intent(getContext(), CartActivity.class));
+                break;
+        }
     }
 }

@@ -24,7 +24,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -64,7 +63,6 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
         editName = findViewById(R.id.editName);
         btnUpdate = findViewById(R.id.btnUpdate);
         imageViewEdit = findViewById(R.id.imageViewEdit);
@@ -74,20 +72,20 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         imageViewEdit.setOnClickListener(this);
         btnUpdate.setOnClickListener(this);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         name = getIntent().getStringExtra("name");
         image = getIntent().getStringExtra("image");
         documentId = getIntent().getStringExtra("categoryDocumentId");
-
         editName.setText(name);
         if (image != null && !image.isEmpty())
             Picasso.get().load(image).into(imageView);
-
     }
+
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
      * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
      */
-
     @Override
     public boolean onSupportNavigateUp() {
         finish();
@@ -110,6 +108,9 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         }
     }
 
+    /**
+     * This method is used to open device storage for choosing image
+     */
     private void showImageChooser() {
         Intent i = new Intent();
         i.setType("image/*");
@@ -117,6 +118,9 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         startActivityForResult(Intent.createChooser(i, "Select Image"), CHOOSE_IMAGE);
     }
 
+    /**
+     * This method is used to assign the chosen image from device to imageview
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -131,6 +135,9 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         }
     }
 
+    /**
+     * This methods validates fields for updating the category
+     * */
     private void updateCategory() {
         if(name.isEmpty())
         {
@@ -200,6 +207,10 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         }
     }
 
+    /**
+     * This method is used to make a database call for adding a category item
+     * @param uri the url of the category item image
+     */
     private void onUploadImageSuccess(Uri uri) {
         name = editName.getText().toString();
         image = uri.toString();
