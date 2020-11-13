@@ -51,27 +51,38 @@ public class AdminOffersActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_offers);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         txtEmpty = findViewById(R.id.txtEmpty);
         linearLayout = findViewById(R.id.linearLayout);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        txtEmpty.setVisibility(View.GONE);
-        linearLayout.setVisibility(View.GONE);
-
         floatingActionButton.setOnClickListener(this);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        initializeView();
         setRecyclerViewData();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
+        txtEmpty.setVisibility(View.GONE);
+        linearLayout.setVisibility(View.GONE);
     }
 
     /**
@@ -157,8 +168,6 @@ public class AdminOffersActivity extends AppCompatActivity implements View.OnCli
                     case DialogInterface.BUTTON_NEGATIVE:
                         // No button clicked
                         adapter.notifyItemChanged(position);
-                        Toast.makeText(getApplicationContext(), "Delete Cancelled.",
-                                Toast.LENGTH_LONG).show();
                         break;
                 }
             }

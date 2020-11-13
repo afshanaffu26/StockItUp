@@ -42,10 +42,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
+        setToolbar();
 
         cardLogout = findViewById(R.id.cardLogout);
         cardViewCategory = findViewById(R.id.cardViewCategory);
@@ -63,6 +60,16 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cardEssentialItems.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
     }
 
     /**

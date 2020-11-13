@@ -35,11 +35,7 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_or_edit_offers);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         editName = findViewById(R.id.editName);
         editValue = findViewById(R.id.editValue);
@@ -48,7 +44,24 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
         btnSubmit.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         flow = getIntent().getStringExtra("flow");
         if (flow.equalsIgnoreCase("edit"))
         {

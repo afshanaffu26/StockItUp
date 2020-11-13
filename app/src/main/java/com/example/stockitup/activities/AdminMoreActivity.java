@@ -27,11 +27,7 @@ public class AdminMoreActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_more);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         imgNextOffers = findViewById(R.id.imgNextOffers);
         imgNextFAQ = findViewById(R.id.imgNextFAQ);
@@ -40,6 +36,17 @@ public class AdminMoreActivity extends AppCompatActivity implements View.OnClick
         imgNextOffers.setOnClickListener(this);
         imgNextFAQ.setOnClickListener(this);
         imgNextContact.setOnClickListener(this);
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**

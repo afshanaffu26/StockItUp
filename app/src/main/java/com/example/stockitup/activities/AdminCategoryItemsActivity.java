@@ -57,11 +57,7 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_category_items);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         progressBar = findViewById(R.id.progressbar);
         recyclerView = findViewById(R.id.recyclerView);
@@ -73,14 +69,30 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+        setRecyclerViewData();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
-
-        setRecyclerViewData();
     }
 
     /**
@@ -167,8 +179,6 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
                     case DialogInterface.BUTTON_NEGATIVE:
                         // No button clicked
                         adapter.notifyItemChanged(position);
-                        Toast.makeText(getApplicationContext(), "Delete Cancelled.",
-                                Toast.LENGTH_LONG).show();
                         break;
                 }
             }

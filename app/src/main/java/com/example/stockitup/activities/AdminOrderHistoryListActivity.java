@@ -38,22 +38,34 @@ public class AdminOrderHistoryListActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_order_history_list);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         recyclerView = findViewById(R.id.recyclerView);
         txtEmptyOrders = findViewById(R.id.txtEmptyOrders);
         linearLayout = findViewById(R.id.linearLayout);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+        setRecyclerViewData();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
-
-        setRecyclerViewData();
     }
 
     /**

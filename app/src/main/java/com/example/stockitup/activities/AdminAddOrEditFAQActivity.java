@@ -35,11 +35,7 @@ public class AdminAddOrEditFAQActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_or_edit_f_a_q);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         editQuestion = findViewById(R.id.editQuestion);
         editAnswer = findViewById(R.id.editAnswer);
@@ -48,7 +44,24 @@ public class AdminAddOrEditFAQActivity extends AppCompatActivity implements View
         btnSubmit.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         flow = getIntent().getStringExtra("flow");
         if (flow.equalsIgnoreCase("edit"))
         {

@@ -40,11 +40,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         btnNext = findViewById(R.id.btnNext);
         editName = findViewById(R.id.editName);
@@ -59,6 +55,17 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -143,12 +150,12 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document("address"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
                 .add(address)
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                finish();
-                Toast.makeText(AddAddressActivity.this, "Address Added.", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        finish();
+                        Toast.makeText(AddAddressActivity.this, "Address Added.", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     /**

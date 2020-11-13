@@ -53,11 +53,7 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_update_order);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         txtOrderDate = findViewById(R.id.txtOrderDate);
         txtSubTotal = findViewById(R.id.txtSubTotal);
@@ -80,7 +76,26 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+        setSpinner();
+        setViewByOrderStatus();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         orderDocumentId = getIntent().getStringExtra("orderDocumentId");
         userID = getIntent().getStringExtra("userID");
@@ -111,9 +126,6 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         txtTotal.setText("Total: "+total+"$");
         txtAddress.setText("Delivery Address: "+address);
         txtOrderId.setText("Order Id: "+orderDocumentId);
-
-        setSpinner();
-        setViewByOrderStatus();
     }
 
     /**
@@ -163,11 +175,22 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         spinner.setAdapter(dataAdapter);
     }
 
+    /**
+     *Callback method to be invoked when an item in this view has been selected.
+     * @param adapterView The AdapterView where the selection happened
+     * @param view The view within the AdapterView that was clicked
+     * @param i The position of the view in the adapter
+     * @param l The row id of the item that is selected
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
     }
 
+    /**
+     *  Callback method to be invoked when the selection disappears from this view
+     * @param adapterView The AdapterView that now contains no selected item.
+     */
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 

@@ -51,11 +51,7 @@ public class AdminFAQActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_faq);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
@@ -66,11 +62,27 @@ public class AdminFAQActivity extends AppCompatActivity implements View.OnClickL
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        initializeView();
+        setRecyclerViewData();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
-
-        setRecyclerViewData();
     }
 
     /**
@@ -148,8 +160,6 @@ public class AdminFAQActivity extends AppCompatActivity implements View.OnClickL
                     case DialogInterface.BUTTON_NEGATIVE:
                         // No button clicked
                         adapter.notifyItemChanged(position);
-                        Toast.makeText(getApplicationContext(), "Delete Cancelled.",
-                                Toast.LENGTH_LONG).show();
                         break;
                 }
             }

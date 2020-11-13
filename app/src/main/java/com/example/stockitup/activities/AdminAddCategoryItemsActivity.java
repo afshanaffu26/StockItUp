@@ -63,11 +63,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_category_items);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         editName = findViewById(R.id.editName);
         editPrice = findViewById(R.id.editPrice);
@@ -82,7 +78,24 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         btnAdd.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         documentId = getIntent().getStringExtra("categoryDocumentId");
         categoryName = getIntent().getStringExtra("categoryName");
         isEssential = getIntent().getStringExtra("isEssential");

@@ -57,11 +57,7 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_categories);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressbar);
@@ -72,11 +68,27 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+        setRecyclerViewData();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
-
-        setRecyclerViewData();
     }
 
     /**
@@ -193,8 +205,6 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
                     case DialogInterface.BUTTON_NEGATIVE:
                         // No button clicked
                         adapter.notifyItemChanged(position);
-                        Toast.makeText(getApplicationContext(), "Delete Cancelled.",
-                                Toast.LENGTH_LONG).show();
                         break;
                 }
             }

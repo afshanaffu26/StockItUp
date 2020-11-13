@@ -64,11 +64,7 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_items);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         spinner = findViewById(R.id.spinner);
         editName = findViewById(R.id.editName);
@@ -84,7 +80,24 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         spinner.setOnItemSelectedListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        setSpinner();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method sets up the spinner data
+     * */
+    private void setSpinner() {
         ArrayList<String> categoriesList = new ArrayList<>();
         categoriesList.add("Select a category..");
         categoriesList.addAll(AppConstants.CATEGORIES_MAP.keySet());
@@ -106,6 +119,13 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         return true;
     }
 
+    /**
+     *Callback method to be invoked when an item in this view has been selected.
+     * @param adapterView The AdapterView where the selection happened
+     * @param view The view within the AdapterView that was clicked
+     * @param i The position of the view in the adapter
+     * @param l The row id of the item that is selected
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (i!=0)
@@ -114,6 +134,10 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
             category = "";
     }
 
+    /**
+     *  Callback method to be invoked when the selection disappears from this view
+     * @param adapterView The AdapterView that now contains no selected item.
+     */
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {    }
 

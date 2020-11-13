@@ -51,11 +51,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
@@ -67,10 +63,27 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        initializeView();
+        setRecyclerViewData();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
-
-        setRecyclerViewData();
     }
 
     /**
@@ -175,8 +188,6 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
                     case DialogInterface.BUTTON_NEGATIVE:
                         // No button clicked
                         adapter.notifyItemChanged(position);
-                        Toast.makeText(getApplicationContext(), "Delete Cancelled.",
-                                Toast.LENGTH_LONG).show();
                         break;
                 }
             }
@@ -187,6 +198,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
     }
+
     /**
      * Navigates to payment page to show break up of total amount being charged.
      */
@@ -247,9 +259,16 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.floatingActionButton:
-                Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
-                startActivity(intent);
+                navigateToAddAddressActivity();
                 break;
         }
+    }
+
+    /**
+     * Navigates to AddAddressActivity
+     * */
+    private void navigateToAddAddressActivity() {
+        Intent intent = new Intent(getApplicationContext(), AddAddressActivity.class);
+        startActivity(intent);
     }
 }

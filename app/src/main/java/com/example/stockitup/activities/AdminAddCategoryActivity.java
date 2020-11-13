@@ -57,11 +57,7 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add_category);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         editName = findViewById(R.id.editName);
         btnAdd = findViewById(R.id.btnAdd);
@@ -73,6 +69,17 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         btnAdd.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -163,8 +170,6 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //progressBar.setVisibility(View.GONE);
-                            //itemImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
                             itemImageRef.getDownloadUrl()
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
@@ -206,9 +211,10 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
                 .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentReference> task) {
-                        if (task.isSuccessful())
-                            progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(),"Category Added.",Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Category Added.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }

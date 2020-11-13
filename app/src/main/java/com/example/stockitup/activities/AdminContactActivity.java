@@ -43,11 +43,7 @@ public class AdminContactActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_contact);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         txtCustomerCareNumber = findViewById(R.id.txtCustomerCareNumber);
         txtTollFreeNumber = findViewById(R.id.txtTollFreeNumber);
@@ -59,12 +55,35 @@ public class AdminContactActivity extends AppCompatActivity implements View.OnCl
         btnSubmit.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+        fetchContactDetails();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         btnSubmit.setText("EDIT");
         editCustomerCareNumber.setVisibility(View.GONE);
         editTollFreeNumber.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
+    }
 
+    /**
+     * This method fetches the contact details
+     * */
+    private void fetchContactDetails() {
         firebaseFirestore.collection(AppConstants.APP_SUPPORT_COLLECTION)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -74,13 +93,22 @@ public class AdminContactActivity extends AppCompatActivity implements View.OnCl
                         {
                             customerCareNumber = task.getResult().getDocuments().get(0).get("customerCareNumber").toString();
                             tollFreeNumber = task.getResult().getDocuments().get(0).get("tollFreeNumber").toString();
-                            txtCustomerCareNumber.setText(customerCareNumber);
-                            txtTollFreeNumber.setText(tollFreeNumber);
                             documentId = task.getResult().getDocuments().get(0).getId();
+                            setContactDetails(customerCareNumber,tollFreeNumber);
                         }
                         progressBar.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    /**
+     * This methods sets contact details to view
+     * @param customerCareNumber the customer care number of support
+     * @param tollFreeNumber the toll free number of support
+     * */
+    private void setContactDetails(String customerCareNumber,String tollFreeNumber) {
+        txtCustomerCareNumber.setText(customerCareNumber);
+        txtTollFreeNumber.setText(tollFreeNumber);
     }
 
     /**

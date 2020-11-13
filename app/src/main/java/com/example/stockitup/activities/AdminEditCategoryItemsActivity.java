@@ -59,11 +59,7 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_edit_category_items);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         editName = findViewById(R.id.editName);
         editDesc = findViewById(R.id.editDesc);
@@ -77,7 +73,24 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         btnUpdate.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         name = getIntent().getStringExtra("name");
         desc = getIntent().getStringExtra("desc");
         price = getIntent().getStringExtra("price");
@@ -211,7 +224,7 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
                 documentReference = firebaseFirestore.collection(AppConstants.ESSENTIALS_COLLECTION).document(documentId);
             else
                 documentReference = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId);
-                    documentReference.set(categoryItemsModel)
+            documentReference.set(categoryItemsModel)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
