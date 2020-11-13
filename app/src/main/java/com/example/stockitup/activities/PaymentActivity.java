@@ -40,6 +40,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     private String address;
     private EditText editName,editCardNo,editCVV,editExpDate;
     private String name,cardNo,cvv,expDate;
+    private String docId;
 
     /**
      *  Called when the activity is starting.
@@ -50,11 +51,7 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         editName = findViewById(R.id.editName);
         editCardNo = findViewById(R.id.editCardNo);
@@ -66,6 +63,17 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -111,75 +119,104 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             return;
         }
         Toast.makeText(getApplicationContext(), "Payment is being Processed, Please don't refresh", Toast.LENGTH_SHORT).show();
+        placeOrder();
+    }
 
-        final String docId = "" + UUID.randomUUID().toString();
+    /**
+     * place order of items in cart
+     * */
+    private void placeOrder() {
+        docId = "" + UUID.randomUUID().toString();
         //fetch cart items
-        firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).get().addOnCompleteListener(
-                new OnCompleteListener < QuerySnapshot > () {
+        firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener < QuerySnapshot > () {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             //iterating through each cart item
                             for (DocumentSnapshot documentSnapshot : task.getResult()) {
-                                String cartDocumentId = documentSnapshot.getId();
-                                CategoryItemsModel cuisineItemsModel = documentSnapshot.toObject(CategoryItemsModel.class);
                                 //adding each cart item to orders collection inside a particular docId
-                                firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(cartDocumentId)
-                                        .set(cuisineItemsModel).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Date date = new Date();
-                                            subTotal = getIntent().getStringExtra("subTotal");
-                                            offerPercent = getIntent().getStringExtra("offerPercent");
-                                            offer = getIntent().getStringExtra("offer");
-                                            tax = getIntent().getStringExtra("tax");
-                                            deliveryCharge = getIntent().getStringExtra("deliveryCharge");
-                                            total = getIntent().getStringExtra("total");
-                                            address = getIntent().getStringExtra("address");
-                                            String status = "Pending";
-                                            OrdersModel ordersModel = new OrdersModel(date, subTotal, offerPercent, offer, tax, deliveryCharge, total, address,status);
-                                            //adding orders data to that particular docId
-                                            firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId)
-                                                    .set(ordersModel)
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            addOrderDetails();
-                                                            //get cart details to delete each item
-                                                            firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
-                                                                    .get()
-                                                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                                        @Override
-                                                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                                            if (task.isSuccessful()) {
-                                                                                Toast.makeText(getApplicationContext(), "Order placed successfully.", Toast.LENGTH_SHORT).show();
-                                                                                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                                                                    //delete each cart item
-                                                                                    firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(queryDocumentSnapshot.getId())
-                                                                                            .delete();
-                                                                                }
-                                                                            }
-                                                                            startActivity(new Intent(getApplicationContext(), HomeScreenActivity.class));
-                                                                        }
-                                                                    });
-                                                        }
-                                                    });
-                                        }
-                                    }
-                                });
+                                addOrderedItems(documentSnapshot,docId);
                             }
                         }
 
                     }
                 });
-
     }
 
     /**
-     * This methods adds order details to database when order is placed
+     * This methods adds ordered items to database from cart
      * */
-    private void addOrderDetails() {
+    private void addOrderedItems(DocumentSnapshot documentSnapshot, final String docId) {
+        String cartDocumentId = documentSnapshot.getId();
+        CategoryItemsModel cuisineItemsModel = documentSnapshot.toObject(CategoryItemsModel.class);
+        firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(cartDocumentId)
+                .set(cuisineItemsModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    addOrderDetails(docId);
+                }
+            }
+        });
+    }
+
+    /**
+     * This method adds order details to database when order is placed
+     * @param docId the document id of the order in AllOrders collection
+     * */
+    private void addOrderDetails(String docId) {
+        Date date = new Date();
+        subTotal = getIntent().getStringExtra("subTotal");
+        offerPercent = getIntent().getStringExtra("offerPercent");
+        offer = getIntent().getStringExtra("offer");
+        tax = getIntent().getStringExtra("tax");
+        deliveryCharge = getIntent().getStringExtra("deliveryCharge");
+        total = getIntent().getStringExtra("total");
+        address = getIntent().getStringExtra("address");
+        String status = "Pending";
+        OrdersModel ordersModel = new OrdersModel(date, subTotal, offerPercent, offer, tax, deliveryCharge, total, address,status);
+        //adding orders data to that particular docId
+        firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders" + uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(docId)
+                .set(ordersModel)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //userId,userEmail,userName
+                        addUserDetails();
+                        fetchAndDeleteCart();
+                    }
+                });
+    }
+
+    /**
+     * fetch cart items and delete
+     * */
+    private void fetchAndDeleteCart() {
+        //get cart details to delete each item
+        firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "Order placed successfully.", Toast.LENGTH_SHORT).show();
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                //delete each cart item
+                                firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(queryDocumentSnapshot.getId())
+                                        .delete();
+                            }
+                        }
+                        startActivity(new Intent(getApplicationContext(), HomeScreenActivity.class));
+                    }
+                });
+    }
+
+    /**
+     * This methods adds user details to database when order is placed
+     * */
+    private void addUserDetails() {
         String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
         ManageOrdersModel manageOrdersModel = new ManageOrdersModel(uid,userEmail,userName);

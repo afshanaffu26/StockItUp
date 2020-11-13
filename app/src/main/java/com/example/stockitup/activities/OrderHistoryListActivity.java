@@ -39,11 +39,7 @@ public class OrderHistoryListActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history_list);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         recyclerView = findViewById(R.id.recyclerView);
         txtEmptyOrders = findViewById(R.id.txtEmptyOrders);
@@ -51,10 +47,26 @@ public class OrderHistoryListActivity extends AppCompatActivity{
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
-
+        initializeView();
         setRecyclerViewData();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
+        orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
     }
 
     /**

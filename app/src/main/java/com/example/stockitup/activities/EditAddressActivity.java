@@ -39,11 +39,7 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_address);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         editName = findViewById(R.id.editName);
         editAddressLine = findViewById(R.id.editAddressLine);
@@ -54,9 +50,28 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
         editPhone = findViewById(R.id.editPhone);
         btnNext = findViewById(R.id.btnNext);
 
+        btnNext.setOnClickListener(this);
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        initializeView();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         name = getIntent().getStringExtra("name");
         addressLine = getIntent().getStringExtra("addressLine");
         city = getIntent().getStringExtra("city");
@@ -73,8 +88,6 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
         editCountry.setText(country);
         editPostalID.setText(pincode);
         editPhone.setText(phone);
-
-        btnNext.setOnClickListener(this);
     }
 
     /**

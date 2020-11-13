@@ -46,19 +46,26 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        String appName = AppConstants.APP_NAME;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        //display back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
-        mAuth=FirebaseAuth.getInstance();
         editEmail=(EditText)findViewById(R.id.editEmail);
         progressBar=findViewById(R.id.progressbar);
-
         btnSubmit = findViewById(R.id.btnSubmit);
+
         btnSubmit.setOnClickListener(this);
+
+        mAuth=FirebaseAuth.getInstance();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**

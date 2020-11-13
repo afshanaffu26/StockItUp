@@ -46,11 +46,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history_details);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         txtOrderDate = findViewById(R.id.txtOrderDate);
         txtSubTotal = findViewById(R.id.txtSubTotal);
@@ -67,6 +63,26 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         btnViewOrderDetails.setOnClickListener(this);
         btnCancelOrder.setOnClickListener(this);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        initializeView();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         subtotal = getIntent().getStringExtra("subtotal");
         tax = getIntent().getStringExtra("tax");
         offer = getIntent().getStringExtra("offer");
@@ -77,9 +93,6 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
         date = getIntent().getStringExtra("date");
         status = getIntent().getStringExtra("status");
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
 
         txtOrderId.setText("OrderId: "+orderHistoryDocumentId);
         txtOrderDate.setText("Ordered On: "+date);

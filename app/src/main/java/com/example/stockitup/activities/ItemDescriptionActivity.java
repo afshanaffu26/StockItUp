@@ -51,11 +51,7 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_description);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         imageView = findViewById(R.id.imageView);
         txtName = findViewById(R.id.txtName);
@@ -69,7 +65,25 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        setSpinner();
+        initializeView();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method sets spinner data
+     * */
+    private void setSpinner() {
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
         // Spinner Drop down elements
@@ -83,7 +97,12 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+    }
 
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         if (getIntent().getStringExtra("screen") == null ) {
             btnAddToCart.setText("Add to Cart");
             floatingActionButton.setVisibility(View.VISIBLE);
@@ -133,7 +152,8 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
      * @param price Product price
      * @param desc Product description
      */
-    private void addItemToCart(String name, String image,String desc, String price, String quantity) {
+    private void addItemToCart(String name, String image,String desc, String price) {
+        quantity = spinner.getSelectedItem().toString();
         CategoryItemsModel cuisineItemsModel = new CategoryItemsModel(name, image, desc, price,quantity);
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -192,12 +212,18 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.btnAddToCart:
-                quantity = spinner.getSelectedItem().toString();
-                addItemToCart(name,image,desc,price,quantity);
+                addItemToCart(name,image,desc,price);
                 break;
             case R.id.floatingActionButton:
-                startActivity(new Intent(getApplicationContext(), CartActivity.class));
+                navigateToCartActivity();
                 break;
         }
+    }
+
+    /**
+     * Navigates to CartActivity
+     * */
+    private void navigateToCartActivity() {
+        startActivity(new Intent(getApplicationContext(), CartActivity.class));
     }
 }
