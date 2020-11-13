@@ -58,14 +58,14 @@
                     android:textSize="18dp"
                     android:textColor="@color/colorText"
                     android:layout_gravity="center"
-                    android:text="Category: Pasta"/>
+                    android:text="Category: "/>
 
                 <EditText
                     android:id="@+id/editName"
                     android:layout_width="match_parent"
                     android:background="@drawable/edit_text_background"
                     android:layout_height="wrap_content"
-                    android:hint="Enter Name"
+                    android:hint="@string/enter_name"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:ems="10"
@@ -81,7 +81,7 @@
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:hint="Enter description"
+                    android:hint="@string/enter_description"
                     android:inputType="textMultiLine" />
 
                 <EditText
@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:background="@drawable/edit_text_background"
                     android:layout_height="wrap_content"
-                    android:hint="Enter price"
+                    android:hint="@string/enter_price"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
@@ -104,8 +104,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/colorButton"
-                    android:text="Add"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/add"
+                    android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
             </LinearLayout>
         </ScrollView>

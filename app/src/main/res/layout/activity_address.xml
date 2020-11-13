@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No address yet!" />
+        android:text="@string/no_address_yet" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_below="@+id/toolbar"
@@ -27,7 +27,7 @@
             android:layout_margin="30dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="Select Address"
+            android:text="@string/select_address"
             android:textColor="@color/colorText"
             android:textSize="24sp" />
         <RelativeLayout

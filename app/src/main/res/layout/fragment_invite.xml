@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="Invite Friend"
+            android:text="@string/invite_friend"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:textSize="24sp" />
@@ -36,7 +36,7 @@
             android:gravity="center"
             android:layout_marginTop="50dp"
             android:padding="10dp"
-            android:text="Invite a friend and get exciting offers on each successful invite.."
+            android:text="@string/invite_a_friend_and_get_exciting_offers_on_each_successful_invite"
             android:textSize="18sp" />
 
         <Button
@@ -46,8 +46,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
             android:background="@color/colorButton"
-            android:text="Invite Friend"
-            android:textColor="#FFFFFF"
+            android:text="@string/invite_friend"
+            android:textColor="@color/colorWhite"
             android:textStyle="bold" />
 
     </LinearLayout>

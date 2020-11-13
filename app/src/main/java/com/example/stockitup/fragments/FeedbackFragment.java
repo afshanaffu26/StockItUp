@@ -28,6 +28,7 @@ public class FeedbackFragment extends Fragment implements View.OnClickListener {
 
     private Button buttonSend,buttonDiscard;
     private EditText editTextMultiLine;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";

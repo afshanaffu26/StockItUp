@@ -46,7 +46,6 @@
                 android:textColor="@color/colorText"
                 android:textSize="14dp" />
         </LinearLayout>
-
         <TextView
             android:id="@+id/txtOrderDate"
             android:layout_width="match_parent"
@@ -54,53 +53,6 @@
             android:layout_margin="10dp"
             android:text="Ordered On:"
             android:textSize="14dp"/>
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/txtSubTotal"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginLeft="10dp"-->
-        <!--            android:text="Subtotal: 55$"-->
-        <!--            android:textSize="16dp" />-->
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/txtOffer"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginLeft="10dp"-->
-        <!--            android:text="Offer (-20%): 5$"-->
-        <!--            android:textSize="16dp" />-->
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/txtTax"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginLeft="10dp"-->
-        <!--            android:text="Tax: 5$"-->
-        <!--            android:textSize="16dp" />-->
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/txtDeliveryCharge"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginLeft="10dp"-->
-        <!--            android:text="DeliveryCharge: 5$"-->
-        <!--            android:textSize="16dp" />-->
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/txtTotal"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginLeft="10dp"-->
-        <!--            android:text="Total: 70$"-->
-        <!--            android:textSize="16dp" />-->
-        <!--        <TextView-->
-        <!--            android:id="@+id/txtAddress"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginLeft="10dp"-->
-        <!--            android:text="Address:"-->
-        <!--            android:textSize="16dp"/>-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

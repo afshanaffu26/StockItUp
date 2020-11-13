@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter display name"
+            android:hint="@string/enter_display_name"
             android:background="@drawable/edit_text_background"
             android:ems="10"
             android:inputType="text" />
@@ -57,7 +57,7 @@
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            android:text="Save"
+            android:text="@string/save"
             android:background="@color/colorButton"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />

@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No Items yet!" />
+        android:text="@string/no_items_yet" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="30dp"
             android:gravity="center"
-            android:text="Category Items"
+            android:text="@string/category_items"
             android:textColor="@color/colorText"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -48,7 +48,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="0dp"
-                        android:layout_marginTop="0dp" />
+                        android:layout_marginTop="0dp"
+                        android:layout_marginStart="0dp" />
                 </RelativeLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

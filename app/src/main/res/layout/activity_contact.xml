@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".activities.ContactActivity">
 
-
     <ProgressBar
         android:visibility="gone"
         android:id="@+id/progressbar"
@@ -32,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="Contact Us"
+            android:text="@string/contact_us_title"
             android:textColor="@color/colorText"
             android:textSize="24sp"
             android:textStyle="bold" />

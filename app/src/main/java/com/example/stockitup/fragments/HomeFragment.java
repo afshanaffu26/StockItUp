@@ -125,7 +125,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query, CategoryItemsModel.class)
                 .build();
-
         essentialsAdapter = new EssentialsAdapter(options);
         essentialsAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -181,8 +180,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.floatingActionButton:
-                startActivity(new Intent(getContext(), CartActivity.class));
+                navigateToCartActivity();
                 break;
         }
+    }
+
+    /**
+     * Navigates to CartActivity
+     * */
+    private void navigateToCartActivity() {
+        startActivity(new Intent(getContext(), CartActivity.class));
     }
 }

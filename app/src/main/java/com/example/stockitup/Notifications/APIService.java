@@ -6,7 +6,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 /**
- * This interface is used make a request to FCM
+ * This interface is used to make a request to FCM
  */
 public interface APIService {
     @Headers(
@@ -16,6 +16,9 @@ public interface APIService {
             }
     )
 
+    /**
+     * This method is used to make a request to FCM
+     */
     @POST("fcm/send")
     Call<MyResponse> sendNotifcation(@Body RequestNotificaton requestNotification);
 }

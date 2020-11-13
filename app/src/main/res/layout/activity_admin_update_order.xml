@@ -29,7 +29,7 @@
                     android:layout_gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/colorText"
-                    android:text="Order Details"/>
+                    android:text="@string/order_details"/>
 
                 <TextView
                     android:id="@+id/txtOrderId"
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="14sp"
-                        android:text="Status:"
+                        android:text="@string/status"
                         android:layout_gravity="center_vertical" />
                     <TextView
                         android:id="@+id/txtStatus"
@@ -153,7 +153,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="30dp"
                     android:background="@color/colorWhite"
-                    android:text="View Ordered Items"
+                    android:text="@string/view_ordered_items"
                     android:textColor="@color/colorText"
                     android:layout_weight="1"
                     android:textStyle="bold"/>

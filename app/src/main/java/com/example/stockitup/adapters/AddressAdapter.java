@@ -32,6 +32,12 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
         super(options);
     }
 
+    /**
+     * This method binds the data and the view
+     * @param holder the view holder
+     * @param position the adapter position
+     * @param model the model file
+     * */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull AddressModel model) {
         holder.txtName.setText(model.getName());
@@ -43,6 +49,11 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
         holder.txtPhone.setText(model.getPhone());
     }
 
+    /**
+     * This method creates the view
+     * @param parent the parent viewGroup
+     * @param viewType the viewType
+     * */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,16 +61,48 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
         return new ViewHolder(view);
     }
 
+    /**
+     * This method deletes the item on given position
+     * @param position the position of item
+     * */
     public void deleteItem(int position){
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
+    /**
+     * This method is called when data is changed
+     * */
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    /**
+     * This method initializes the OnDataChangeListener instance
+     * */
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
+    }
+
+    /**
+     * This method initializes the OnItemClickListener instance
+     * */
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
+    /**
+     * This class is the ViewHolder for the adapter. It extends RecyclerView.ViewHolder
+     * */
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView txtName,txtAddressLine,txtCity,txtProvince,txtCountry,txtPincode,txtPhone;
         private ImageView imgBtnEditAddress;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txtName = itemView.findViewById(R.id.txtName);
             txtAddressLine = itemView.findViewById(R.id.txtAddressLine);
             txtCity = itemView.findViewById(R.id.txtCity);
@@ -68,10 +111,17 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
             txtPincode = itemView.findViewById(R.id.txtPincode);
             txtPhone = itemView.findViewById(R.id.txtPhone);
             imgBtnEditAddress = itemView.findViewById(R.id.imgBtnEditAddress);
+
             imgBtnEditAddress.setOnClickListener(this);
             itemView.setOnClickListener(this);
+
             dataChangeListener.onDataChanged();
         }
+
+        /**
+         * Called when a view has been clicked.
+         * @param view The view that was clicked.
+         */
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
@@ -80,19 +130,5 @@ public class AddressAdapter extends FirestoreRecyclerAdapter<AddressModel,Addres
                 listener.onItemClick(view,getSnapshots().getSnapshot(position), position);
             }
         }
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener = listener;
-    }
-
-    @Override
-    public void onDataChanged() {
-        super.onDataChanged();
-        dataChangeListener.onDataChanged();
-    }
-
-    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
-        this.dataChangeListener = dataChangeListener;
     }
 }

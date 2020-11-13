@@ -99,14 +99,28 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imgProfileBtn:
-                Intent i = new Intent(getActivity(), ProfileActivity.class);
-                startActivity(i);
+                navigateToProfileActivity();
                 break;
             case R.id.imgAddressBtn:
-                Intent intent = new Intent(getActivity(), AddressActivity.class);
-                intent.putExtra("screen","settings");
-                startActivity(intent);
+                navigateToAddressActivity();
                 break;
         }
+    }
+
+    /**
+     * Navigates to ProfileActivity
+     * */
+    private void navigateToProfileActivity() {
+        Intent i = new Intent(getActivity(), ProfileActivity.class);
+        startActivity(i);
+    }
+
+    /**
+     * Navigates to AddressActivity
+     * */
+    private void navigateToAddressActivity() {
+        Intent intent = new Intent(getActivity(), AddressActivity.class);
+        intent.putExtra("screen","settings");
+        startActivity(intent);
     }
 }

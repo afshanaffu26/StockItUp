@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:gravity="center"
-                    android:text="Payment"
+                    android:text="@string/payment"
                     android:textStyle="bold"
                     android:textColor="@color/colorText"
                     android:textSize="24sp" />
@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
-                    android:hint="Name on the card"
+                    android:hint="@string/name_on_the_card"
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:inputType="text" />
@@ -67,7 +67,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
-                    android:hint="Credit/Debit Card Number"
+                    android:hint="@string/credit_debit_card_number"
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:inputType="number" />
@@ -79,7 +79,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
-                    android:hint="CVV"
+                    android:hint="@string/cvv"
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:maxLength="3"
@@ -92,7 +92,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
-                    android:hint="Exp Month/Year"
+                    android:hint="@string/exp_month_year"
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
                     android:inputType="date" />
@@ -105,7 +105,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/colorButton"
-                    android:text="PAY"
+                    android:text="@string/pay"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
             </LinearLayout>

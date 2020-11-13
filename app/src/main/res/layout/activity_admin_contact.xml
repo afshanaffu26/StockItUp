@@ -20,13 +20,13 @@
             android:layout_margin="30dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="Contact"
+            android:text="@string/contact"
             android:textColor="@color/colorText"
             android:textSize="24sp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Customer Care Number"
+        android:text="@string/customer_care_number"
         android:layout_marginLeft="15dp"
         android:textColor="@color/colorText"
         android:textSize="18sp" />
@@ -44,12 +44,12 @@
         android:layout_margin="15dp"
         android:background="@drawable/edit_text_background"
         android:ems="10"
-        android:hint="Enter Customer care number"
+        android:hint="@string/enter_customer_care_number"
         android:inputType="text" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Toll free Number"
+        android:text="@string/toll_free_number"
         android:layout_marginLeft="15dp"
         android:textColor="@color/colorText"
         android:textSize="18sp" />
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:hint="Enter toll free number"
+        android:hint="@string/enter_toll_free_number"
         android:background="@drawable/edit_text_background"
         android:ems="10"
         android:inputType="text" />
@@ -79,7 +79,7 @@
         android:layout_marginBottom="20dp"
         android:background="@color/colorButton"
         android:text="Edit/Update"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold" />
     </LinearLayout>
     <ProgressBar

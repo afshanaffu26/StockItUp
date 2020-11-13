@@ -34,18 +34,34 @@ public class RequestNotificaton {
         this.sendNotificationModel = sendNotificationModel;
     }
 
+    /**
+     * Getter method used to get the device token
+     * @return returns device token
+     */
     public String getToken() {
         return token;
     }
 
+    /**
+     * Setter method used to set the device token
+     * @param token device token
+     */
     public void setToken(String token) {
         this.token = token;
     }
 
+    /**
+     * This is a getter method to get data JSON
+     * @return data JSON
+     */
     public SendDataModel getSendDataModel() {
         return sendDataModel;
     }
 
+    /**
+     * This is a setter method used to set data JSON
+     * @param sendDataModel Data JSON is passed as an object.
+     */
     public void setSendDataModel(SendDataModel sendDataModel) {
         this.sendDataModel = sendDataModel;
     }

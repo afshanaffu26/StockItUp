@@ -9,6 +9,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Client {
     private static Retrofit retrofit=null;
 
+    /**
+     * This method returns Retrofit instance
+     * @param url Base URL
+     * @return Retrofit instance
+     */
     public static Retrofit getClient(String url)
     {
         if(retrofit==null)

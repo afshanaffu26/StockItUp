@@ -28,12 +28,12 @@ public class AppConstants {
     /**
      * the customer care number for support
      */
-    public static String CUSTOMER_CARE_NUMBER = "4388961212";
+    public static String CUSTOMER_CARE_NUMBER;
 
     /**
      * the toll free number for support
      */
-    public static String TOLL_FREE_NUMBER = "1800776665";
+    public static String TOLL_FREE_NUMBER;
 
     /**
      * firestore collection called Categories

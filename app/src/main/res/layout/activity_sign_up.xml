@@ -137,7 +137,7 @@
                     android:background="@color/colorButton"
                     android:textSize="18sp"
                     android:text="@string/sign_up"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
                 <LinearLayout
                     android:layout_width="wrap_content"

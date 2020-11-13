@@ -32,12 +32,23 @@ public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAd
         super(options);
     }
 
+    /**
+     * This method binds the data and the view
+     * @param holder the view holder
+     * @param position the adapter position
+     * @param model the model file
+     * */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull OffersModel model) {
         holder.txtName.setText(model.getName());
         holder.txtValue.setText(model.getValue()+"% off");
     }
 
+    /**
+     * This method creates the view
+     * @param parent the parent viewGroup
+     * @param viewType the viewType
+     * */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,20 +56,57 @@ public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAd
         return new ViewHolder(view);
     }
 
+    /**
+     * This method deletes the item on given position
+     * @param position the position of item
+     * */
     public void deleteItem(int position){
         getSnapshots().getSnapshot(position).getReference().delete();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    /**
+     * This method is called when data is changed
+     * */
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
 
+    /**
+     * This method initializes the OnDataChangeListener instance
+     * */
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
+    }
+
+    /**
+     * This method initializes the OnItemClickListener instance
+     * */
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
+    /**
+     * This class is the ViewHolder for the adapter. It extends RecyclerView.ViewHolder
+     * */
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtName,txtValue;
         private ImageView imageViewEdit;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txtName = itemView.findViewById(R.id.txtName);
             txtValue = itemView.findViewById(R.id.txtValue);
+
             dataChangeListener.onDataChanged();
         }
+
+        /**
+         * Called when a view has been clicked.
+         * @param view The view that was clicked.
+         */
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
@@ -67,19 +115,5 @@ public class OffersAdapter extends FirestoreRecyclerAdapter<OffersModel,OffersAd
                 listener.onItemClick(view,getSnapshots().getSnapshot(position), position);
             }
         }
-    }
-
-    @Override
-    public void onDataChanged() {
-        super.onDataChanged();
-        dataChangeListener.onDataChanged();
-    }
-
-    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
-        this.dataChangeListener = dataChangeListener;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener = listener;
     }
 }

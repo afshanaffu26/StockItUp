@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="No offers yet!" />
+        android:text="@string/no_offers_yet" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="Offers"
+            android:text="@string/offers"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:textSize="24sp" />

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="No FAQ yet!" />
+        android:text="@string/no_faq_yet" />
     <ProgressBar
         android:visibility="gone"
         android:id="@+id/progressBar"
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:gravity="center"
-                    android:text="FAQ"
+                    android:text="@string/faq"
                     android:textColor="@color/colorText"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -67,69 +67,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </RelativeLayout>
-
-                <!--    <LinearLayout-->
-                <!--        android:layout_width="match_parent"-->
-                <!--        android:layout_height="match_parent"-->
-                <!--        android:orientation="vertical">-->
-
-                <!--        <TextView-->
-                <!--            android:id="@+id/q1"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginLeft="10dp"-->
-                <!--            android:layout_marginTop="20dp"-->
-                <!--            android:text="What is the address?"-->
-                <!--            android:textColor="@color/colorText"-->
-                <!--            android:textSize="16sp" />-->
-
-                <!--        <TextView-->
-                <!--            android:id="@+id/a1"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginLeft="10dp"-->
-                <!--            android:layout_marginTop="10dp"-->
-                <!--            android:text="5411 Rue Aylmer,Montreal,Quebec,Canada"-->
-                <!--            android:textSize="14sp" />-->
-
-                <!--        <TextView-->
-                <!--            android:id="@+id/Q2"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginLeft="10dp"-->
-                <!--            android:layout_marginTop="20dp"-->
-                <!--            android:text="What kind of businesses do you deliver to?"-->
-                <!--            android:textColor="@color/colorText"-->
-                <!--            android:textSize="16sp" />-->
-
-                <!--        <TextView-->
-                <!--            android:id="@+id/A2"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginLeft="10dp"-->
-                <!--            android:layout_marginTop="10dp"-->
-                <!--            android:text="We deliver to Restaurants"-->
-                <!--            android:textSize="14sp" />-->
-
-                <!--        <TextView-->
-                <!--            android:id="@+id/Q3"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginLeft="10dp"-->
-                <!--            android:layout_marginTop="20dp"-->
-                <!--            android:text="Do we get any confirmation of purchase?"-->
-                <!--            android:textColor="@color/colorText"-->
-                <!--            android:textSize="16sp" />-->
-
-                <!--        <TextView-->
-                <!--            android:id="@+id/A3"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:layout_marginLeft="10dp"-->
-                <!--            android:layout_marginTop="10dp"-->
-                <!--            android:text="Yes, you will get an invoice"-->
-                <!--            android:textSize="14sp" />-->
-                <!--    </LinearLayout>-->
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

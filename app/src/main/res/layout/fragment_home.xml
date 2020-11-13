@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Essential Ingredients"
+                android:text="@string/essential_ingredients"
                 android:textColor="@color/colorText"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Categories"
+                android:text="@string/categories"
                 android:textColor="@color/colorText"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -64,7 +64,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp"
-                android:text="Fresh ingredients always!!"
+                android:text="@string/fresh_ingredients_always"
                 android:textColor="@color/colorText"
                 android:textSize="18sp" />
 
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:text="Best discounts ever.."
+                android:text="@string/best_discounts_ever"
                 android:textColor="@color/colorText"
                 android:textSize="18sp" />
         </LinearLayout>

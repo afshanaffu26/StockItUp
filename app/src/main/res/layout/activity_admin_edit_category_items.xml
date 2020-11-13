@@ -52,7 +52,7 @@
                     android:layout_margin="15dp"
                     android:textSize="16dp"
                     android:textColor="@color/colorText"
-                    android:text="Name"/>
+                    android:text="@string/name"/>
                 <EditText
                     android:id="@+id/editName"
                     android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                     android:layout_margin="15dp"
                     android:textSize="16dp"
                     android:textColor="@color/colorText"
-                    android:text="Price ($)"/>
+                    android:text="@string/price"/>
                 <EditText
                     android:id="@+id/editPrice"
                     android:layout_width="match_parent"

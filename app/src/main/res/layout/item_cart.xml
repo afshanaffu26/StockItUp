@@ -66,12 +66,4 @@
         android:layout_marginBottom="15dp"
         android:src="@drawable/ic_baseline_delete_sweep_24"
         android:layout_marginEnd="15dp" />
-<!--    <ImageButton-->
-<!--        android:id="@+id/imgDeleteBtn"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_gravity="right|end|bottom"-->
-<!--        android:background="@color/colorWhite"-->
-<!--        app:srcCompat="@drawable/delete_forever_24"-->
-<!--        tools:ignore="VectorDrawableCompat" />-->
 </androidx.cardview.widget.CardView>

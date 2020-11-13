@@ -23,7 +23,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="30dp"
             android:gravity="center"
-            android:text="FAQ"
+            android:text="@string/faq"
             android:textColor="@color/colorText"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -35,7 +35,7 @@
             android:layout_margin="15dp"
             android:background="@drawable/edit_text_background"
             android:ems="10"
-            android:hint="Enter Question"
+            android:hint="@string/enter_question"
             android:inputType="text" />
 
         <EditText
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Enter Answer"
+            android:hint="@string/enter_answer"
             android:background="@drawable/edit_text_background"
             android:ems="10"
             android:inputType="text" />
@@ -56,8 +56,8 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"
             android:background="@color/colorButton"
-            android:text="Add/Update"
-            android:textColor="#FFFFFF"
+            android:text="@string/add_update"
+            android:textColor="@color/colorWhite"
             android:textStyle="bold" />
     </LinearLayout>
 

@@ -101,10 +101,24 @@ public class HelpFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.help2:
-                startActivity(new Intent(getContext(), FaqActivity.class));
+                navigateToFAQActivity();
                 break;
             case R.id.help3:
-                startActivity(new Intent(getContext(), ContactActivity.class));
+                navigateToContactActivity();
         }
+    }
+
+    /**
+     * Navigates to FAQActivity
+     * */
+    private void navigateToContactActivity() {
+        startActivity(new Intent(getContext(), ContactActivity.class));
+    }
+
+    /**
+     * Navigates to ContactActivity
+     * */
+    private void navigateToFAQActivity() {
+        startActivity(new Intent(getContext(), FaqActivity.class));
     }
 }

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="Feedback"
+            android:text="@string/feedback"
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:textSize="24sp" />
@@ -38,14 +38,14 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_margin="15dp"
-            android:text="Your review will help us to give you better experience. Make it a good one!"
+            android:text="@string/your_review_will_help_us_to_give_you_better_experience_make_it_a_good_one"
             android:textSize="18sp" />
 
         <EditText
             android:id="@+id/editTextMultiLine"
             android:layout_width="match_parent"
             android:layout_marginTop="80dp"
-            android:hint="Tell us your experience..."
+            android:hint="@string/tell_us_your_experience"
             android:layout_height="200dp"
             android:ems="10"
             android:padding="10dp"
@@ -66,7 +66,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@color/colorWhite"
-                android:text="Discard"
+                android:text="@string/discard"
                 android:textColor="@color/colorText"
                 android:layout_weight="1"
                 android:textStyle="bold" />
@@ -77,9 +77,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:background="@color/colorMain"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:layout_weight="1"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

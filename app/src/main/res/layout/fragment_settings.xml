@@ -24,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:text="Version"
+                android:text="@string/version"
                 android:textSize="16sp" />
 
             <TextView
@@ -36,7 +36,7 @@
                 android:layout_marginEnd="20dp"
                 android:textSize="16sp"
                 android:layout_marginRight="20dp"
-                android:text="1.1" />
+                android:text="@string/_1_1" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="16dp"
-                android:text="Manage Address"
+                android:text="@string/manage_address"
                 android:textSize="16sp" />
 
             <ImageView
@@ -96,7 +96,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:text="Profile"
+                android:text="@string/profile"
                 android:textSize="16sp" />
 
             <ImageView

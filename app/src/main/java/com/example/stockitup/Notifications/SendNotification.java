@@ -26,6 +26,13 @@ public class SendNotification extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private APIService apiService;
 
+    /**
+     * This method is used to create retrofit instance and get device token of user.
+     * @param userID Unique user auth ID
+     * @param title Title of notification
+     * @param message Message iof notification
+     * @param intent Intent object for notification
+     */
     public void sendNotification(String userID, final String title, final String message, final Intent intent){
         firebaseFirestore = FirebaseFirestore.getInstance();
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
@@ -52,6 +59,10 @@ public class SendNotification extends AppCompatActivity {
 
     }
 
+    /**
+     * This method is used to update device token
+     * @param userID Unique user auth ID
+     */
     public void updateToken(String userID){
         firebaseFirestore = FirebaseFirestore.getInstance();
         String refreshToken= FirebaseInstanceId.getInstance().getToken();
@@ -72,6 +83,14 @@ public class SendNotification extends AppCompatActivity {
                 });
     }
 
+
+    /**
+     * This method is used to create notification payload and make request to FCM
+     * @param usertoken Unique device ID
+     * @param title Title of notification
+     * @param message Message iof notification
+     * @param intent Intent object for notification
+     */
     public void sendNotifications(String usertoken, String title, String message, Intent intent) {
         SendNotificationModel sendNotificationModel = new SendNotificationModel(message, title);
         SendDataModel sendDataModel = new SendDataModel(message, title, intent.toUri(Intent.URI_INTENT_SCHEME));

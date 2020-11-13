@@ -35,6 +35,12 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
         super(options);
     }
 
+    /**
+     * This method binds the data and the view
+     * @param holder the view holder
+     * @param position the adapter position
+     * @param model the model file
+     * */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull OrdersModel model) {
         String date = new SimpleDateFormat("dd-MM-yy HH:mm").format(model.getDate());
@@ -55,6 +61,11 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
         }
     }
 
+    /**
+     * This method creates the view
+     * @param parent the parent viewGroup
+     * @param viewType the viewType
+     * */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -62,19 +73,32 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
         return new AdminAllOrdersAdapter.ViewHolder(view);
     }
 
+    /**
+     * This method is called when data is changed
+     * */
     @Override
     public void onDataChanged() {
         super.onDataChanged();
         // dataChangeListener.onDataChanged();
     }
 
+    /**
+     * This method initializes the OnDataChangeListener instance
+     * */
     public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
         this.dataChangeListener = dataChangeListener;
     }
 
+    /**
+     * This method initializes the OnItemClickListener instance
+     * */
     public void setOnItemClickListener(OnItemClickListener listener){
         this.listener = listener;
     }
+
+    /**
+     * This class is the ViewHolder for the adapter. It extends RecyclerView.ViewHolder
+     * */
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView txtOrderDate,txtStatus,txtOrderId;
@@ -82,14 +106,20 @@ public class AdminAllOrdersAdapter extends FirestoreRecyclerAdapter<OrdersModel,
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txtOrderDate = itemView.findViewById(R.id.txtOrderDate);
             txtOrderId = itemView.findViewById(R.id.txtOrderId);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             imgNext = itemView.findViewById(R.id.imgNext);
+
             imgNext.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Called when a view has been clicked.
+         * @param view The view that was clicked.
+         */
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();

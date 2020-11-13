@@ -23,7 +23,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="30dp"
             android:gravity="center"
-            android:text="Order History"
+            android:text="@string/order_history"
             android:textColor="@color/colorText"
             android:textSize="20sp"
             android:textStyle="bold" />

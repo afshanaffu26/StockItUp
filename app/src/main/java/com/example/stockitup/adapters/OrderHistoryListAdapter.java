@@ -31,6 +31,12 @@ public class OrderHistoryListAdapter extends FirestoreRecyclerAdapter<CategoryIt
         super(options);
     }
 
+    /**
+     * This method binds the data and the view
+     * @param holder the view holder
+     * @param position the adapter position
+     * @param model the model file
+     * */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull final CategoryItemsModel model) {
 
@@ -41,6 +47,11 @@ public class OrderHistoryListAdapter extends FirestoreRecyclerAdapter<CategoryIt
             Picasso.get().load(model.getImage()).into(holder.imageView);
     }
 
+    /**
+     * This method creates the view
+     * @param parent the parent viewGroup
+     * @param viewType the viewType
+     * */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,31 +59,43 @@ public class OrderHistoryListAdapter extends FirestoreRecyclerAdapter<CategoryIt
         return new ViewHolder(view);
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    /**
+     * This method initializes the OnItemClickListener instance
+     * */
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
 
+    /**
+     * This class is the ViewHolder for the adapter. It extends RecyclerView.ViewHolder
+     * */
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtName,txtQuantity,txtPrice;
         private ImageView imageView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txtName = itemView.findViewById(R.id.txtName);
             txtPrice = itemView.findViewById(R.id.txtPrice);
             txtQuantity = itemView.findViewById(R.id.txtQuantity);
             imageView = itemView.findViewById(R.id.imageView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    //if an item is deleted from recycler view, this checks when its in delete animation position returning -1
-                    if (position != RecyclerView.NO_POSITION && listener != null)
-                    {
-                        listener.onItemClick(view,getSnapshots().getSnapshot(position),position);
-                    }
-                }
-            });
-        }
-    }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener = listener;
+            itemView.setOnClickListener(this);
+        }
+
+        /**
+         * Called when a view has been clicked.
+         * @param view The view that was clicked.
+         */
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            //if an item is deleted from recycler view, this checks when its in delete animation position returning -1
+            if (position != RecyclerView.NO_POSITION && listener != null)
+            {
+                listener.onItemClick(view,getSnapshots().getSnapshot(position),position);
+            }
+        }
     }
 }

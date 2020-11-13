@@ -30,7 +30,7 @@
                 android:layout_margin="30dp"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="Delivery Address"
+                android:text="@string/delivery_address"
                 android:textColor="@color/colorText"
                 android:textSize="24sp" />
             <EditText
@@ -40,7 +40,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="Name"
+                android:hint="@string/name"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
@@ -51,7 +51,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="Street and Apt/Suit#"
+                android:hint="@string/street_and_apt_suit"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="City"
+                android:hint="@string/city"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="text" />
@@ -75,7 +75,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="Province"
+                android:hint="@string/province"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="text" />
@@ -87,7 +87,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="15dp"
-                android:hint="Country"
+                android:hint="@string/country"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
                 android:inputType="text" />
@@ -101,7 +101,7 @@
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
-                android:hint="Postal Code/ZIP"
+                android:hint="@string/postal_code_zip"
                 android:inputType="textPostalAddress" />
             <EditText
                 android:id="@+id/editPhone"
@@ -112,7 +112,7 @@
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/edit_text_background"
                 android:ems="10"
-                android:hint="Telephone number"
+                android:hint="@string/telephone_number"
                 android:inputType="number" />
             <Button
                 android:id="@+id/btnNext"
@@ -122,8 +122,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
                 android:background="@color/colorButton"
-                android:text="Add Address"
-                android:textColor="#FFFFFF"
+                android:text="@string/add_address"
+                android:textColor="@color/colorWhite"
                 android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>

@@ -15,18 +15,34 @@ public class Token {
     public Token() {
     }
 
+    /**
+     * Getter method used to get the device token
+     * @return returns device token
+     */
     public String getToken() {
         return token;
     }
 
+    /**
+     * Setter method used to set the device token
+     * @param token device token
+     */
     public void setToken(String token) {
         this.token = token;
     }
 
+    /**
+     * Getter method used to get the user ID
+     * @return returns user ID
+     */
     public String getUserID() {
         return userID;
     }
 
+    /**
+     * Setter method used to set the user ID
+     * @param userID Unique user auth ID
+     */
     public void setUserID(String userID) {
         this.userID = userID;
     }

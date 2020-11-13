@@ -47,7 +47,7 @@
                         android:layout_centerInParent="true"
                         android:fontFamily="sans-serif"
                         android:gravity="center_horizontal"
-                        android:text="View Category"
+                        android:text="@string/view_category"
                         android:textAlignment="center"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -78,7 +78,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add Items"
+                        android:text="@string/add_items"
                         android:layout_centerInParent="true"
                         android:textStyle="bold"
                         android:textAlignment="center"
@@ -111,7 +111,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Essential Items"
+                        android:text="@string/essential_items"
                         android:layout_centerInParent="true"
                         android:textStyle="bold"
                         android:textAlignment="center"
@@ -144,7 +144,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Manage Orders"
+                        android:text="@string/manage_orders"
                         android:layout_centerInParent="true"
                         android:textStyle="bold"
                         android:textAlignment="center"
@@ -177,7 +177,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="More"
+                        android:text="@string/more"
                         android:layout_centerInParent="true"
                         android:textStyle="bold"
                         android:textAlignment="center"
@@ -210,7 +210,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Logout"
+                        android:text="@string/log_out"
                         android:layout_centerInParent="true"
                         android:textStyle="bold"
                         android:textAlignment="center"

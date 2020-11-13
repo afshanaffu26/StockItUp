@@ -32,6 +32,12 @@ public class AdminManageOrdersAdapter extends FirestoreRecyclerAdapter<ManageOrd
         super(options);
     }
 
+    /**
+     * This method binds the data and the view
+     * @param holder the view holder
+     * @param position the adapter position
+     * @param model the model file
+     * */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull final ManageOrdersModel model) {
         holder.txtOrderId.setText("ID: "+model.getUserId());
@@ -39,6 +45,11 @@ public class AdminManageOrdersAdapter extends FirestoreRecyclerAdapter<ManageOrd
         holder.txtName.setText("Name: "+model.getUserName());
     }
 
+    /**
+     * This method creates the view
+     * @param parent the parent viewGroup
+     * @param viewType the viewType
+     * */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,21 +57,55 @@ public class AdminManageOrdersAdapter extends FirestoreRecyclerAdapter<ManageOrd
         return new ViewHolder(view);
     }
 
+    /**
+     * This method is called when data is changed
+     * */
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    /**
+     * This method initializes the OnDataChangeListener instance
+     * */
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
+    }
+
+    /**
+     * This method initializes the OnItemClickListener instance
+     * */
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
+    /**
+     * This class is the ViewHolder for the adapter. It extends RecyclerView.ViewHolder
+     * */
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView txtOrderId,txtUserEmail,txtName;
         private ImageView imgNext;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txtOrderId = itemView.findViewById(R.id.txtOrderId);
             txtUserEmail = itemView.findViewById(R.id.txtUserEmail);
             txtName = itemView.findViewById(R.id.txtName);
             imgNext = itemView.findViewById(R.id.imgNext);
+
             imgNext.setOnClickListener(this);
             itemView.setOnClickListener(this);
+
             dataChangeListener.onDataChanged();
         }
 
+        /**
+         * Called when a view has been clicked.
+         * @param view The view that was clicked.
+         */
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
@@ -69,19 +114,5 @@ public class AdminManageOrdersAdapter extends FirestoreRecyclerAdapter<ManageOrd
                 listener.onItemClick(view,getSnapshots().getSnapshot(position), position);
             }
         }
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener = listener;
-    }
-
-    @Override
-    public void onDataChanged() {
-        super.onDataChanged();
-        dataChangeListener.onDataChanged();
-    }
-
-    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
-        this.dataChangeListener = dataChangeListener;
     }
 }

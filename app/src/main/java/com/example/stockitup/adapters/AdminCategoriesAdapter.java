@@ -35,6 +35,12 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
         super(options);
     }
 
+    /**
+     * This method binds the data and the view
+     * @param holder the view holder
+     * @param position the adapter position
+     * @param model the model file
+     * */
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull final CategoriesModel model) {
         holder.txtName.setText(model.getName());
@@ -42,6 +48,11 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
             Picasso.get().load(model.getImage()).into(holder.imageView);
     }
 
+    /**
+     * This method creates the view
+     * @param parent the parent viewGroup
+     * @param viewType the viewType
+     * */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,24 +60,69 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
         return new ViewHolder(view);
     }
 
+    /**
+     * This method deletes the item on given position
+     * @param position the position of item
+     * */
     public void deleteItem(int position){
         itemDeleteListener.onItemDelete(getSnapshots().getSnapshot(position), position);
     }
 
+    /**
+     * This method initializes the OnItemClickListener instance
+     * */
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
+    /**
+     * This method initializes the OnItemDeleteListener instance
+     * */
+    public void setOnItemDeleteListener(OnItemDeleteListener listener){
+        this.itemDeleteListener = listener;
+    }
+
+    /**
+     * This method is called when data is changed
+     * */
+    @Override
+    public void onDataChanged() {
+        super.onDataChanged();
+        dataChangeListener.onDataChanged();
+    }
+
+    /**
+     * This method initializes the OnDataChangeListener instance
+     * */
+    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
+        this.dataChangeListener = dataChangeListener;
+    }
+
+    /**
+     * This class is the ViewHolder for the adapter. It extends RecyclerView.ViewHolder
+     * */
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView txtName;
         private ImageView imageView,imageViewEdit;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txtName = itemView.findViewById(R.id.txtName);
             imageView = itemView.findViewById(R.id.imageView);
             imageViewEdit = itemView.findViewById(R.id.imageViewEdit);
+
             imageViewEdit.setOnClickListener(this);
             itemView.setOnClickListener(this);
+
             dataChangeListener.onDataChanged();
         }
 
+        /**
+         * Called when a view has been clicked.
+         * @param view The view that was clicked.
+         */
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
@@ -75,21 +131,5 @@ public class AdminCategoriesAdapter extends FirestoreRecyclerAdapter<CategoriesM
                 listener.onItemClick(view,getSnapshots().getSnapshot(position), position);
             }
         }
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        this.listener = listener;
-    }
-    public void setOnItemDeleteListener(OnItemDeleteListener listener){
-        this.itemDeleteListener = listener;
-    }
-    @Override
-    public void onDataChanged() {
-        super.onDataChanged();
-        dataChangeListener.onDataChanged();
-    }
-
-    public void setOnDataChangeListener(OnDataChangeListener dataChangeListener){
-        this.dataChangeListener = dataChangeListener;
     }
 }

@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:text="Cart is empty!" />
+        android:text="@string/cart_is_empty" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,7 +35,7 @@
                     android:layout_margin="30dp"
                     android:gravity="center"
                     android:textStyle="bold"
-                    android:text="Cart"
+                    android:text="@string/cart"
                     android:textColor="@color/colorText"
                     android:textSize="24sp" />
                 <RelativeLayout
@@ -65,7 +65,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="SubTotal"
+                            android:text="@string/subtotal"
                             android:textSize="18sp" />
 
                         <TextView
@@ -73,7 +73,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Offer"
+                            android:text="@string/offer"
                             android:textSize="18sp" />
 
                         <TextView
@@ -81,7 +81,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Tax"
+                            android:text="@string/tax"
                             android:textSize="18sp" />
 
                         <TextView
@@ -89,7 +89,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Delivery Charges"
+                            android:text="@string/delivery_charges"
                             android:textSize="18sp" />
 
                         <TextView
@@ -97,7 +97,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Total"
+                            android:text="@string/total"
                             android:textStyle="bold"
                             android:textColor="@color/colorText"
                             android:textSize="20sp" />
@@ -179,8 +179,8 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:hint="Enter Promo Code"
+                        android:textSize="12sp"
+                        android:hint="@string/enter_promo_code"
                         android:layout_marginLeft="15dp"
                         android:visibility="visible"
                         android:background="@drawable/edit_text_background"
@@ -194,8 +194,8 @@
                         android:layout_marginRight="15dp"
                         android:layout_height="wrap_content"
                         android:background="@color/colorButton"
-                        android:text="Apply/Remove"
-                        android:textColor="#FFFFFF"
+                        android:text="@string/apply_remove"
+                        android:textColor="@color/colorWhite"
                         android:textStyle="bold" />
                 </LinearLayout>
                 <Button
@@ -206,8 +206,8 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/colorButton"
-                    android:text="CheckOut Order"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/checkout_order"
+                    android:textColor="@color/colorWhite"
                     android:textStyle="bold" />
             </LinearLayout>
 
