@@ -29,12 +29,20 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         buttonNext  = findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
 
+        navigateToLoginIfLaunchedPreviously();
+    }
+
+    /**
+     * If the app was launched previously, navigate to login directly
+     * */
+    private void navigateToLoginIfLaunchedPreviously() {
         boolean isFirstTime = MyPreferences.isFirst(WelcomeActivity.this);
         if (!isFirstTime) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
         }
     }
+
     /**
      * Called when a view has been clicked.
      * @param view The view that was clicked.
@@ -43,10 +51,17 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buttonNext:
-                startActivity(new Intent(getApplicationContext(), WelcomeActivity2.class));
-                finish();
+                navigatesToWelcomeActivity2();
                 break;
         }
+    }
+
+    /**
+     * Navigates to WelcomeActivity2
+     * */
+    private void navigatesToWelcomeActivity2() {
+        startActivity(new Intent(getApplicationContext(), WelcomeActivity2.class));
+        finish();
     }
 }
 

@@ -49,11 +49,7 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_items);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
@@ -64,14 +60,30 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+        setRecyclerViewData();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
         txtCategory.setText(category);
-
-        setRecyclerViewData();
     }
 
     /**

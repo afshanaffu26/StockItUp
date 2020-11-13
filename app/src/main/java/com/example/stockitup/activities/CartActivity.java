@@ -45,7 +45,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressBar progressBar;
     private Button btnCheckout,btnPromo;
     private FirebaseFirestore firebaseFirestore;
-    private CollectionReference collectionReference;
     private CartAdapter adapter;
     private RecyclerView recyclerView;
     private LinearLayout linearLayout;
@@ -63,11 +62,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         linearLayout = findViewById(R.id.linearLayout);
         txtSubTotal = findViewById(R.id.txtSubTotal);
@@ -89,17 +84,33 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        collectionReference = firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
-        btnPromo.setText("APPLY");
-
+        initializeView();
         setRecyclerViewData();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
+        btnPromo.setText("APPLY");
     }
 
     /**
      * set data and functionality to recycler view
      * */
     private void setRecyclerViewData() {
+        CollectionReference collectionReference = firebaseFirestore.collection(AppConstants.CART_COLLECTION).document("cart" + uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT);
         Query query = collectionReference.orderBy("name",Query.Direction.ASCENDING);
         FirestoreRecyclerOptions<CategoryItemsModel> options = new FirestoreRecyclerOptions.Builder<CategoryItemsModel>()
                 .setQuery(query,CategoryItemsModel.class)
@@ -124,7 +135,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 alertMessage(position);
             }
         })
-        .attachToRecyclerView(recyclerView);
+                .attachToRecyclerView(recyclerView);
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override

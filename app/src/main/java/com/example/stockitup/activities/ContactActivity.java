@@ -39,12 +39,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        //display back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         imgCall1 = findViewById(R.id.imgCall1);
         imgCall2 = findViewById(R.id.imgCall2);
@@ -58,7 +53,24 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         imgEmail.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeView();
+    }
 
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * This method initializes the view
+     * */
+    private void initializeView() {
         txtEmail.setText("Email - "+AppConstants.ADMIN_EMAIL);
         txtCustomerCarePhone.setText("Customer Care - "+AppConstants.CUSTOMER_CARE_NUMBER);
         txtTollFreePhone.setText("Toll Free - "+AppConstants.TOLL_FREE_NUMBER);

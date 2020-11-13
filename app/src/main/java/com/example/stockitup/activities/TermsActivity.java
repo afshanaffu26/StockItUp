@@ -22,12 +22,20 @@ public class TermsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms);
 
+        setToolbar();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
         String appName = AppConstants.APP_NAME;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     /**
      * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
      * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.

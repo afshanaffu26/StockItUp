@@ -60,12 +60,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        //display back button
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setToolbar();
 
         editName = (EditText) findViewById(R.id.editDisplayName);
         btnSave = findViewById(R.id.btnSave);
@@ -77,8 +72,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         imageViewEdit.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-
         loadUserInformation();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**

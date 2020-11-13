@@ -54,10 +54,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
+        setToolbar();
 
         txtLogin = findViewById(R.id.txtLogin);
         txtConditions = findViewById(R.id.txtConditions);
@@ -78,6 +75,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+    }
+
+    /**
      * Called when a view has been clicked.
      * @param view The view that was clicked.
      */
@@ -86,18 +93,32 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         switch (view.getId())
         {
             case R.id.txtLogin:
-                finish();
-                Intent i= new Intent(getApplicationContext(),LoginActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                navigateToLoginActivity();
                 break;
             case R.id.txtConditions:
-                startActivity(new Intent(getApplicationContext(), TermsActivity.class));
+                navigateToTermsActivity();
                 break;
             case R.id.btnSignUp:
                 userSignUp();
                 break;
         }
+    }
+
+    /**
+     * Navigates to LoginActivity
+     * */
+    private void navigateToLoginActivity() {
+        finish();
+        Intent i= new Intent(getApplicationContext(),LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
+
+    /**
+     * Navigates to TermsActivity
+     * */
+    private void navigateToTermsActivity() {
+        startActivity(new Intent(getApplicationContext(), TermsActivity.class));
     }
 
     /**

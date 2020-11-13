@@ -37,9 +37,16 @@ public class  WelcomeActivity2 extends AppCompatActivity  implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.buttonNext:
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            finish();
-            break;
-        }
+                navigateToLoginActivity();
+                break;
         }
     }
+
+    /**
+     * Navigates to LoginActivity
+     * */
+    private void navigateToLoginActivity() {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+    }
+}

@@ -24,6 +24,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         if(Build.VERSION.SDK_INT>=21){
             window=this.getWindow();
             window.setStatusBarColor(this.getResources().getColor(R.color.colorPrimary));
