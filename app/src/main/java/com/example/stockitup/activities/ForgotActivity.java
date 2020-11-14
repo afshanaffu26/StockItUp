@@ -28,16 +28,6 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     private ProgressBar progressBar;
 
     /**
-     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
-     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
-     */
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish();
-        return true;
-    }
-
-    /**
      *  Called when the activity is starting.
      * @param savedInstanceState  If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in
      */
@@ -51,6 +41,17 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
      * initialize references and listeners
      * */
     private void initializeReferencesAndListeners() {
@@ -61,17 +62,6 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         btnSubmit.setOnClickListener(this);
 
         mAuth=FirebaseAuth.getInstance();
-    }
-
-    /**
-     * sets toolbar title, back navigation
-     * */
-    private void setToolbar() {
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -120,5 +110,15 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
                 }
             }
         });
+    }
+
+    /**
+     * This method is called whenever the user chooses to navigate up within your application's activity hierarchy from the action bar.
+     * @return boolean:true if Up navigation completed successfully and this Activity was finished, false otherwise.
+     */
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

@@ -56,6 +56,17 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
     }
 
     /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
      * initialize references and listeners
      * */
     private void initializeReferencesAndListeners() {
@@ -68,17 +79,6 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-    }
-
-    /**
-     * sets toolbar title, back navigation
-     * */
-    private void setToolbar() {
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**

@@ -69,6 +69,17 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
      * initialize references and listeners
      * */
     private void initializeReferencesAndListeners() {
@@ -91,17 +102,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         btnCheckout.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-    }
-
-    /**
-     * sets toolbar title, back navigation
-     * */
-    private void setToolbar() {
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**

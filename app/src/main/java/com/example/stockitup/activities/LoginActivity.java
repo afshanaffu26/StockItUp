@@ -56,6 +56,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+    }
+
+    /**
      * initialize references and listeners
      * */
     private void initializeReferencesAndListeners() {
@@ -75,17 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     /**
-     * sets toolbar title, back navigation
-     * */
-    private void setToolbar() {
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-    }
-
-    /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
     private void initializeViewAndControls() {
         progressBar.setVisibility(View.GONE);

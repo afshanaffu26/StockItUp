@@ -46,17 +46,6 @@ public class OrderHistoryListActivity extends AppCompatActivity{
     }
 
     /**
-     * initialize references and listeners
-     * */
-    private void initializeReferencesAndListeners() {
-        recyclerView = findViewById(R.id.recyclerView);
-        txtEmptyOrders = findViewById(R.id.txtEmptyOrders);
-        linearLayout = findViewById(R.id.linearLayout);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-    }
-
-    /**
      * sets toolbar title, back navigation
      * */
     private void setToolbar() {
@@ -65,6 +54,17 @@ public class OrderHistoryListActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
+        recyclerView = findViewById(R.id.recyclerView);
+        txtEmptyOrders = findViewById(R.id.txtEmptyOrders);
+        linearLayout = findViewById(R.id.linearLayout);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     /**
