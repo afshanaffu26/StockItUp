@@ -26,10 +26,16 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        initializeReferencesAndListeners();
+        navigateToLoginIfLaunchedPreviously();
+    }
+
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         buttonNext  = findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
-
-        navigateToLoginIfLaunchedPreviously();
     }
 
     /**

@@ -59,6 +59,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+    }
+
+    /**
      * initialize references and listeners
      * */
     private void initializeReferencesAndListeners() {
@@ -78,16 +88,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
-    }
-
-    /**
-     * sets toolbar title, back navigation
-     * */
-    private void setToolbar() {
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
     }
 
     /**

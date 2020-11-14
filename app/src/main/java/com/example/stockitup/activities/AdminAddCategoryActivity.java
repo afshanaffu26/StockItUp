@@ -58,17 +58,7 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         setContentView(R.layout.activity_admin_add_category);
 
         setToolbar();
-
-        editName = findViewById(R.id.editName);
-        btnAdd = findViewById(R.id.btnAdd);
-        imageViewEdit = findViewById(R.id.imageViewEdit);
-        imageView = findViewById(R.id.imageView);
-        progressBar = findViewById(R.id.progressbar);
-
-        imageViewEdit.setOnClickListener(this);
-        btnAdd.setOnClickListener(this);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        initializeReferencesAndListeners();
     }
 
     /**
@@ -80,6 +70,22 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
+        editName = findViewById(R.id.editName);
+        btnAdd = findViewById(R.id.btnAdd);
+        imageViewEdit = findViewById(R.id.imageViewEdit);
+        imageView = findViewById(R.id.imageView);
+        progressBar = findViewById(R.id.progressbar);
+
+        imageViewEdit.setOnClickListener(this);
+        btnAdd.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     /**
@@ -170,23 +176,7 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            itemImageRef.getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            //progressBar.setVisibility(View.GONE);
-                                            itemImageUrl = uri.toString();
-                                            //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
-                                            onUploadImageSuccess(itemImageUrl);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            progressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
+                            getImageURL(itemImageRef);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -197,6 +187,28 @@ public class AdminAddCategoryActivity extends AppCompatActivity implements View.
                         }
                     });
         }
+    }
+
+    /**
+     * gets image download URL
+     * @param itemImageRef the image reference of uploaded image
+     * */
+    private void getImageURL(StorageReference itemImageRef) {
+        itemImageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        itemImageUrl = uri.toString();
+                        onUploadImageSuccess(itemImageUrl);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     /**

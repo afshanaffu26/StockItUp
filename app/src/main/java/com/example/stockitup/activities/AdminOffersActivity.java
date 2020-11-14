@@ -58,6 +58,17 @@ public class AdminOffersActivity extends AppCompatActivity implements View.OnCli
     }
 
     /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
      * initialize references and listeners
      * */
     private void initializeReferencesAndListeners() {
@@ -69,17 +80,6 @@ public class AdminOffersActivity extends AppCompatActivity implements View.OnCli
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-    }
-
-    /**
-     * sets toolbar title, back navigation
-     * */
-    private void setToolbar() {
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     /**

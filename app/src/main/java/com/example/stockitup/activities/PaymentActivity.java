@@ -52,17 +52,8 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_payment);
 
         setToolbar();
-
-        editName = findViewById(R.id.editName);
-        editCardNo = findViewById(R.id.editCardNo);
-        editCVV = findViewById(R.id.editCVV);
-        editExpDate = findViewById(R.id.editExpDate);
-        btnPay = findViewById(R.id.btnPay);
-
-        btnPay.setOnClickListener(this);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
     }
 
     /**
@@ -74,6 +65,28 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(appName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
+        editName = findViewById(R.id.editName);
+        editCardNo = findViewById(R.id.editCardNo);
+        editCVV = findViewById(R.id.editCVV);
+        editExpDate = findViewById(R.id.editExpDate);
+        btnPay = findViewById(R.id.btnPay);
+
+        btnPay.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+    }
+
+    /**
+     * This method initializes the view and controls
+     * */
+    private void initializeViewAndControls() {
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     /**

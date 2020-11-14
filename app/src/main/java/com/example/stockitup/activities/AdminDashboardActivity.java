@@ -31,7 +31,6 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private CardView cardLogout,cardViewCategory,cardAddItems,cardManageOrders,cardEssentialItems,cardMore;
     private FirebaseFirestore firebaseFirestore;
     private ProgressBar progressBar;
-    private Map<String,String> map=new HashMap<String,String>();
 
     /**
      * Called when the activity is starting.
@@ -44,6 +43,16 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
 
         setToolbar();
         initializeReferencesAndListeners();
+    }
+
+    /**
+     * sets toolbar title, back navigation
+     * */
+    private void setToolbar() {
+        String appName = AppConstants.APP_NAME;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(appName);
     }
 
     /**
@@ -66,16 +75,6 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         cardEssentialItems.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-    }
-
-    /**
-     * sets toolbar title, back navigation
-     * */
-    private void setToolbar() {
-        String appName = AppConstants.APP_NAME;
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(appName);
     }
 
     /**
@@ -121,6 +120,7 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful())
                         {
+                            Map<String,String> map=new HashMap<String,String>();
                             for (DocumentSnapshot documentSnapshot: task.getResult())
                             {
                                 map.put(documentSnapshot.getString("name"),documentSnapshot.getId());

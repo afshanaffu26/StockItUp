@@ -25,6 +25,13 @@ public class  WelcomeActivity2 extends AppCompatActivity  implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome2);
 
+        initializeReferencesAndListeners();
+    }
+
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         buttonNext = findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(this);
     }
