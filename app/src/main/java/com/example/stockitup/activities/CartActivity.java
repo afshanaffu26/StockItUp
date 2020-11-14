@@ -63,7 +63,15 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_cart);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        setRecyclerViewData();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         linearLayout = findViewById(R.id.linearLayout);
         txtSubTotal = findViewById(R.id.txtSubTotal);
         txtTax = findViewById(R.id.txtTax);
@@ -83,9 +91,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         btnCheckout.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        initializeView();
-        setRecyclerViewData();
     }
 
     /**
@@ -100,10 +105,11 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         btnPromo.setText("APPLY");
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     /**
@@ -270,22 +276,36 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnCheckout:
-                Intent intent = new Intent(getApplicationContext(), AddressActivity.class);
-                intent.putExtra("subTotal", String.format("%.2f", subTotal));
-                intent.putExtra("offerPercent",String.format("%.2f", offerPercent));
-                intent.putExtra("offer", String.format("%.2f", offer));
-                intent.putExtra("tax", String.format("%.2f", tax));
-                intent.putExtra("deliveryCharge", String.format("%.2f", deliveryCharge));
-                intent.putExtra("total", String.format("%.2f", total));
-                startActivity(intent);
+                navigateToAddressActivity();
                 break;
             case R.id.btnPromo:
-                if (btnPromo.getText().toString().equalsIgnoreCase("apply"))
-                    applyPromo();
-                else
-                    removePromo();
+                applyOrRemovePromo();
                 break;
         }
+    }
+
+    /**
+     * Navigates to address activity
+     * */
+    private void navigateToAddressActivity() {
+        Intent intent = new Intent(getApplicationContext(), AddressActivity.class);
+        intent.putExtra("subTotal", String.format("%.2f", subTotal));
+        intent.putExtra("offerPercent",String.format("%.2f", offerPercent));
+        intent.putExtra("offer", String.format("%.2f", offer));
+        intent.putExtra("tax", String.format("%.2f", tax));
+        intent.putExtra("deliveryCharge", String.format("%.2f", deliveryCharge));
+        intent.putExtra("total", String.format("%.2f", total));
+        startActivity(intent);
+    }
+
+    /**
+     * checks if apply promo or remove promo code is to be executed
+     * */
+    private void applyOrRemovePromo() {
+        if (btnPromo.getText().toString().equalsIgnoreCase("apply"))
+            applyPromo();
+        else
+            removePromo();
     }
 
     /**

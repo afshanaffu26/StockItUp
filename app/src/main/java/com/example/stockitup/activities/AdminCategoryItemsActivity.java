@@ -58,7 +58,15 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_admin_category_items);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        setRecyclerViewData();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         progressBar = findViewById(R.id.progressbar);
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
@@ -69,8 +77,6 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
-        setRecyclerViewData();
     }
 
     /**
@@ -85,9 +91,9 @@ public class AdminCategoryItemsActivity extends AppCompatActivity implements Vie
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtCategory.setText(category);

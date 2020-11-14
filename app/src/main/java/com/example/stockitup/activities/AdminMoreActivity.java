@@ -28,7 +28,13 @@ public class AdminMoreActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_admin_more);
 
         setToolbar();
+        initializeReferencesAndListeners();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         imgNextOffers = findViewById(R.id.imgNextOffers);
         imgNextFAQ = findViewById(R.id.imgNextFAQ);
         imgNextContact = findViewById(R.id.imgNextContact);

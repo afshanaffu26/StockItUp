@@ -47,7 +47,13 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_forgot);
 
         setToolbar();
+        initializeReferencesAndListeners();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editEmail=(EditText)findViewById(R.id.editEmail);
         progressBar=findViewById(R.id.progressbar);
         btnSubmit = findViewById(R.id.btnSubmit);

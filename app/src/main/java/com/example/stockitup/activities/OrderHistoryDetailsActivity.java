@@ -47,7 +47,14 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         setContentView(R.layout.activity_order_history_details);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         txtOrderDate = findViewById(R.id.txtOrderDate);
         txtSubTotal = findViewById(R.id.txtSubTotal);
         txtOffer = findViewById(R.id.txtOffer);
@@ -65,7 +72,6 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        initializeView();
     }
 
     /**
@@ -80,9 +86,9 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         subtotal = getIntent().getStringExtra("subtotal");
         tax = getIntent().getStringExtra("tax");
         offer = getIntent().getStringExtra("offer");
@@ -192,24 +198,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        // Yes button clicked
-                        Map<String,Object> map = new HashMap<>();
-                        map.put("status","Cancelled");
-                        String uid = firebaseAuth.getUid();
-                        DocumentReference documentReference = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderHistoryDocumentId);
-                        documentReference.update(map).addOnSuccessListener(
-                                new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        setViewByOrderStatus();
-                                        Toast.makeText(getApplicationContext(), "Order is Cancelled.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        OnYesToCancelOrder();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -223,5 +212,28 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         builder.setMessage("Are you sure you want to cancel this order?")
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
+    }
+
+    /**
+     * Cancels the order placed
+     * */
+    private void OnYesToCancelOrder() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("status","Cancelled");
+        String uid = firebaseAuth.getUid();
+        DocumentReference documentReference = firebaseFirestore.collection(AppConstants.ORDERS_COLLECTION).document("orders"+uid).collection(AppConstants.ORDERS_COLLECTION_DOCUMENT).document(orderHistoryDocumentId);
+        documentReference.update(map).addOnSuccessListener(
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        setViewByOrderStatus();
+                        Toast.makeText(getApplicationContext(), "Order is Cancelled.", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Error: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

@@ -58,7 +58,15 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_admin_categories);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        setRecyclerViewData();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressbar);
         floatingActionButton = findViewById(R.id.floatingActionButton);
@@ -68,8 +76,6 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
-        setRecyclerViewData();
     }
 
     /**
@@ -84,9 +90,9 @@ public class AdminCategoriesActivity extends AppCompatActivity implements View.O
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
     }

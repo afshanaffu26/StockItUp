@@ -40,7 +40,14 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_contact);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         imgCall1 = findViewById(R.id.imgCall1);
         imgCall2 = findViewById(R.id.imgCall2);
         imgEmail = findViewById(R.id.imgEmail);
@@ -53,7 +60,6 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         imgEmail.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
     }
 
     /**
@@ -68,12 +74,12 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
-        txtEmail.setText("Email - "+AppConstants.ADMIN_EMAIL);
-        txtCustomerCarePhone.setText("Customer Care - "+AppConstants.CUSTOMER_CARE_NUMBER);
-        txtTollFreePhone.setText("Toll Free - "+AppConstants.TOLL_FREE_NUMBER);
+    private void initializeViewAndControls() {
+        txtEmail.setText("Email - "+ AppConstants.ADMIN_EMAIL);
+        txtCustomerCarePhone.setText("Customer Care - "+ AppConstants.CUSTOMER_CARE_NUMBER);
+        txtTollFreePhone.setText("Toll Free - "+ AppConstants.TOLL_FREE_NUMBER);
     }
 
     /**

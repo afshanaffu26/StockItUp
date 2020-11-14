@@ -39,14 +39,20 @@ public class AdminOrderHistoryListActivity extends AppCompatActivity{
         setContentView(R.layout.activity_admin_order_history_list);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        setRecyclerViewData();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         recyclerView = findViewById(R.id.recyclerView);
         txtEmptyOrders = findViewById(R.id.txtEmptyOrders);
         linearLayout = findViewById(R.id.linearLayout);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
-        setRecyclerViewData();
     }
 
     /**
@@ -61,9 +67,9 @@ public class AdminOrderHistoryListActivity extends AppCompatActivity{
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         orderHistoryDocumentId = getIntent().getStringExtra("orderHistoryDocumentId");
     }

@@ -85,10 +85,18 @@ public class InviteFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_invite, container, false);
 
-        btnInvite = v.findViewById(R.id.btnInvite);
-        btnInvite.setOnClickListener(this);
+        initializeReferencesAndListeners(v);
 
         return v;
+    }
+
+    /**
+     * initialize references and listeners
+     * @param v the view of fragment
+     * */
+    private void initializeReferencesAndListeners(View v) {
+        btnInvite = v.findViewById(R.id.btnInvite);
+        btnInvite.setOnClickListener(this);
     }
 
     /**

@@ -64,7 +64,14 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         setContentView(R.layout.activity_admin_add_category_items);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editName = findViewById(R.id.editName);
         editPrice = findViewById(R.id.editPrice);
         editDescription = findViewById(R.id.editDescription);
@@ -78,7 +85,6 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
         btnAdd.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
     }
 
     /**
@@ -93,9 +99,9 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         documentId = getIntent().getStringExtra("categoryDocumentId");
         categoryName = getIntent().getStringExtra("categoryName");
         isEssential = getIntent().getStringExtra("isEssential");
@@ -177,23 +183,7 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //itemImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
-                            itemImageRef.getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            itemImageUrl = uri.toString();
-                                            //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
-                                            onUploadImageSuccess(itemImageUrl);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            progressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
+                            getImageURL(itemImageRef);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -204,6 +194,28 @@ public class AdminAddCategoryItemsActivity extends AppCompatActivity implements 
                         }
                     });
         }
+    }
+
+    /**
+     * gets image download URL
+     * @param itemImageRef the image reference of uploaded image
+     * */
+    private void getImageURL(StorageReference itemImageRef) {
+        itemImageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        itemImageUrl = uri.toString();
+                        onUploadImageSuccess(itemImageUrl);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     /**

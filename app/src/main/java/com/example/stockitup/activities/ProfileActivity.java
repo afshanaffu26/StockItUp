@@ -61,7 +61,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_profile);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        loadUserInformation();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editName = (EditText) findViewById(R.id.editDisplayName);
         btnSave = findViewById(R.id.btnSave);
         imageViewEdit = findViewById(R.id.imageViewEdit);
@@ -72,7 +79,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         imageViewEdit.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
-        loadUserInformation();
     }
 
     /**
@@ -189,22 +195,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //profileImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
-                            profileImageRef.getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            profileImageUrl = uri.toString();
-                                            saveUserInfo(uri);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            progressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
+                            getImageURL(profileImageRef);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -238,6 +229,28 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         }
                     });
         }
+    }
+
+    /**
+     * gets image download URL
+     * @param profileImageRef the image reference of uploaded image
+     * */
+    private void getImageURL(StorageReference profileImageRef) {
+        profileImageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        profileImageUrl = uri.toString();
+                        saveUserInfo(uri);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     /**

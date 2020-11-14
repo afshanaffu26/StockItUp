@@ -50,7 +50,15 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_category_items);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        setRecyclerViewData();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         recyclerView = findViewById(R.id.recyclerView);
         txtCategory = findViewById(R.id.txtCategory);
         floatingActionButton = findViewById(R.id.floatingActionButton);
@@ -60,8 +68,6 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
-        setRecyclerViewData();
     }
 
     /**
@@ -76,9 +82,9 @@ public class CategoryItemsActivity extends AppCompatActivity implements View.OnC
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         categoryDocumentId = getIntent().getStringExtra("categoryDocumentId");
         category = getIntent().getStringExtra("name");
         txtEmpty.setVisibility(View.GONE);

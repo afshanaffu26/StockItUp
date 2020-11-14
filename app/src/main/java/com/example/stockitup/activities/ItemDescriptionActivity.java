@@ -52,7 +52,15 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         setContentView(R.layout.activity_item_description);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        setSpinner();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         imageView = findViewById(R.id.imageView);
         txtName = findViewById(R.id.txtName);
         txtPrice = findViewById(R.id.price);
@@ -65,8 +73,6 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        setSpinner();
-        initializeView();
     }
 
     /**
@@ -100,9 +106,9 @@ public class ItemDescriptionActivity extends AppCompatActivity implements Adapte
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         if (getIntent().getStringExtra("screen") == null ) {
             btnAddToCart.setText("Add to Cart");
             floatingActionButton.setVisibility(View.VISIBLE);

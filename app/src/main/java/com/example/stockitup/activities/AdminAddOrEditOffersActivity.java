@@ -36,7 +36,14 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
         setContentView(R.layout.activity_admin_add_or_edit_offers);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editName = findViewById(R.id.editName);
         editValue = findViewById(R.id.editValue);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -44,7 +51,6 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
         btnSubmit.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
     }
 
     /**
@@ -59,9 +65,9 @@ public class AdminAddOrEditOffersActivity extends AppCompatActivity implements V
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         flow = getIntent().getStringExtra("flow");
         if (flow.equalsIgnoreCase("edit"))
         {

@@ -52,7 +52,15 @@ public class AdminFAQActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_admin_faq);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        setRecyclerViewData();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         recyclerView = findViewById(R.id.recyclerView);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         txtEmpty = findViewById(R.id.txtEmpty);
@@ -61,9 +69,6 @@ public class AdminFAQActivity extends AppCompatActivity implements View.OnClickL
         floatingActionButton.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        initializeView();
-        setRecyclerViewData();
     }
 
     /**
@@ -78,11 +83,12 @@ public class AdminFAQActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     /**

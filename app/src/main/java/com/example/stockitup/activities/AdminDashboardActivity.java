@@ -43,7 +43,13 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_admin_dashboard);
 
         setToolbar();
+        initializeReferencesAndListeners();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         cardLogout = findViewById(R.id.cardLogout);
         cardViewCategory = findViewById(R.id.cardViewCategory);
         cardAddItems = findViewById(R.id.cardAddItems);

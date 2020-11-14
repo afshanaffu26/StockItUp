@@ -51,7 +51,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editEmail= findViewById(R.id.editEmail);
         editPassword= findViewById(R.id.editPassword);
         progressBar= findViewById(R.id.progressbar);
@@ -65,7 +72,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
     }
 
     /**
@@ -81,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /**
      * This method initializes the view
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         progressBar.setVisibility(View.GONE);
     }
 
@@ -206,16 +212,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                             AppConstants.OFFERS_MAP = map;
                         }
-                    }
-                });
-        firebaseFirestore.collection(AppConstants.APP_SUPPORT_COLLECTION)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        task.getResult().getDocuments().get(0).get("customerCareNumber");
-                        AppConstants.TOLL_FREE_NUMBER = task.getResult().getDocuments().get(0).get("tollFreeNumber").toString();
-                        AppConstants.CUSTOMER_CARE_NUMBER = task.getResult().getDocuments().get(0).get("customerCareNumber").toString();
                     }
                 });
     }

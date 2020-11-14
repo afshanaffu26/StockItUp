@@ -45,7 +45,6 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
     private FirebaseFirestore firebaseFirestore;
     private static final int CHOOSE_IMAGE = 101;
     private Uri uriItemImage;
-    private String itemImageUrl = null;
     private ProgressBar progressBar;
 
     /**
@@ -58,7 +57,14 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         setContentView(R.layout.activity_admin_edit_category);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editName = findViewById(R.id.editName);
         btnUpdate = findViewById(R.id.btnUpdate);
         imageViewEdit = findViewById(R.id.imageViewEdit);
@@ -69,7 +75,6 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         btnUpdate.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
     }
 
     /**
@@ -84,9 +89,9 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         name = getIntent().getStringExtra("name");
         image = getIntent().getStringExtra("image");
         documentId = getIntent().getStringExtra("categoryDocumentId");
@@ -113,7 +118,7 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnUpdate:
-                updateCategory();
+                onUpdateCategory();
                 break;
             case R.id.imageViewEdit:
                 showImageChooser();
@@ -151,15 +156,20 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
     /**
      * This methods validates fields for updating the category
      * */
-    private void updateCategory() {
+    private void onUpdateCategory() {
+        name = editName.getText().toString();
         if(name.isEmpty())
         {
             editName.setError("Name is required");
             editName.requestFocus();
             return;
         }
-        else {
+        if (uriItemImage != null) {
             uploadImageToFirebaseStorage();
+        }
+        else
+        {
+            updateCategory();
         }
     }
 
@@ -171,62 +181,27 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
         final StorageReference itemImageRef = FirebaseStorage.getInstance().getReference()
                 .child("ingredientsImages")
                 .child(imageId + ".jpeg");
-        if (uriItemImage != null) {
-            progressBar.setVisibility(View.VISIBLE);
-            itemImageRef.putFile(uriItemImage)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //itemImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
-                            itemImageRef.getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            itemImageUrl = uri.toString();
-                                            //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
-                                            onUploadImageSuccess(uri);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            progressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-        else
-        {
-            name = editName.getText().toString();
-            CategoriesModel categoriesModel = new CategoriesModel(name, image);
-            firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(documentId)
-                    .set(categoriesModel)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), "Category Updated.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+        progressBar.setVisibility(View.VISIBLE);
+        itemImageRef.putFile(uriItemImage)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        getImageURL(itemImageRef);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     /**
-     * This method is used to make a database call for adding a category item
-     * @param uri the url of the category item image
-     */
-    private void onUploadImageSuccess(Uri uri) {
-        name = editName.getText().toString();
-        image = uri.toString();
+     * updates the category name
+     * */
+    private void updateCategory() {
         CategoriesModel categoriesModel = new CategoriesModel(name, image);
         firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(documentId)
                 .set(categoriesModel)
@@ -234,7 +209,29 @@ public class AdminEditCategoryActivity extends AppCompatActivity implements View
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Category Updated.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    /**
+     * gets image download URL
+     * @param itemImageRef the image reference of uploaded image
+     * */
+    private void getImageURL(StorageReference itemImageRef) {
+        itemImageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        image = uri.toString();
+                        updateCategory();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }

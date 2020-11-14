@@ -89,14 +89,22 @@ public class FeedbackFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_feedback, container, false);
 
+        initializeReferencesAndListeners(v);
+
+        return v;
+    }
+
+    /**
+     * initialize references and listeners
+     * @param v the view of fragment
+     * */
+    private void initializeReferencesAndListeners(View v) {
         buttonSend = v.findViewById(R.id.buttonSend);
         buttonDiscard = v.findViewById(R.id.buttonDiscard);
         editTextMultiLine = v.findViewById(R.id.editTextMultiLine);
 
         buttonSend.setOnClickListener(this);
         buttonDiscard.setOnClickListener(this);
-
-        return v;
     }
 
     /**

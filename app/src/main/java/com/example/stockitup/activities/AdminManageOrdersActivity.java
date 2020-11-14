@@ -46,14 +46,8 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_manage_orders);
 
         setToolbar();
-
-        recyclerView = findViewById(R.id.recyclerView);
-        progressBar = findViewById(R.id.progressbar);
-        txtEmpty = findViewById(R.id.txtEmpty);
-        linearLayout = findViewById(R.id.linearLayout);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
         setRecyclerViewData();
     }
 
@@ -69,9 +63,21 @@ public class AdminManageOrdersActivity extends AppCompatActivity {
     }
 
     /**
-     * This method initializes the view
+     * initialize references and listeners
      * */
-    private void initializeView() {
+    private void initializeReferencesAndListeners() {
+        recyclerView = findViewById(R.id.recyclerView);
+        progressBar = findViewById(R.id.progressbar);
+        txtEmpty = findViewById(R.id.txtEmpty);
+        linearLayout = findViewById(R.id.linearLayout);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+    }
+
+    /**
+     * This method initializes the view and controls
+     * */
+    private void initializeViewAndControls() {
         txtEmpty.setVisibility(View.GONE);
         linearLayout.setVisibility(View.GONE);
     }

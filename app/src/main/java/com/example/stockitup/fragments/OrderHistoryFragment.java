@@ -103,16 +103,23 @@ public class OrderHistoryFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_order_history, container, false);
 
+        initializeReferencesAndListeners(v);
+        setRecyclerViewData();
+
+        return v;
+    }
+
+    /**
+     * initialize references and listeners
+     * @param v the view of fragment
+     * */
+    private void initializeReferencesAndListeners(View v) {
         recyclerView = v.findViewById(R.id.recyclerView);
         linearLayout = v.findViewById(R.id.linearLayout);
         txtEmptyOrders = v.findViewById(R.id.txtEmptyOrders);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        setRecyclerViewData();
-
-        return v;
     }
 
     /**

@@ -48,7 +48,6 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
     private FirebaseFirestore firebaseFirestore;
     private static final int CHOOSE_IMAGE = 101;
     private Uri uriItemImage;
-    private String itemImageUrl=null;
 
     /**
      *  Called when the activity is starting.
@@ -60,7 +59,14 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_admin_edit_category_items);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editName = findViewById(R.id.editName);
         editDesc = findViewById(R.id.editDesc);
         editPrice = findViewById(R.id.editPrice);
@@ -73,7 +79,6 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         btnUpdate.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
     }
 
     /**
@@ -88,9 +93,9 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         name = getIntent().getStringExtra("name");
         desc = getIntent().getStringExtra("desc");
         price = getIntent().getStringExtra("price");
@@ -162,12 +167,31 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
      * This method is used validate fields to update Category Item
      */
     private void updateItemData() {
+        name = editName.getText().toString();
+        desc = editDesc.getText().toString();
+        price = editPrice.getText().toString();
+
         if (name.isEmpty()) {
             editName.setError("Name is required");
             editName.requestFocus();
             return;
-        } else {
+        }
+        if (desc.isEmpty()) {
+            editDesc.setError("Description is required");
+            editDesc.requestFocus();
+            return;
+        }
+        if (price.isEmpty()) {
+            editPrice.setError("Price is required");
+            editPrice.requestFocus();
+            return;
+        }
+        if (uriItemImage != null) {
             uploadImageToFirebaseStorage();
+        }
+        else
+        {
+            updateCategoryItem();
         }
     }
 
@@ -179,71 +203,49 @@ public class AdminEditCategoryItemsActivity extends AppCompatActivity implements
         final StorageReference itemImageRef = FirebaseStorage.getInstance().getReference()
                 .child("ingredientsImages")
                 .child(imageId + ".jpeg");
-        if (uriItemImage != null) {
-            progressBar.setVisibility(View.VISIBLE);
-            itemImageRef.putFile(uriItemImage)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //itemImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
-                            itemImageRef.getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            //progressBar.setVisibility(View.GONE);
-                                            itemImageUrl = uri.toString();
-                                            //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
-                                            onUploadImageSuccess(itemImageUrl);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            progressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-        else
-        {
-            name = editName.getText().toString();
-            desc = editDesc.getText().toString();
-            price = editPrice.getText().toString();
-            DocumentReference documentReference;
-            CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, desc, price,quantity);
-            if (categoryDocumentId.equalsIgnoreCase(""))
-                documentReference = firebaseFirestore.collection(AppConstants.ESSENTIALS_COLLECTION).document(documentId);
-            else
-                documentReference = firebaseFirestore.collection(AppConstants.CATEGORY_COLLECTION).document(categoryDocumentId).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT).document(documentId);
-            documentReference.set(categoryItemsModel)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            progressBar.setVisibility(View.GONE);
-                            Toast.makeText(AdminEditCategoryItemsActivity.this, "Item Updated.", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+        progressBar.setVisibility(View.VISIBLE);
+        itemImageRef.putFile(uriItemImage)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        getImageURL(itemImageRef);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     /**
-     * This method is used to make a database call for adding a category
-     * @param itemImageUrl the url of the category image
+     * gets image download URL
+     * @param itemImageRef the image reference of uploaded image
+     * */
+    private void getImageURL(StorageReference itemImageRef) {
+        itemImageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        image = uri.toString();
+                        updateCategoryItem();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    /**
+     * This method is used to make a database call for adding a category item
      */
-    private void onUploadImageSuccess(String itemImageUrl) {
-        name = editName.getText().toString();
-        desc = editDesc.getText().toString();
-        price = editPrice.getText().toString();
-        image = itemImageUrl;
+    private void updateCategoryItem() {
         DocumentReference documentReference;
         CategoryItemsModel categoryItemsModel = new CategoryItemsModel(name, image, desc, price,quantity);
         if (categoryDocumentId.equalsIgnoreCase(""))

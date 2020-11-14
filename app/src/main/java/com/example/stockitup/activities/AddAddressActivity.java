@@ -30,6 +30,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     private FirebaseFirestore firebaseFirestore;
     private String uid;
     private Button btnNext;
+    private String name,addressLine,province,city,postalID,country,phone;
 
     /**
      *  Called when the activity is starting.
@@ -41,7 +42,13 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_add_address);
 
         setToolbar();
+        initializeReferencesAndListeners();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         btnNext = findViewById(R.id.btnNext);
         editName = findViewById(R.id.editName);
         editAddressLine = findViewById(R.id.editAddressLine);
@@ -54,7 +61,6 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         btnNext.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     /**
@@ -76,17 +82,15 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnNext:
-                addAddress();
+                validateAndAddAddress();
                 break;
         }
     }
 
     /**
-     * This method stores the provided address to database.
+     * This method validates and stores the provided address to database.
      */
-    private void addAddress() {
-        String name,addressLine,province,city,postalID,country,phone;
-
+    private void validateAndAddAddress() {
         name = editName.getText().toString();
         addressLine = editAddressLine.getText().toString();
         province = editProvince.getText().toString();
@@ -137,7 +141,13 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
             editPhone.requestFocus();
             return;
         }
+        addAddress();
+    }
 
+    /**
+     * This method add address to database
+     * */
+    private void addAddress() {
         Map<String, Object> address = new HashMap<>();
         address.put("name", ""+name);
         address.put("addressLine", ""+addressLine);
@@ -146,6 +156,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         address.put("country", ""+country);
         address.put("pincode", ""+postalID);
         address.put("phone", ""+phone);
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         firebaseFirestore.collection(AppConstants.ADDRESS_COLLECTION).document("address"+uid).collection(AppConstants.ITEMS_COLLECTION_DOCUMENT)
                 .add(address)

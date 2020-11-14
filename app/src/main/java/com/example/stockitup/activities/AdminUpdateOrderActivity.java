@@ -54,7 +54,16 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
         setContentView(R.layout.activity_admin_update_order);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        setSpinner();
+        setViewByOrderStatus();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         txtOrderDate = findViewById(R.id.txtOrderDate);
         txtSubTotal = findViewById(R.id.txtSubTotal);
         txtOffer = findViewById(R.id.txtOffer);
@@ -76,9 +85,6 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
-        setSpinner();
-        setViewByOrderStatus();
     }
 
     /**
@@ -93,9 +99,9 @@ public class AdminUpdateOrderActivity extends AppCompatActivity implements Adapt
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         userDocumentId = getIntent().getStringExtra("userDocumentId");
         orderDocumentId = getIntent().getStringExtra("orderDocumentId");
         userID = getIntent().getStringExtra("userID");

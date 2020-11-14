@@ -3,6 +3,7 @@ package com.example.stockitup.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -13,6 +14,11 @@ import android.widget.TextView;
 import com.example.stockitup.R;
 import com.example.stockitup.activities.ContactActivity;
 import com.example.stockitup.activities.FaqActivity;
+import com.example.stockitup.utils.AppConstants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * This class deals with customer support of application
@@ -84,13 +90,21 @@ public class HelpFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View v= inflater.inflate(R.layout.fragment_help, container, false);
 
-        help2=v.findViewById(R.id.help2);
-        help3=v.findViewById(R.id.help3);
+        initializeReferencesAndListeners(v);
+
+        return v;
+    }
+
+    /**
+     * initialize references and listeners
+     * @param v the view of fragment
+     * */
+    private void initializeReferencesAndListeners(View v) {
+        help2 = v.findViewById(R.id.help2);
+        help3 = v.findViewById(R.id.help3);
 
         help2.setOnClickListener(this);
         help3.setOnClickListener(this);
-
-        return v;
     }
 
     /**
@@ -112,7 +126,18 @@ public class HelpFragment extends Fragment implements View.OnClickListener{
      * Navigates to FAQActivity
      * */
     private void navigateToContactActivity() {
-        startActivity(new Intent(getContext(), ContactActivity.class));
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection(AppConstants.APP_SUPPORT_COLLECTION)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        task.getResult().getDocuments().get(0).get("customerCareNumber");
+                        AppConstants.TOLL_FREE_NUMBER = task.getResult().getDocuments().get(0).get("tollFreeNumber").toString();
+                        AppConstants.CUSTOMER_CARE_NUMBER = task.getResult().getDocuments().get(0).get("customerCareNumber").toString();
+                        startActivity(new Intent(getContext(), ContactActivity.class));
+                    }
+                });
     }
 
     /**

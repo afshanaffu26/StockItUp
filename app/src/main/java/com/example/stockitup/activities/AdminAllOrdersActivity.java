@@ -43,13 +43,19 @@ public class AdminAllOrdersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin_all_orders);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeView();
+        setRecyclerViewData();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressbar);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
-        setRecyclerViewData();
     }
 
     /**

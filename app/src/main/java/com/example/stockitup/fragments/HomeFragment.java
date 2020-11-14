@@ -101,14 +101,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerView = v.findViewById(R.id.recyclerView);
-        recyclerViewCategory = v.findViewById(R.id.recyclerViewCategory);
-        floatingActionButton = v.findViewById(R.id.floatingActionButton);
-
-        floatingActionButton.setOnClickListener(this);
-
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
+        initializeReferencesAndListeners(v);
         setRecyclerViewDataForEssentials();
         setRecyclerViewDataForCategories();
 
@@ -116,9 +109,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
+     * initialize references and listeners
+     * @param v the view of fragment
+     * */
+    private void initializeReferencesAndListeners(View v) {
+        recyclerView = v.findViewById(R.id.recyclerView);
+        recyclerViewCategory = v.findViewById(R.id.recyclerViewCategory);
+        floatingActionButton = v.findViewById(R.id.floatingActionButton);
+
+        floatingActionButton.setOnClickListener(this);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+    }
+
+    /**
      * This methods sets the recycler view data for Essential Items
      * */
-    private void setRecyclerViewDataForEssentials() {
+    private void
+    setRecyclerViewDataForEssentials() {
         //Query
         Query query = firebaseFirestore.collection("Essentials");
         //RecyclerOptions

@@ -36,7 +36,14 @@ public class AdminAddOrEditFAQActivity extends AppCompatActivity implements View
         setContentView(R.layout.activity_admin_add_or_edit_f_a_q);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editQuestion = findViewById(R.id.editQuestion);
         editAnswer = findViewById(R.id.editAnswer);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -44,7 +51,6 @@ public class AdminAddOrEditFAQActivity extends AppCompatActivity implements View
         btnSubmit.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
     }
 
     /**
@@ -59,9 +65,9 @@ public class AdminAddOrEditFAQActivity extends AppCompatActivity implements View
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         flow = getIntent().getStringExtra("flow");
         if (flow.equalsIgnoreCase("edit"))
         {

@@ -55,7 +55,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_sign_up);
 
         setToolbar();
+        initializeReferencesAndListeners();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         txtLogin = findViewById(R.id.txtLogin);
         txtConditions = findViewById(R.id.txtConditions);
         editName=(EditText) findViewById(R.id.editName);
@@ -229,16 +235,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             }
                             AppConstants.OFFERS_MAP = map;
                         }
-                    }
-                });
-        firebaseFirestore.collection(AppConstants.APP_SUPPORT_COLLECTION)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        task.getResult().getDocuments().get(0).get("customerCareNumber");
-                        AppConstants.TOLL_FREE_NUMBER = task.getResult().getDocuments().get(0).get("tollFreeNumber").toString();
-                        AppConstants.CUSTOMER_CARE_NUMBER = task.getResult().getDocuments().get(0).get("customerCareNumber").toString();
                     }
                 });
     }

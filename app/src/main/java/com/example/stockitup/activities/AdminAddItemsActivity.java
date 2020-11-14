@@ -65,7 +65,14 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         setContentView(R.layout.activity_admin_add_items);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        setSpinner();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         spinner = findViewById(R.id.spinner);
         editName = findViewById(R.id.editName);
         editPrice = findViewById(R.id.editPrice);
@@ -80,7 +87,6 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
         spinner.setOnItemSelectedListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        setSpinner();
     }
 
     /**
@@ -199,23 +205,7 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //itemImageUrl = taskSnapshot.getStorage().getDownloadUrl().toString();
-                            itemImageRef.getDownloadUrl()
-                                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                        @Override
-                                        public void onSuccess(Uri uri) {
-                                            itemImageUrl = uri.toString();
-                                            //Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
-                                            onUploadImageSuccess(itemImageUrl);
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            progressBar.setVisibility(View.GONE);
-                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                        }
-                                    });
+                            getImageURL(itemImageRef);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -226,6 +216,28 @@ public class AdminAddItemsActivity extends AppCompatActivity implements AdapterV
                         }
                     });
         }
+    }
+
+    /**
+     * gets image download URL
+     * @param itemImageRef the image reference of uploaded image
+     * */
+    private void getImageURL(StorageReference itemImageRef) {
+        itemImageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        itemImageUrl = uri.toString();
+                        onUploadImageSuccess(itemImageUrl);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     /**

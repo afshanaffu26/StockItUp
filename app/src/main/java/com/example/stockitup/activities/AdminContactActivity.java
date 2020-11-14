@@ -44,7 +44,15 @@ public class AdminContactActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_admin_contact);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        fetchContactDetails();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         txtCustomerCareNumber = findViewById(R.id.txtCustomerCareNumber);
         txtTollFreeNumber = findViewById(R.id.txtTollFreeNumber);
         editCustomerCareNumber = findViewById(R.id.editCustomerCareNumber);
@@ -55,8 +63,6 @@ public class AdminContactActivity extends AppCompatActivity implements View.OnCl
         btnSubmit.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
-        fetchContactDetails();
     }
 
     /**
@@ -71,9 +77,9 @@ public class AdminContactActivity extends AppCompatActivity implements View.OnCl
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         btnSubmit.setText("EDIT");
         editCustomerCareNumber.setVisibility(View.GONE);
         editTollFreeNumber.setVisibility(View.GONE);

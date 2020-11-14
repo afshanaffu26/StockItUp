@@ -95,6 +95,17 @@ public class OffersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_offers, container, false);
 
+        initializeReferencesAndListeners(v);
+        setRecyclerViewData();
+
+        return v;
+    }
+
+    /**
+     * initialize references and listeners
+     * @param v the view of fragment
+     * */
+    private void initializeReferencesAndListeners(View v) {
         recyclerView = v.findViewById(R.id.recyclerView);
         linearLayout = v.findViewById(R.id.linearLayout);
         txtEmptyOffers = v.findViewById(R.id.txtEmptyOffers);
@@ -103,10 +114,6 @@ public class OffersFragment extends Fragment {
         linearLayout.setVisibility(View.GONE);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-
-        setRecyclerViewData();
-
-        return v;
     }
 
     /**

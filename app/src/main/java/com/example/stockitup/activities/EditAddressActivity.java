@@ -40,7 +40,14 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_edit_address);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         editName = findViewById(R.id.editName);
         editAddressLine = findViewById(R.id.editAddressLine);
         editProvince = findViewById(R.id.editProvince);
@@ -53,8 +60,6 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
         btnNext.setOnClickListener(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        initializeView();
     }
 
     /**
@@ -69,9 +74,9 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         name = getIntent().getStringExtra("name");
         addressLine = getIntent().getStringExtra("addressLine");
         city = getIntent().getStringExtra("city");
@@ -88,6 +93,8 @@ public class EditAddressActivity extends AppCompatActivity implements View.OnCli
         editCountry.setText(country);
         editPostalID.setText(pincode);
         editPhone.setText(phone);
+
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     /**

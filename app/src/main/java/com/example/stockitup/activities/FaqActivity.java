@@ -42,15 +42,21 @@ public class FaqActivity extends AppCompatActivity {
         setContentView(R.layout.activity_faq);
 
         setToolbar();
+        initializeReferencesAndListeners();
+        initializeViewAndControls();
+        setRecyclerViewData();
+    }
 
+    /**
+     * initialize references and listeners
+     * */
+    private void initializeReferencesAndListeners() {
         progressBar = findViewById(R.id.progressBar);
         recyclerView = findViewById(R.id.recyclerView);
         scrollView = findViewById(R.id.scrollView);
         txtEmpty = findViewById(R.id.txtEmpty);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        initializeView();
-        setRecyclerViewData();
     }
 
     /**
@@ -65,9 +71,9 @@ public class FaqActivity extends AppCompatActivity {
     }
 
     /**
-     * This method initializes the view
+     * This method initializes the view and controls
      * */
-    private void initializeView() {
+    private void initializeViewAndControls() {
         txtEmpty.setVisibility(View.GONE);
         scrollView.setVisibility(View.GONE);
     }
