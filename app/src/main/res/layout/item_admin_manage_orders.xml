@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,7 +25,6 @@
             android:text="User Email:"
             android:textColor="@color/colorText"
             android:textSize="18dp"/>
-
         <TextView
             android:id="@+id/txtName"
             android:layout_width="match_parent"
@@ -32,7 +32,6 @@
             android:layout_marginLeft="10dp"
             android:text="Name:"
             android:textSize="14dp"/>
-
         <TextView
             android:id="@+id/txtOrderId"
             android:layout_width="match_parent"
@@ -41,7 +40,6 @@
             android:text="Order Id:"
             android:textSize="14dp"/>
     </LinearLayout>
-
     <ImageButton
         android:id="@+id/imgNext"
         android:layout_width="50dp"

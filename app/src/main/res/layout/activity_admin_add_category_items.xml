@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     tools:context=".activities.AdminAddCategoryItemsActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,7 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -29,7 +28,6 @@
                     android:background="@color/colorMain"
                     android:layout_gravity="center"
                     android:gravity="center">
-
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imageView"
                         android:layout_width="180dp"
@@ -37,7 +35,6 @@
                         android:layout_margin="15dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/image_bg"/>
-
                     <ImageView
                         android:id="@+id/imageViewEdit"
                         android:layout_width="wrap_content"
@@ -49,7 +46,6 @@
                         android:scaleType="center"
                         android:src="@drawable/ic_baseline_edit_white_24" />
                 </RelativeLayout>
-
                 <TextView
                     android:id="@+id/txtCategoryName"
                     android:layout_width="wrap_content"
@@ -59,7 +55,6 @@
                     android:textColor="@color/colorText"
                     android:layout_gravity="center"
                     android:text="Category: "/>
-
                 <EditText
                     android:id="@+id/editName"
                     android:layout_width="match_parent"
@@ -70,7 +65,6 @@
                     android:layout_marginRight="15dp"
                     android:ems="10"
                     android:inputType="text" />
-
                 <EditText
                     android:id="@+id/editDescription"
                     android:layout_width="match_parent"
@@ -83,7 +77,6 @@
                     android:gravity="start|top"
                     android:hint="@string/enter_description"
                     android:inputType="textMultiLine" />
-
                 <EditText
                     android:id="@+id/editPrice"
                     android:layout_width="match_parent"
@@ -95,7 +88,6 @@
                     android:layout_marginTop="15dp"
                     android:ems="10"
                     android:inputType="number" />
-
                 <Button
                     android:id="@+id/btnAdd"
                     android:layout_width="300dp"

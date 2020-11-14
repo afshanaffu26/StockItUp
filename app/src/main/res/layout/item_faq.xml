@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_margin="15dp">
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,12 +13,10 @@
         android:textColor="@color/colorText"
         android:textSize="16dp"
         android:id="@+id/txtQuestion"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="This is the answer."
         android:textSize="14dp"
         android:id="@+id/txtAnswer"/>
-
 </LinearLayout>

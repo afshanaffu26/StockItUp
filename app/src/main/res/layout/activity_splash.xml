@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,21 +10,18 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="40dp"
     tools:context=".activities.AdminOffersActivity">
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:orientation="vertical">
-
         <ImageView
             android:id="@+id/imgAppIcon"
             android:layout_width="220dp"
             android:layout_height="220dp"
             android:layout_gravity="center"
             app:srcCompat="@drawable/app_icon" />
-
         <TextView
             android:id="@+id/txtAppName"
             android:layout_width="wrap_content"
@@ -35,5 +33,4 @@
             android:textSize="30sp"
             android:textStyle="bold|italic" />
     </LinearLayout>
-
 </RelativeLayout>

@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     tools:context=".fragments.SettingsFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -26,7 +24,6 @@
                 android:layout_marginLeft="20dp"
                 android:text="@string/version"
                 android:textSize="16sp" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true"
@@ -37,7 +34,6 @@
                 android:textSize="16sp"
                 android:layout_marginRight="20dp"
                 android:text="@string/_1_1" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -46,13 +42,10 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="1dp"
                 android:background="@color/colorPrimary" />
-
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +56,6 @@
                 android:layout_marginLeft="16dp"
                 android:text="@string/manage_address"
                 android:textSize="16sp" />
-
             <ImageView
                 android:id="@+id/imgAddressBtn"
                 android:layout_width="30dp"
@@ -83,11 +75,9 @@
                 android:layout_marginRight="5dp"
                 android:background="@color/colorPrimary" />
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,7 +88,6 @@
                 android:layout_marginLeft="20dp"
                 android:text="@string/profile"
                 android:textSize="16sp" />
-
             <ImageView
                 android:id="@+id/imgProfileBtn"
                 android:layout_width="30dp"
@@ -118,6 +107,5 @@
                 android:layout_marginRight="5dp"
                 android:background="@color/colorPrimary" />
         </RelativeLayout>
-
     </LinearLayout>
 </FrameLayout>

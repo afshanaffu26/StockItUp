@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +21,6 @@
             android:textStyle="bold"
             android:textColor="@color/colorText"
             android:textSize="24sp" />
-
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="@dimen/img_width_height"
@@ -28,7 +28,6 @@
             android:layout_height="@dimen/img_width_height"
             android:layout_gravity="center"
             app:srcCompat="@drawable/app_icon" />
-
         <TextView
             android:id="@+id/textView8"
             android:layout_width="match_parent"
@@ -38,7 +37,6 @@
             android:padding="10dp"
             android:text="@string/invite_a_friend_and_get_exciting_offers_on_each_successful_invite"
             android:textSize="18sp" />
-
         <Button
             android:id="@+id/btnInvite"
             android:layout_width="300dp"
@@ -49,6 +47,5 @@
             android:text="@string/invite_friend"
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
-
     </LinearLayout>
 </FrameLayout>

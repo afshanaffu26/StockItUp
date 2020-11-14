@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     tools:context=".activities.AdminAddOrEditOffersActivity">
-
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:orientation="vertical">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +25,6 @@
             android:textColor="@color/colorText"
             android:textSize="20sp"
             android:textStyle="bold" />
-
         <EditText
             android:id="@+id/editName"
             android:layout_width="match_parent"
@@ -37,7 +34,6 @@
             android:ems="10"
             android:hint="@string/enter_code"
             android:inputType="text" />
-
         <EditText
             android:id="@+id/editValue"
             android:layout_width="match_parent"
@@ -47,7 +43,6 @@
             android:background="@drawable/edit_text_background"
             android:ems="10"
             android:inputType="number" />
-
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="300dp"
@@ -60,6 +55,4 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
     </LinearLayout>
-
-
 </RelativeLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,7 +28,6 @@
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
-
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -46,7 +46,6 @@
                     android:textColor="@color/colorText"
                     android:textSize="24sp"
                     android:textStyle="bold" />
-
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="@dimen/img_width_height"
@@ -55,7 +54,6 @@
                     android:layout_height="@dimen/img_width_height"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/app_icon" />
-
                 <RelativeLayout
                     android:id="@+id/relativeLayout"
                     android:layout_width="match_parent"

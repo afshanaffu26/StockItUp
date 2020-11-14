@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,28 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:text="@string/recover_password"
-        android:textStyle="bold"
-        android:textColor="@color/colorText"
-        android:textSize="24sp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="@dimen/img_width_height"
-        android:layout_height="@dimen/img_width_height"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        app:srcCompat="@drawable/app_icon" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="@string/recover_password"
+            android:textStyle="bold"
+            android:textColor="@color/colorText"
+            android:textSize="24sp" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/img_width_height"
+            android:layout_height="@dimen/img_width_height"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/app_icon" />
         <EditText
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
@@ -44,7 +43,6 @@
             android:layout_marginRight="15dp"
             android:ems="10"
             android:inputType="textEmailAddress" />
-
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="300dp"
@@ -56,7 +54,6 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold" />
     </LinearLayout>
-
     <ProgressBar
         android:visibility="gone"
         android:id="@+id/progressbar"

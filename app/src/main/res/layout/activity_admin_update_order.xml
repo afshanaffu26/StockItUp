@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,7 +31,6 @@
                     android:textStyle="bold"
                     android:textColor="@color/colorText"
                     android:text="@string/order_details"/>
-
                 <TextView
                     android:id="@+id/txtOrderId"
                     android:layout_width="match_parent"
@@ -39,7 +39,6 @@
                     android:text="Order Id:"
                     android:textColor="@color/colorText"
                     android:textSize="14dp"/>
-
                 <TextView
                     android:id="@+id/txtOrderDate"
                     android:layout_width="match_parent"
@@ -47,7 +46,6 @@
                     android:layout_margin="10dp"
                     android:text="Ordered On:"
                     android:textSize="14dp"/>
-
                 <TextView
                     android:id="@+id/txtSubTotal"
                     android:layout_width="match_parent"
@@ -55,7 +53,6 @@
                     android:layout_margin="10dp"
                     android:text="Subtotal: 55$"
                     android:textSize="14dp" />
-
                 <TextView
                     android:id="@+id/txtOffer"
                     android:layout_width="match_parent"
@@ -63,7 +60,6 @@
                     android:layout_margin="10dp"
                     android:text="Offer (-20%): -5$"
                     android:textSize="14dp" />
-
                 <TextView
                     android:id="@+id/txtTax"
                     android:layout_width="match_parent"
@@ -71,7 +67,6 @@
                     android:layout_margin="10dp"
                     android:text="Tax: 5$"
                     android:textSize="14dp" />
-
                 <TextView
                     android:id="@+id/txtDeliveryCharge"
                     android:layout_width="match_parent"
@@ -79,7 +74,6 @@
                     android:layout_margin="10dp"
                     android:text="DeliveryCharge: 5$"
                     android:textSize="14dp" />
-
                 <TextView
                     android:id="@+id/txtTotal"
                     android:layout_width="match_parent"
@@ -94,7 +88,6 @@
                     android:layout_margin="10dp"
                     android:text="Address:"
                     android:textSize="14dp"/>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -127,7 +120,6 @@
                         android:background="@drawable/edit_text_background"
                         android:layout_marginRight="15dp"
                         />
-
                     <ImageView
                         android:id="@+id/imgEditStatus"
                         android:layout_gravity="center_vertical"
@@ -135,7 +127,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/edit_24" />
-
                     <ImageView
                         android:id="@+id/imgStatus"
                         android:layout_gravity="center_vertical"
@@ -143,9 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_done" />
-
                 </LinearLayout>
-
                 <Button
                     android:id="@+id/btnViewOrderDetails"
                     android:layout_width="match_parent"

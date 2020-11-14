@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,7 +37,6 @@
                 android:textStyle="bold"
                 android:text="Pasta"
                 android:textColor="@color/colorText" />
-
             <TextView
                 android:id="@+id/txtPrice"
                 android:layout_width="wrap_content"
@@ -53,9 +53,7 @@
                 android:textSize="18dp"
                 android:text="Qty: 2"
                 android:textColor="@color/colorText" />
-
         </LinearLayout>
-
     </LinearLayout>
     <ImageView
         android:layout_width="wrap_content"

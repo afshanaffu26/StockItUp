@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,80 +9,76 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:text="@string/feedback"
-            android:textStyle="bold"
-            android:textColor="@color/colorText"
-            android:textSize="24sp" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/img_width_height"
-            android:layout_marginTop="30dp"
-            android:layout_height="@dimen/img_width_height"
-            android:layout_gravity="center"
-            android:src="@drawable/app_icon" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="15dp"
-            android:text="@string/your_review_will_help_us_to_give_you_better_experience_make_it_a_good_one"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editTextMultiLine"
-            android:layout_width="match_parent"
-            android:layout_marginTop="80dp"
-            android:hint="@string/tell_us_your_experience"
-            android:layout_height="200dp"
-            android:ems="10"
-            android:padding="10dp"
-            android:gravity="start|top"
-            android:background="#3051ca8e"
-            android:layout_margin="10dp"
-            android:inputType="textMultiLine" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="2"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/buttonDiscard"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textView5"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:background="@color/colorWhite"
-                android:text="@string/discard"
+                android:gravity="center"
+                android:text="@string/feedback"
+                android:textStyle="bold"
                 android:textColor="@color/colorText"
-                android:layout_weight="1"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/buttonSend"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
+                android:textSize="24sp" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/img_width_height"
                 android:layout_marginTop="30dp"
-                android:background="@color/colorMain"
-                android:text="@string/submit"
-                android:layout_weight="1"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold" />
+                android:layout_height="@dimen/img_width_height"
+                android:layout_gravity="center"
+                android:src="@drawable/app_icon" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="15dp"
+                android:text="@string/your_review_will_help_us_to_give_you_better_experience_make_it_a_good_one"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/editTextMultiLine"
+                android:layout_width="match_parent"
+                android:layout_marginTop="80dp"
+                android:hint="@string/tell_us_your_experience"
+                android:layout_height="200dp"
+                android:ems="10"
+                android:padding="10dp"
+                android:gravity="start|top"
+                android:background="#3051ca8e"
+                android:layout_margin="10dp"
+                android:inputType="textMultiLine" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="2"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/buttonDiscard"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/colorWhite"
+                    android:text="@string/discard"
+                    android:textColor="@color/colorText"
+                    android:layout_weight="1"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/buttonSend"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:background="@color/colorMain"
+                    android:text="@string/submit"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
     </ScrollView>
 </FrameLayout>

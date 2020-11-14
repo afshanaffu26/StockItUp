@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,7 +11,6 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -20,7 +20,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -31,7 +30,6 @@
                 android:layout_marginLeft="20dp"
                 android:text="@string/version"
                 android:textSize="16sp" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true"
@@ -42,7 +40,6 @@
                 android:textSize="16sp"
                 android:layout_marginRight="20dp"
                 android:text="@string/_1_1" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -51,13 +48,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/colorPrimary" />
-
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +62,6 @@
                 android:layout_marginLeft="20dp"
                 android:text="@string/offers"
                 android:textSize="16sp" />
-
             <ImageView
                 android:id="@+id/imgNextOffers"
                 android:layout_width="30dp"
@@ -79,7 +72,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/navigate_next_24" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -88,13 +80,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/colorPrimary" />
-
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,7 +94,6 @@
                 android:layout_marginLeft="20dp"
                 android:text="@string/faq"
                 android:textSize="16sp" />
-
             <ImageView
                 android:id="@+id/imgNextFAQ"
                 android:layout_width="30dp"
@@ -116,7 +104,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/navigate_next_24" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -125,13 +112,10 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/colorPrimary" />
-
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,7 +126,6 @@
                 android:layout_marginLeft="20dp"
                 android:text="@string/contact"
                 android:textSize="16sp" />
-
             <ImageView
                 android:id="@+id/imgNextContact"
                 android:layout_width="30dp"
@@ -153,7 +136,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/navigate_next_24" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -162,7 +144,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/colorPrimary" />
-
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
