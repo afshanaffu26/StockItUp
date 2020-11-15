@@ -114,7 +114,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity implements Vi
         txtTax.setText("Tax: "+tax+"$");
         txtDeliveryCharge.setText("DeliveryCharge: "+deliveryCharge+"$");
         txtTotal.setText("Total: "+total+"$");
-        txtAddress.setText("Address: "+address+"$");
+        txtAddress.setText("Address: "+address);
         txtStatus.setText(status);
         if (status.equalsIgnoreCase("pending"))
         {
