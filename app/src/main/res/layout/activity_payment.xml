@@ -87,10 +87,11 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp"
+                    android:maxLength="4"
                     android:hint="@string/exp_month_year"
                     android:background="@drawable/edit_text_background"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="number" />
                 <Button
                     android:id="@+id/btnPay"
                     android:layout_width="300dp"

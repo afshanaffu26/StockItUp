@@ -125,9 +125,19 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
             editCVV.requestFocus();
             return;
         }
+        if (cvv.length() < 3 || cvv.length() > 4){
+            editCVV.setError("Please enter valid CVV");
+            editCVV.requestFocus();
+            return;
+        }
         if(expDate.isEmpty())
         {
             editExpDate.setError("Expiry Date is required");
+            editExpDate.requestFocus();
+            return;
+        }
+        if (expDate.length()!=AppConstants.MAX_EXPIRY_LENGTH || Integer.parseInt(expDate.substring(0,2)) < 1 || Integer.parseInt(expDate.substring(0,2)) > 12){
+            editExpDate.setError("Please enter valid expiry date");
             editExpDate.requestFocus();
             return;
         }

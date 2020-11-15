@@ -100,4 +100,8 @@ public class AppConstants {
      */
     public static final String ADMIN_PASSWORD = "gvzungbsuznhniux";
 
+    /**
+     * Maximum length for expiry of a card
+     */
+    public static final int  MAX_EXPIRY_LENGTH = 4;
 }

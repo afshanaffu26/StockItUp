@@ -81,7 +81,7 @@ Upon Purchaser’s reasonable request from time to time, Supplier shall furnish 
     <string name="name_on_the_card">Name on the card</string>
     <string name="credit_debit_card_number">Credit/Debit Card Number</string>
     <string name="cvv">CVV</string>
-    <string name="exp_month_year">Exp Month/Year</string>
+    <string name="exp_month_year">Expiry MMYY</string>
     <string name="pay">PAY</string>
     <string name="order_details">Order Details</string>
     <string name="status">Status:</string>
